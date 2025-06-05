@@ -2,34 +2,128 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>6ol Core Hub · v0.2</title>
+  <title>6ol Core Hub · v0.3</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    :root { --bg:#111; --fg:#eee; --accent:#f5c84c; }
-    * { box-sizing:border-box; scroll-behavior:smooth; }
-    body{margin:0;font-family:"Helvetica Neue",sans-serif;background:var(--bg);color:var(--fg);line-height:1.6;}
-    header{padding:2rem 1rem;text-align:center;}
-    nav{position:sticky;top:0;z-index:10;background:#000c;backdrop-filter:blur(6px);
-        display:flex;gap:1rem;justify-content:center;padding:.5rem;}
-    nav a{color:var(--fg);text-decoration:none;padding:.25rem .5rem;border-radius:.25rem;transition:background .2s;}
-    nav a.active,nav a:hover{background:var(--accent);color:#000;}
-    section{padding:4rem 1rem;max-width:800px;margin:auto;}
-    footer{text-align:center;padding:2rem 1rem;font-size:.875rem;}
-    .locked{opacity:.35;filter:blur(2px);}
+    :root {
+      --bg: #111;
+      --fg: #eee;
+      --accent: #f5c84c;
+    }
+    * {
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+    body {
+      margin: 0;
+      font-family: "Helvetica Neue", sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.6;
+    }
+    header {
+      padding: 2rem 1rem;
+      text-align: center;
+    }
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: #000c;
+      backdrop-filter: blur(6px);
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      padding: 0.5rem;
+    }
+    nav a {
+      color: var(--fg);
+      text-decoration: none;
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.25rem;
+      transition: background 0.2s;
+    }
+    nav a.active,
+    nav a:hover {
+      background: var(--accent);
+      color: #000;
+    }
+    section {
+      padding: 4rem 1rem;
+      max-width: 800px;
+      margin: auto;
+    }
+    section h2 {
+      margin-bottom: 1rem;
+    }
+    .locked {
+      opacity: 0.35;
+      filter: blur(2px);
+    }
+    .item-list {
+      list-style: none;
+      padding-left: 0;
+    }
+    .item-list li {
+      margin-bottom: 0.75rem;
+      padding-left: 1.5rem;
+      position: relative;
+    }
+    .item-list li::before {
+      content: "🔹";
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      font-size: 0.875rem;
+    }
+    /* Passphrase form styling */
+    form#pass-form {
+      margin: 1rem auto;
+      max-width: 280px;
+      display: flex;
+      gap: 0.5rem;
+    }
+    form#pass-form input,
+    form#pass-form button {
+      border: none;
+      border-radius: 0.25rem;
+      font-family: inherit;
+    }
+    form#pass-form input {
+      flex: 1;
+      padding: 0.5rem;
+    }
+    form#pass-form button {
+      padding: 0.5rem 1rem;
+      background: var(--accent);
+      color: #000;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
 
 <header>
   <h1>6ol Core Hub</h1>
-  <p class="tagline">A sovereign playground for seekers & builders.</p>
+  <p class="tagline">A sovereign playground for seekers &amp; builders.</p>
 
   <!-- Passphrase unlock -->
-  <form id="pass-form" style="margin:1rem auto;max-width:280px;display:flex;gap:.5rem;">
-    <input id="pass-input" type="password" placeholder="Enter passphrase" style="flex:1;padding:.5rem;border-radius:.25rem;border:none;" />
-    <button type="submit" style="padding:.5rem 1rem;border:none;border-radius:.25rem;background:var(--accent);color:#000;">Unlock</button>
+  <form id="pass-form">
+    <input
+      id="pass-input"
+      type="password"
+      placeholder="Enter passphrase"
+      autocomplete="off"
+    />
+    <button type="submit">Unlock</button>
   </form>
-  <p style="font-size:.9rem;">Current level: <span id="current-level">0</span></p>
+  <p style="font-size: 0.9rem;">
+    Current level: <span id="current-level">0</span>
+  </p>
 </header>
 
 <nav id="navbar">
@@ -40,22 +134,41 @@
 </nav>
 
 <main>
+  <!-- Scrolls (requires level 1+) -->
   <section id="scrolls" data-level="1" class="locked">
     <h2>📜 Scrolls</h2>
     <p>Teachings unlocked by loop-level and passphrase.</p>
+    <ul class="item-list">
+      <li><strong>Daylight Initiation</strong><br />Basics of 6ol’s mission and first ritual.</li>
+      <li><strong>Night-Vision Insight</strong><br />Deeper guidance on self-reflection (level 2+).</li>
+      <li><strong>Shadow Work Depth</strong><br />Advanced principles and hidden insights (level 3+).</li>
+    </ul>
   </section>
 
+  <!-- Rituals (requires level 1+) -->
   <section id="rituals" data-level="1" class="locked">
     <h2>🕯 Rituals</h2>
-    <p>Core practices to keep the energy flow in balance.</p>
+    <p>Core practices to keep the energy loop flowing.</p>
+    <ul class="item-list">
+      <li><strong>Morning Seed Offering</strong><br />10-minute journaling &amp; intention setting.</li>
+      <li><strong>Midday Flow Check</strong><br />Breath-work + quick gratitude pause.</li>
+      <li><strong>Evening Harvest</strong><br />Black journal reflection &amp; digital log sync.</li>
+    </ul>
   </section>
 
+  <!-- Journal (open to all) -->
   <section id="journal" data-level="0">
     <h2>✍️ Journal</h2>
-    <textarea id="entry" rows="8" style="width:100%;max-width:100%;"></textarea>
-    <p id="timestamp" style="font-size:.8rem;opacity:.7;"></p>
+    <textarea
+      id="entry"
+      rows="8"
+      style="width: 100%; max-width: 100%;"
+      placeholder="Write today’s reflection..."
+    ></textarea>
+    <p id="timestamp" style="font-size: 0.8rem; opacity: 0.7;"></p>
   </section>
 
+  <!-- Contact (open to all) -->
   <section id="contact" data-level="0">
     <h2>📬 Contact</h2>
     <p>Email: ellery.p.costaiii@icloud.com</p>
@@ -64,27 +177,40 @@
 
 <footer>© 2025 4got1en · Built entirely on an iPhone</footer>
 
-<!-- Scripts -->
+<!-- Include your loop-engine script -->
 <script src="loop-engine.js"></script>
 <script>
-/* ===== Scroll-highlight ===== */
-const links=[...document.querySelectorAll('nav a')];
-const secs =links.map(a=>document.querySelector(a.getAttribute('href')));
-addEventListener('scroll',()=>{
-  let i=secs.findIndex(s=>s.getBoundingClientRect().top<=60&&s.getBoundingClientRect().bottom>=60);
-  if(i===-1)i=0;
-  links.forEach((a,ix)=>a.classList.toggle('active',ix===i));
-});
+  /* ===== Scroll-highlight ===== */
+  const links = [...document.querySelectorAll("nav a")];
+  const secs = links.map((a) =>
+    document.querySelector(a.getAttribute("href"))
+  );
+  addEventListener("scroll", () => {
+    let i = secs.findIndex(
+      (s) =>
+        s.getBoundingClientRect().top <= 60 &&
+        s.getBoundingClientRect().bottom >= 60
+    );
+    if (i === -1) i = 0;
+    links.forEach((a, ix) => a.classList.toggle("active", ix === i));
+  });
 
-/* ===== Journal persistence ===== */
-const entry=document.getElementById('entry'),ts=document.getElementById('timestamp'),KEY='6ol_journal';
-function save(){localStorage.setItem(KEY,entry.value);ts.textContent='Last saved: '+new Date().toLocaleString();}
-entry.addEventListener('input',save);
-addEventListener('load',()=>{
-  const data=localStorage.getItem(KEY);
-  if(data){entry.value=data;ts.textContent='Last saved: '+new Date().toLocaleString();}
-});
+  /* ===== Journal persistence ===== */
+  const entry = document.getElementById("entry"),
+    ts = document.getElementById("timestamp"),
+    KEY = "6ol_journal";
+  function save() {
+    localStorage.setItem(KEY, entry.value);
+    ts.textContent = "Last saved: " + new Date().toLocaleString();
+  }
+  entry.addEventListener("input", save);
+  addEventListener("load", () => {
+    const data = localStorage.getItem(KEY);
+    if (data) {
+      entry.value = data;
+      ts.textContent = "Last saved: " + new Date().toLocaleString();
+    }
+  });
 </script>
-
 </body>
 </html>
