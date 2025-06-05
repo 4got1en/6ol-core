@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>6ol Core Hub · v0.1</title>
+  <title>6ol Core Hub · v0.2</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     :root { --bg:#111; --fg:#eee; --accent:#f5c84c; }
@@ -15,6 +15,7 @@
     nav a.active,nav a:hover{background:var(--accent);color:#000;}
     section{padding:4rem 1rem;max-width:800px;margin:auto;}
     footer{text-align:center;padding:2rem 1rem;font-size:.875rem;}
+    .locked{opacity:.35;filter:blur(2px);}
   </style>
 </head>
 <body>
@@ -22,6 +23,13 @@
 <header>
   <h1>6ol Core Hub</h1>
   <p class="tagline">A sovereign playground for seekers & builders.</p>
+
+  <!-- Passphrase unlock -->
+  <form id="pass-form" style="margin:1rem auto;max-width:280px;display:flex;gap:.5rem;">
+    <input id="pass-input" type="password" placeholder="Enter passphrase" style="flex:1;padding:.5rem;border-radius:.25rem;border:none;" />
+    <button type="submit" style="padding:.5rem 1rem;border:none;border-radius:.25rem;background:var(--accent);color:#000;">Unlock</button>
+  </form>
+  <p style="font-size:.9rem;">Current level: <span id="current-level">0</span></p>
 </header>
 
 <nav id="navbar">
@@ -32,23 +40,23 @@
 </nav>
 
 <main>
-  <section id="scrolls">
+  <section id="scrolls" data-level="1" class="locked">
     <h2>📜 Scrolls</h2>
-    <p>Teachings unlocked by loop-level and passphrase (coming soon).</p>
+    <p>Teachings unlocked by loop-level and passphrase.</p>
   </section>
 
-  <section id="rituals">
+  <section id="rituals" data-level="1" class="locked">
     <h2>🕯 Rituals</h2>
-    <p>Core practices to keep the energy loop flowing.</p>
+    <p>Core practices to keep the energy flow in balance.</p>
   </section>
 
-  <section id="journal">
+  <section id="journal" data-level="0">
     <h2>✍️ Journal</h2>
     <textarea id="entry" rows="8" style="width:100%;max-width:100%;"></textarea>
     <p id="timestamp" style="font-size:.8rem;opacity:.7;"></p>
   </section>
 
-  <section id="contact">
+  <section id="contact" data-level="0">
     <h2>📬 Contact</h2>
     <p>Email: ellery.p.costaiii@icloud.com</p>
   </section>
@@ -56,6 +64,8 @@
 
 <footer>© 2025 4got1en · Built entirely on an iPhone</footer>
 
+<!-- Scripts -->
+<script src="loop-engine.js"></script>
 <script>
 /* ===== Scroll-highlight ===== */
 const links=[...document.querySelectorAll('nav a')];
@@ -65,6 +75,7 @@ addEventListener('scroll',()=>{
   if(i===-1)i=0;
   links.forEach((a,ix)=>a.classList.toggle('active',ix===i));
 });
+
 /* ===== Journal persistence ===== */
 const entry=document.getElementById('entry'),ts=document.getElementById('timestamp'),KEY='6ol_journal';
 function save(){localStorage.setItem(KEY,entry.value);ts.textContent='Last saved: '+new Date().toLocaleString();}
