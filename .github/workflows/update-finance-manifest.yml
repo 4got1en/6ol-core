@@ -1,0 +1,61 @@
+name: Update Finance Manifest
+
+# Grant write permission so the action can commit updated manifest
+permissions:
+  contents: write
+
+# Trigger whenever any .html under /finance/ is created/modified/deleted
+on:
+  push:
+    paths:
+      - 'finance/*.html'
+
+jobs:
+  regenerate_finance_manifest:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out repository (with write creds)
+      uses: actions/checkout@v3
+      with:
+        persist-credentials: true
+
+    - name: Regenerate finance/manifest.json
+      run: |
+        # Start a fresh JSON array
+        printf "[" > finance/manifest.json
+        first=true
+        # Loop over each HTML file in finance/, sorted alphabetically
+        for f in finance/*.html; do
+          name=$(basename "$f")
+          # Extract <h1>…</h1> as title
+          title=$(sed -n 's/.*<h1>\(.*\)<\/h1>.*/\1/p' "$f")
+          # Fallback to filename (minus .html) if no <h1> found
+          if [ -z "$title" ]; then
+            title="${name%.html}"
+          fi
+          # Extract first <small>…</small> as summary (if present)
+          summary=$(sed -n 's/.*<small>\(.*\)<\/small>.*/\1/p' "$f")
+          if [ "$first" = true ]; then
+            first=false
+          else
+            echo "," >> finance/manifest.json
+          fi
+          # Escape quotes in title/summary
+          esc_title=$(printf '%s' "$title" | sed 's/"/\\"/g')
+          esc_summary=$(printf '%s' "$summary" | sed 's/"/\\"/g')
+          echo '{"filename": "'"$name"'", "title": "'"$esc_title"'", "summary": "'"$esc_summary"'"}' >> finance/manifest.json
+        done
+        # Close the JSON array
+        printf "]" >> finance/manifest.json
+
+    - name: Commit updated manifest.json
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git add finance/manifest.json
+        git commit -m "Auto-update finance/manifest.json" || echo "No changes to commit"
+
+    - name: Push changes
+      run: |
+        git push
