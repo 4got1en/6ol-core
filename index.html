@@ -152,10 +152,7 @@
   <a href="#podcast">Podcast</a>
   <a href="#finance">Finance</a>
   <a href="#legal">Legal</a>
-  <!-- New Control Center link -->
-  <a href="https://github.com/4got1en/6ol-core/blob/main/control-center.md" target="_blank">
-    Control Center
-  </a>
+  <a href="#control-center">Control Center</a>
   <a href="#navarre">Navarre</a>
   <a href="#contact">Contact</a>
 </nav>
@@ -223,6 +220,17 @@
     <ul class="item-list" id="legal-list">
       <!-- Populated by loadLegalTasks() -->
     </ul>
+  </section>
+
+  <!-- Control Center (level 0) -->
+  <section id="control-center" data-level="0">
+    <h2>🗄 Control Center</h2>
+    <p>Your master project dashboard and notes.</p>
+    <p>
+      <a href="control-center.html" target="_blank" style="color: var(--accent); font-weight: bold;">
+        Open Control Center →
+      </a>
+    </p>
   </section>
 
   <!-- Navarre Email Kit (level 0) -->
@@ -501,3 +509,14 @@
     loadScrolls();
     loadRituals();
     loadJournalEntries();
+    loadPodcast();
+    loadFinance();
+    loadLegalTasks();
+    loadNavarreEmails();
+    initScrollspy();
+    initJournalPersistence();
+    initGating();
+  });
+</script>
+</body>
+</html>
