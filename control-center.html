@@ -4,6 +4,10 @@
   <meta charset="UTF-8" />
   <title>Control Center · 6ol</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- FAVICON -->
+  <link rel="icon" href="../favicon.ico" />
+
   <style>
     :root {
       --bg: #111;
@@ -75,12 +79,42 @@
       padding: 2rem 1rem;
       font-size: 0.875rem;
     }
+
+    /* Print-friendly (optional) */
+    @media print {
+      body {
+        background: #fff !important;
+        color: #000 !important;
+      }
+      a::after {
+        content: " (" attr(href) ")";
+        font-size: 0.85em;
+      }
+      a {
+        color: #000 !important;
+        text-decoration: underline !important;
+      }
+      blockquote {
+        border-left-color: #000;
+      }
+      pre {
+        background: #f5f5f5;
+        color: #000;
+      }
+      code {
+        background: #f5f5f5;
+        color: #000;
+      }
+      nav, footer {
+        display: none !important;
+      }
+    }
   </style>
 </head>
 <body>
 
 <header>
-  <h1>6ol Control Center</h1>
+  <h1>Control Center</h1>
   <p>
     <a class="back-link" href="index.html">← Back to Hub</a>
   </p>
@@ -109,7 +143,7 @@
       <ul>
         <li><strong>Status:</strong> In Progress</li>
         <li><strong>Priority:</strong> High</li>
-        <li><strong>GitHub Link:</strong> <a href="https://github.com/4got1en/6ol-core/index.html" style="color: var(--accent);" target="_blank">https://github.com/4got1en/6ol-core/index.html</a></li>
+        <li><strong>GitHub Link:</strong> <a href="https://github.com/4got1en/6ol-core/index.html" target="_blank">https://github.com/4got1en/6ol-core/index.html</a></li>
         <li><strong>Loop Level:</strong> 0</li>
         <li><strong>Next Action:</strong> Continue gating logic</li>
         <li><strong>Tags:</strong> web, automation</li>
@@ -131,7 +165,7 @@
       <ul>
         <li><strong>Status:</strong> Complete</li>
         <li><strong>Priority:</strong> Low</li>
-        <li><strong>GitHub Link:</strong> <a href="https://github.com/4got1en/onthecomeup-captions" style="color: var(--accent);" target="_blank">https://github.com/4got1en/onthecomeup-captions</a></li>
+        <li><strong>GitHub Link:</strong> <a href="https://github.com/4got1en/onthecomeup-captions" target="_blank">https://github.com/4got1en/onthecomeup-captions</a></li>
         <li><strong>Loop Level:</strong> 0</li>
         <li><strong>Next Action:</strong> Begin next episode</li>
         <li><strong>Tags:</strong> media, captions</li>
@@ -156,7 +190,7 @@
         <li><strong>Loop Level:</strong> 1</li>
         <li><strong>Passphrase:</strong> <code>sol</code></li>
         <li><strong>Status:</strong> Published</li>
-        <li><strong>GitHub URL:</strong> <a href="https://github.com/4got1en/6ol-core/scrolls/daylight.md" style="color: var(--accent);" target="_blank">https://github.com/4got1en/6ol-core/scrolls/daylight.md</a></li>
+        <li><strong>GitHub URL:</strong> <a href="https://github.com/4got1en/6ol-core/scrolls/daylight.md" target="_blank">https://github.com/4got1en/6ol-core/scrolls/daylight.md</a></li>
         <li><strong>Summary:</strong> Introduce 6ol’s mission &amp; first ritual.</li>
       </ul>
     </li>
@@ -167,7 +201,7 @@
         <li><strong>Loop Level:</strong> 2</li>
         <li><strong>Passphrase:</strong> <code>luna</code></li>
         <li><strong>Status:</strong> Draft</li>
-        <li><strong>GitHub URL:</strong> <a href="https://github.com/4got1en/6ol-core/scrolls/nightvision.md" style="color: var(--accent);" target="_blank">https://github.com/4got1en/6ol-core/scrolls/nightvision.md</a></li>
+        <li><strong>GitHub URL:</strong> <a href="https://github.com/4got1en/6ol-core/scrolls/nightvision.md" target="_blank">https://github.com/4got1en/6ol-core/scrolls/nightvision.md</a></li>
         <li><strong>Summary:</strong> Self-reflection guide (in progress).</li>
       </ul>
     </li>
@@ -178,7 +212,7 @@
         <li><strong>Loop Level:</strong> 3</li>
         <li><strong>Passphrase:</strong> <code>umbra</code></li>
         <li><strong>Status:</strong> Draft</li>
-        <li><strong>GitHub URL:</strong> <a href="https://github.com/4got1en/6ol-core/scrolls/shadowdepth.md" style="color: var(--accent);" target="_blank">https://github.com/4got1en/6ol-core/scrolls/shadowdepth.md</a></li>
+        <li><strong>GitHub URL:</strong> <a href="https://github.com/4got1en/6ol-core/scrolls/shadowdepth.md" target="_blank">https://github.com/4got1en/6ol-core/scrolls/shadowdepth.md</a></li>
         <li><strong>Summary:</strong> Advanced hidden insights (needs expansion).</li>
       </ul>
     </li>
@@ -193,7 +227,7 @@
         <li><strong>Loop Level:</strong> 1</li>
         <li><strong>Passphrase:</strong> <code>sol</code></li>
         <li><strong>Status:</strong> Published</li>
-        <li><strong>GitHub URL:</strong> <a href="https://github.com/4got1en/6ol-core/rituals/morningseed.md" style="color: var(--accent);" target="_blank">https://github.com/4got1en/6ol-core/rituals/morningseed.md</a></li>
+        <li><strong>GitHub URL:</strong> <a href="https://github.com/4got1en/6ol-core/rituals/morningseed.md" target="_blank">https://github.com/4got1en/6ol-core/rituals/morningseed.md</a></li>
         <li><strong>Summary:</strong> 10-minute journaling &amp; intention-setting exercise.</li>
       </ul>
     </li>
@@ -204,7 +238,7 @@
         <li><strong>Loop Level:</strong> 1</li>
         <li><strong>Passphrase:</strong> <code>sol</code></li>
         <li><strong>Status:</strong> Published</li>
-        <li><strong>GitHub URL:</strong> <a href="https://github.com/4got1en/6ol-core/rituals/middayflow.md" style="color: var(--accent);" target="_blank">https://github.com/4got1en/6ol-core/rituals/middayflow.md</a></li>
+        <li><strong>GitHub URL:</strong> <a href="https://github.com/4got1en/6ol-core/rituals/middayflow.md" target="_blank">https://github.com/4got1en/6ol-core/rituals/middayflow.md</a></li>
         <li><strong>Summary:</strong> Breath-work &amp; quick gratitude pause.</li>
       </ul>
     </li>
@@ -215,7 +249,7 @@
         <li><strong>Loop Level:</strong> 1</li>
         <li><strong>Passphrase:</strong> <code>sol</code></li>
         <li><strong>Status:</strong> Published</li>
-        <li><strong>GitHub URL:</strong> <a href="https://github.com/4got1en/6ol-core/rituals/eveningharvest.md" style="color: var(--accent);" target="_blank">https://github.com/4got1en/6ol-core/rituals/eveningharvest.md</a></li>
+        <li><strong>GitHub URL:</strong> <a href="https://github.com/4got1en/6ol-core/rituals/eveningharvest.md" target="_blank">https://github.com/4got1en/6ol-core/rituals/eveningharvest.md</a></li>
         <li><strong>Summary:</strong> Black journal reflection &amp; sync ritual.</li>
       </ul>
     </li>
