@@ -1,0 +1,60 @@
+name: Update Podcast Manifest
+
+# Grant write permission so the action can commit updated manifest
+permissions:
+  contents: write
+
+# Trigger whenever any .html under /onthecomeup/ is created/modified/deleted
+on:
+  push:
+    paths:
+      - 'onthecomeup/*.html'
+
+jobs:
+  regenerate_podcast_manifest:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out repository (with write creds)
+      uses: actions/checkout@v3
+      with:
+        persist-credentials: true
+
+    - name: Regenerate onthecomeup/manifest.json
+      run: |
+        # Start a fresh array
+        printf "[" > onthecomeup/manifest.json
+        first=true
+        # Loop over each HTML file in onthecomeup/, sorted alphabetically
+        for f in onthecomeup/*.html; do
+          name=$(basename "$f")
+          # Extract <h1>…</h1> as title
+          title=$(sed -n 's/.*<h1>\(.*\)<\/h1>.*/\1/p' "$f")
+          if [ -z "$title" ]; then
+            title="${name%.html}"
+          fi
+          # Extract first <small>…</small> as summary (if present)
+          summary=$(sed -n 's/.*<small>\(.*\)<\/small>.*/\1/p' "$f")
+          if [ "$first" = true ]; then
+            first=false
+          else
+            echo "," >> onthecomeup/manifest.json
+          fi
+          # Escape quotes in title/summary
+          esc_title=$(printf '%s' "$title" | sed 's/"/\\"/g')
+          esc_summary=$(printf '%s' "$summary" | sed 's/"/\\"/g')
+          echo '{"filename": "'"$name"'", "title": "'"$esc_title"'", "summary": "'"$esc_summary"'"}' >> onthecomeup/manifest.json
+        done
+        # Close the array
+        printf "]" >> onthecomeup/manifest.json
+
+    - name: Commit updated manifest.json
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git add onthecomeup/manifest.json
+        git commit -m "Auto-update onthecomeup/manifest.json" || echo "No changes to commit"
+
+    - name: Push changes
+      run: |
+        git push
