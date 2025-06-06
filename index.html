@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>6ol Core Hub · v0.7</title>
+  <title>6ol Core Hub · v0.8</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     :root {
@@ -213,17 +213,11 @@
     ></textarea>
     <p id="timestamp" style="font-size: 0.8rem; opacity: 0.7;"></p>
 
-    <!-- “Past Entries” List -->
+    <!-- “Past Entries” List (dynamically generated) -->
     <div id="past-entries">
       <h3>🗂 Past Entries</h3>
-      <ul class="item-list">
-        <li>
-          <a href="journals/2025-06-05.html" target="_blank">
-            2025-06-05
-          </a><br />
-          Reflective entry using Morning Seed Offering.
-        </li>
-        <!-- For each new journal.html you add, copy-paste a new <li> here -->
+      <ul class="item-list" id="entries-list">
+        <!-- JavaScript will populate this <ul> by reading journals/manifest.json -->
       </ul>
     </div>
   </section>
@@ -239,37 +233,64 @@
 
 <!-- Keep loop-engine.js for gating + journal persistence -->
 <script src="loop-engine.js"></script>
-<script>
-  /* ===== Scroll-highlight ===== */
-  const links = [...document.querySelectorAll("nav a")];
-  const secs = links.map((a) =>
-    document.querySelector(a.getAttribute("href"))
-  );
-  addEventListener("scroll", () => {
-    let i = secs.findIndex(
-      (s) =>
-        s.getBoundingClientRect().top <= 60 &&
-        s.getBoundingClientRect().bottom >= 60
-    );
-    if (i === -1) i = 0;
-    links.forEach((a, ix) => a.classList.toggle("active", ix === i));
-  });
 
-  /* ===== Journal persistence ===== */
-  const entry = document.getElementById("entry"),
-    ts = document.getElementById("timestamp"),
-    KEY = "6ol_journal";
-  function save() {
-    localStorage.setItem(KEY, entry.value);
-    ts.textContent = "Last saved: " + new Date().toLocaleString();
+<!-- New: dynamic Past Entries script -->
+<script>
+  async function loadJournalEntries() {
+    try {
+      const res = await fetch('journals/manifest.json');
+      if (!res.ok) throw new Error('Failed to fetch manifest.json');
+      const manifest = await res.json();
+      const ul = document.getElementById('entries-list');
+      manifest.forEach(item => {
+        // Create <li><a>…</a><br><small>summary</small></li>
+        const li = document.createElement('li');
+        const link = document.createElement('a');
+        link.href = `journals/${item.filename}`;
+        link.textContent = item.date;
+        link.target = '_blank';
+        li.appendChild(link);
+        // line break
+        li.appendChild(document.createElement('br'));
+        // summary text in a <small>
+        const small = document.createElement('small');
+        small.textContent = item.summary;
+        li.appendChild(small);
+        ul.appendChild(li);
+      });
+    } catch (e) {
+      console.error('Error loading journal manifest:', e);
+    }
   }
-  entry.addEventListener("input", save);
-  addEventListener("load", () => {
+
+  window.addEventListener('load', () => {
+    loadJournalEntries();
+
+    // Keep the existing journal‐textarea persistence logic:
+    const entry = document.getElementById('entry'),
+      ts = document.getElementById('timestamp'),
+      KEY = '6ol_journal';
+    function save() {
+      localStorage.setItem(KEY, entry.value);
+      ts.textContent = 'Last saved: ' + new Date().toLocaleString();
+    }
+    entry.addEventListener('input', save);
     const data = localStorage.getItem(KEY);
     if (data) {
       entry.value = data;
-      ts.textContent = "Last saved: " + new Date().toLocaleString();
+      ts.textContent = 'Last saved: ' + new Date().toLocaleString();
     }
+  });
+
+  /* ===== Scroll-highlight (unchanged) ===== */
+  const links = [...document.querySelectorAll('nav a')];
+  const secs = links.map(a => document.querySelector(a.getAttribute('href')));
+  addEventListener('scroll', () => {
+    let i = secs.findIndex(
+      s => s.getBoundingClientRect().top <= 60 && s.getBoundingClientRect().bottom >= 60
+    );
+    if (i === -1) i = 0;
+    links.forEach((a, ix) => a.classList.toggle('active', ix === i));
   });
 </script>
 </body>
