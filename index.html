@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>6ol Core Hub · v0.8</title>
+  <title>6ol Core Hub · v0.9</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     :root {
@@ -83,12 +83,17 @@
     .item-list li a:hover {
       text-decoration: underline;
     }
+    .item-list li small {
+      display: block;
+      font-size: 0.85rem;
+      opacity: 0.75;
+      margin-top: 0.25rem;
+    }
     footer {
       text-align: center;
       padding: 2rem 1rem;
       font-size: 0.875rem;
     }
-    /* Passphrase form styling */
     form#pass-form {
       margin: 1rem auto;
       max-width: 280px;
@@ -111,8 +116,6 @@
       color: #000;
       cursor: pointer;
     }
-
-    /* “Past Entries” styling */
     #past-entries {
       margin-top: 2rem;
     }
@@ -150,55 +153,21 @@
 </nav>
 
 <main>
-  <!-- Scrolls (level 1+) -->
+  <!-- Scrolls (requires level 1+) -->
   <section id="scrolls" data-level="1" class="locked">
     <h2>📜 Scrolls</h2>
     <p>Teachings unlocked by loop-level and passphrase.</p>
-    <ul class="item-list">
-      <li>
-        <a href="scrolls/daylight.html" target="_blank">
-          Daylight Initiation
-        </a><br />
-        Basics of 6ol’s mission and first ritual.
-      </li>
-      <li>
-        <a href="scrolls/nightvision.html" target="_blank">
-          Night-Vision Insight
-        </a><br />
-        Deeper guidance on self-reflection (level 2+).
-      </li>
-      <li>
-        <a href="scrolls/shadowdepth.html" target="_blank">
-          Shadow Work Depth
-        </a><br />
-        Advanced principles and hidden insights (level 3+).
-      </li>
+    <ul class="item-list" id="scrolls-list">
+      <!-- Populated by JavaScript -->
     </ul>
   </section>
 
-  <!-- Rituals (level 1+) -->
+  <!-- Rituals (requires level 1+) -->
   <section id="rituals" data-level="1" class="locked">
     <h2>🕯 Rituals</h2>
     <p>Core practices to keep the energy loop flowing.</p>
-    <ul class="item-list">
-      <li>
-        <a href="rituals/morningseed.html" target="_blank">
-          Morning Seed Offering
-        </a><br />
-        10-minute journaling &amp; intention setting.
-      </li>
-      <li>
-        <a href="rituals/middayflow.html" target="_blank">
-          Midday Flow Check
-        </a><br />
-        Breath-work &amp; quick gratitude pause.
-      </li>
-      <li>
-        <a href="rituals/eveningharvest.html" target="_blank">
-          Evening Harvest
-        </a><br />
-        Black journal reflection &amp; sync ritual.
-      </li>
+    <ul class="item-list" id="rituals-list">
+      <!-- Populated by JavaScript -->
     </ul>
   </section>
 
@@ -213,11 +182,10 @@
     ></textarea>
     <p id="timestamp" style="font-size: 0.8rem; opacity: 0.7;"></p>
 
-    <!-- “Past Entries” List (dynamically generated) -->
     <div id="past-entries">
       <h3>🗂 Past Entries</h3>
       <ul class="item-list" id="entries-list">
-        <!-- JavaScript will populate this <ul> by reading journals/manifest.json -->
+        <!-- Populated by loadJournalEntries() -->
       </ul>
     </div>
   </section>
@@ -234,25 +202,75 @@
 <!-- Keep loop-engine.js for gating + journal persistence -->
 <script src="loop-engine.js"></script>
 
-<!-- New: dynamic Past Entries script -->
+<!-- New: dynamic Scrolls + Rituals + Journal scripts -->
 <script>
+  // ---- Load Scrolls manifest and build list ----
+  async function loadScrolls() {
+    try {
+      const res = await fetch('scrolls/manifest.json');
+      if (!res.ok) throw new Error('Failed to fetch scrolls/manifest.json');
+      const items = await res.json();
+      const ul = document.getElementById('scrolls-list');
+      items.forEach(item => {
+        const li = document.createElement('li');
+        const link = document.createElement('a');
+        link.href = `scrolls/${item.filename}`;
+        link.textContent = item.title;
+        link.target = '_blank';
+        li.appendChild(link);
+        // line break
+        li.appendChild(document.createElement('br'));
+        // summary in <small>
+        const small = document.createElement('small');
+        small.textContent = item.summary;
+        li.appendChild(small);
+        ul.appendChild(li);
+      });
+    } catch (e) {
+      console.error('Error loading scrolls manifest:', e);
+    }
+  }
+
+  // ---- Load Rituals manifest and build list ----
+  async function loadRituals() {
+    try {
+      const res = await fetch('rituals/manifest.json');
+      if (!res.ok) throw new Error('Failed to fetch rituals/manifest.json');
+      const items = await res.json();
+      const ul = document.getElementById('rituals-list');
+      items.forEach(item => {
+        const li = document.createElement('li');
+        const link = document.createElement('a');
+        link.href = `rituals/${item.filename}`;
+        link.textContent = item.title;
+        link.target = '_blank';
+        li.appendChild(link);
+        li.appendChild(document.createElement('br'));
+        const small = document.createElement('small');
+        small.textContent = item.summary;
+        li.appendChild(small);
+        ul.appendChild(li);
+      });
+    } catch (e) {
+      console.error('Error loading rituals manifest:', e);
+    }
+  }
+
+  // ---- Load Journal entries (unchanged from v0.8) ----
   async function loadJournalEntries() {
     try {
       const res = await fetch('journals/manifest.json');
-      if (!res.ok) throw new Error('Failed to fetch manifest.json');
+      if (!res.ok) throw new Error('Failed to fetch journals/manifest.json');
       const manifest = await res.json();
       const ul = document.getElementById('entries-list');
       manifest.forEach(item => {
-        // Create <li><a>…</a><br><small>summary</small></li>
         const li = document.createElement('li');
         const link = document.createElement('a');
         link.href = `journals/${item.filename}`;
         link.textContent = item.date;
         link.target = '_blank';
         li.appendChild(link);
-        // line break
         li.appendChild(document.createElement('br'));
-        // summary text in a <small>
         const small = document.createElement('small');
         small.textContent = item.summary;
         li.appendChild(small);
@@ -263,13 +281,24 @@
     }
   }
 
-  window.addEventListener('load', () => {
-    loadJournalEntries();
+  // ---- Scrollspy highlighting (unchanged) ----
+  function initScrollspy() {
+    const links = [...document.querySelectorAll('nav a')];
+    const secs = links.map(a => document.querySelector(a.getAttribute('href')));
+    window.addEventListener('scroll', () => {
+      let i = secs.findIndex(
+        s => s.getBoundingClientRect().top <= 60 && s.getBoundingClientRect().bottom >= 60
+      );
+      if (i === -1) i = 0;
+      links.forEach((a, ix) => a.classList.toggle('active', ix === i));
+    });
+  }
 
-    // Keep the existing journal‐textarea persistence logic:
+  // ---- Journal textarea persistence (unchanged) ----
+  function initJournalPersistence() {
     const entry = document.getElementById('entry'),
-      ts = document.getElementById('timestamp'),
-      KEY = '6ol_journal';
+          ts = document.getElementById('timestamp'),
+          KEY = '6ol_journal';
     function save() {
       localStorage.setItem(KEY, entry.value);
       ts.textContent = 'Last saved: ' + new Date().toLocaleString();
@@ -280,17 +309,60 @@
       entry.value = data;
       ts.textContent = 'Last saved: ' + new Date().toLocaleString();
     }
-  });
+  }
 
-  /* ===== Scroll-highlight (unchanged) ===== */
-  const links = [...document.querySelectorAll('nav a')];
-  const secs = links.map(a => document.querySelector(a.getAttribute('href')));
-  addEventListener('scroll', () => {
-    let i = secs.findIndex(
-      s => s.getBoundingClientRect().top <= 60 && s.getBoundingClientRect().bottom >= 60
-    );
-    if (i === -1) i = 0;
-    links.forEach((a, ix) => a.classList.toggle('active', ix === i));
+  // ---- Passphrase / gating (unchanged) ----
+  function initGating() {
+    const STORAGE_KEY = '6ol_loop_level';
+    const PASS_MAP = { sol: 1, luna: 2, umbra: 3 };
+    function getLevel() {
+      return Number(localStorage.getItem(STORAGE_KEY) || 0);
+    }
+    function setLevel(lvl) {
+      localStorage.setItem(STORAGE_KEY, lvl);
+      refreshUI();
+    }
+    function refreshUI() {
+      const lvl = getLevel();
+      document.getElementById('current-level').textContent = lvl;
+      document.querySelectorAll('[data-level]').forEach(sec => {
+        const req = Number(sec.dataset.level);
+        if (lvl >= req) {
+          sec.classList.remove('locked');
+          sec.style.display = '';
+        } else {
+          sec.classList.add('locked');
+          sec.style.display = (req === 0) ? '' : '';
+        }
+      });
+    }
+    document.getElementById('pass-form').addEventListener('submit', e => {
+      e.preventDefault();
+      const pw = document.getElementById('pass-input').value.trim().toLowerCase();
+      if (PASS_MAP.hasOwnProperty(pw)) {
+        const newLevel = PASS_MAP[pw];
+        if (newLevel > getLevel()) {
+          setLevel(newLevel);
+          alert('🔓 Unlocked level ' + newLevel + '!');
+        } else {
+          alert('You already have this level or higher.');
+        }
+      } else {
+        alert('❌ Invalid passphrase');
+      }
+      e.target.reset();
+    });
+    window.addEventListener('load', refreshUI);
+  }
+
+  // ---- Initialize everything on load ----
+  window.addEventListener('load', () => {
+    loadScrolls();
+    loadRituals();
+    loadJournalEntries();
+    initScrollspy();
+    initJournalPersistence();
+    initGating();
   });
 </script>
 </body>
