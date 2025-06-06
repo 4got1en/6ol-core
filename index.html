@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>6ol Core Hub · v0.5</title>
+  <title>6ol Core Hub · v0.6</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     :root {
@@ -112,7 +112,7 @@
       cursor: pointer;
     }
 
-    /* ===== New: Past Entries styling ===== */
+    /* ===== “Past Entries” styling ===== */
     #past-entries {
       margin-top: 2rem;
     }
@@ -156,19 +156,19 @@
     <p>Teachings unlocked by loop-level and passphrase.</p>
     <ul class="item-list">
       <li>
-        <a href="https://github.com/4got1en/6ol-core/blob/main/scrolls/daylight.md" target="_blank">
+        <a href="scrolls/daylight.html" target="_blank">
           Daylight Initiation
         </a><br />
         Basics of 6ol’s mission and first ritual.
       </li>
       <li>
-        <a href="https://github.com/4got1en/6ol-core/blob/main/scrolls/nightvision.md" target="_blank">
+        <a href="scrolls/nightvision.html" target="_blank">
           Night-Vision Insight
         </a><br />
         Deeper guidance on self-reflection (level 2+).
       </li>
       <li>
-        <a href="https://github.com/4got1en/6ol-core/blob/main/scrolls/shadowdepth.md" target="_blank">
+        <a href="scrolls/shadowdepth.html" target="_blank">
           Shadow Work Depth
         </a><br />
         Advanced principles and hidden insights (level 3+).
@@ -182,19 +182,19 @@
     <p>Core practices to keep the energy loop flowing.</p>
     <ul class="item-list">
       <li>
-        <a href="https://github.com/4got1en/6ol-core/blob/main/rituals/morningseed.md" target="_blank">
+        <a href="rituals/morningseed.html" target="_blank">
           Morning Seed Offering
         </a><br />
         10-minute journaling &amp; intention setting.
       </li>
       <li>
-        <a href="https://github.com/4got1en/6ol-core/blob/main/rituals/middayflow.md" target="_blank">
+        <a href="rituals/middayflow.html" target="_blank">
           Midday Flow Check
         </a><br />
         Breath-work &amp; quick gratitude pause.
       </li>
       <li>
-        <a href="https://github.com/4got1en/6ol-core/blob/main/rituals/eveningharvest.md" target="_blank">
+        <a href="rituals/eveningharvest.html" target="_blank">
           Evening Harvest
         </a><br />
         Black journal reflection &amp; sync ritual.
@@ -213,18 +213,17 @@
     ></textarea>
     <p id="timestamp" style="font-size: 0.8rem; opacity: 0.7;"></p>
 
-    <!-- New: Past Entries List -->
+    <!-- “Past Entries” List (still pointing at .md files) -->
     <div id="past-entries">
       <h3>🗂 Past Entries</h3>
       <ul class="item-list">
-        <!-- Manually add one <li> per journal file in /journals -->
         <li>
-          <a href="https://github.com/4got1en/6ol-core/blob/main/journals/2025-06-05.md" target="_blank">
+          <a href="journals/2025-06-05.md" target="_blank">
             2025-06-05
           </a><br />
           Reflective entry using Morning Seed Offering.
         </li>
-        <!-- Copy-paste and edit this <li> for each new file you add -->
+        <!-- Add more <li> for new journal .md files as you create them -->
       </ul>
     </div>
   </section>
@@ -238,7 +237,7 @@
 
 <footer>© 2025 4got1en · Built entirely on an iPhone</footer>
 
-<!-- Include your loop-engine script -->
+<!-- Keep loop-engine.js for gating + journal persistence -->
 <script src="loop-engine.js"></script>
 <script>
   /* ===== Scroll-highlight ===== */
