@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>6ol Core Hub · v0.4</title>
+  <title>6ol Core Hub · v0.5</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     :root {
@@ -111,6 +111,14 @@
       color: #000;
       cursor: pointer;
     }
+
+    /* ===== New: Past Entries styling ===== */
+    #past-entries {
+      margin-top: 2rem;
+    }
+    #past-entries h3 {
+      margin-bottom: 1rem;
+    }
   </style>
 </head>
 <body>
@@ -204,6 +212,21 @@
       placeholder="Write today’s reflection..."
     ></textarea>
     <p id="timestamp" style="font-size: 0.8rem; opacity: 0.7;"></p>
+
+    <!-- New: Past Entries List -->
+    <div id="past-entries">
+      <h3>🗂 Past Entries</h3>
+      <ul class="item-list">
+        <!-- Manually add one <li> per journal file in /journals -->
+        <li>
+          <a href="https://github.com/4got1en/6ol-core/blob/main/journals/2025-06-05.md" target="_blank">
+            2025-06-05
+          </a><br />
+          Reflective entry using Morning Seed Offering.
+        </li>
+        <!-- Copy-paste and edit this <li> for each new file you add -->
+      </ul>
+    </div>
   </section>
 
   <!-- Contact (open to all) -->
