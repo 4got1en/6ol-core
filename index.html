@@ -2,13 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>6ol Core Hub · v1.5</title>
+  <title>6ol Core Hub · v1.6</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     :root {
       --bg: #111;
       --fg: #eee;
       --accent: #f5c84c;
+      --search-bg: #222;
+      --search-border: #444;
     }
     * {
       box-sizing: border-box;
@@ -48,8 +50,23 @@
       background: var(--accent);
       color: #000;
     }
+    /* Search input styling */
+    #search-container {
+      margin: 1rem auto;
+      max-width: 400px;
+      padding: 0 1rem;
+    }
+    #search-input {
+      width: 100%;
+      padding: 0.5rem 1rem;
+      background: var(--search-bg);
+      border: 1px solid var(--search-border);
+      border-radius: 0.25rem;
+      color: var(--fg);
+      font-size: 1rem;
+    }
     section {
-      padding: 4rem 1rem;
+      padding: 3rem 1rem;
       max-width: 800px;
       margin: auto;
     }
@@ -89,6 +106,15 @@
       opacity: 0.75;
       margin-top: 0.25rem;
     }
+    textarea {
+      background: #222;
+      border: 1px solid var(--search-border);
+      border-radius: 0.25rem;
+      color: var(--fg);
+      padding: 0.5rem;
+      font-family: inherit;
+      font-size: 1rem;
+    }
     footer {
       text-align: center;
       padding: 2rem 1rem;
@@ -109,6 +135,8 @@
     form#pass-form input {
       flex: 1;
       padding: 0.5rem;
+      background: #222;
+      color: var(--fg);
     }
     form#pass-form button {
       padding: 0.5rem 1rem;
@@ -158,8 +186,17 @@
   <a href="#contact">Contact</a>
 </nav>
 
+<!-- Client-side search box -->
+<div id="search-container">
+  <input
+    id="search-input"
+    type="text"
+    placeholder="Search all items…"
+  />
+</div>
+
 <main>
-  <!-- Scrolls (level 1+) -->
+  <!-- Scrolls (requires level 1+) -->
   <section id="scrolls" data-level="1" class="locked">
     <h2>📜 Scrolls</h2>
     <p>Teachings unlocked by loop-level and passphrase.</p>
@@ -168,7 +205,7 @@
     </ul>
   </section>
 
-  <!-- Rituals (level 1+) -->
+  <!-- Rituals (requires level 1+) -->
   <section id="rituals" data-level="1" class="locked">
     <h2>🕯 Rituals</h2>
     <p>Core practices to keep the energy loop flowing.</p>
@@ -177,13 +214,12 @@
     </ul>
   </section>
 
-  <!-- Journal (level 0) -->
+  <!-- Journal (open to all) -->
   <section id="journal" data-level="0">
     <h2>✍️ Journal</h2>
     <textarea
       id="entry"
       rows="8"
-      style="width: 100%; max-width: 100%;"
       placeholder="Write today’s reflection..."
     ></textarea>
     <p id="timestamp" style="font-size: 0.8rem; opacity: 0.7;"></p>
@@ -196,7 +232,7 @@
     </div>
   </section>
 
-  <!-- Podcast (level 0) -->
+  <!-- Podcast (open to all) -->
   <section id="podcast" data-level="0">
     <h2>🎧 OnTheComeUp Podcast</h2>
     <p>Episode captions &amp; show notes, organized by episode number.</p>
@@ -205,7 +241,7 @@
     </ul>
   </section>
 
-  <!-- Finance (level 0) -->
+  <!-- Finance (open to all) -->
   <section id="finance" data-level="0">
     <h2>💰 Finance Streams</h2>
     <p>Daily P&amp;L, payout summaries, or ledger entries.</p>
@@ -214,7 +250,7 @@
     </ul>
   </section>
 
-  <!-- Legal Tasks (level 0) -->
+  <!-- Legal Tasks (open to all) -->
   <section id="legal" data-level="0">
     <h2>⚖️ Legal Tasks</h2>
     <p>Upcoming deadlines, motions, and filings—stay on track.</p>
@@ -223,7 +259,7 @@
     </ul>
   </section>
 
-  <!-- Analytics (level 0) -->
+  <!-- Analytics (open to all) -->
   <section id="analytics" data-level="0">
     <h2>📊 Analytics</h2>
     <p>Monthly revenue and key metrics.</p>
@@ -235,7 +271,7 @@
     </p>
   </section>
 
-  <!-- Control Center (level 0) -->
+  <!-- Control Center (open to all) -->
   <section id="control-center" data-level="0">
     <h2>🗄 Control Center</h2>
     <p>Your master project dashboard and notes.</p>
@@ -247,7 +283,7 @@
     </p>
   </section>
 
-  <!-- Navarre Email Kit (level 0) -->
+  <!-- Navarre Email Kit (open to all) -->
   <section id="navarre" data-level="0">
     <h2>✉️ Navarre Email Kit</h2>
     <p>Legal email drafts, organized and ready to send.</p>
@@ -256,7 +292,7 @@
     </ul>
   </section>
 
-  <!-- Contact (level 0) -->
+  <!-- Contact (open to all) -->
   <section id="contact" data-level="0">
     <h2>📬 Contact</h2>
     <p>Email: ellery.p.costaiii@icloud.com</p>
@@ -518,7 +554,24 @@
     window.addEventListener('load', refreshUI);
   }
 
-  // ---- Initialize All on Page Load ----
+  // ---- Client-Side Search Filtering ----
+  function initSearch() {
+    const input = document.getElementById('search-input');
+    input.addEventListener('input', () => {
+      const query = input.value.trim().toLowerCase();
+      // Collect all <li> across every list
+      const allLists = document.querySelectorAll('.item-list');
+      allLists.forEach(ul => {
+        ul.querySelectorAll('li').forEach(li => {
+          const text = li.textContent.toLowerCase();
+          // Show if query is empty or found in text, else hide
+          li.style.display = (!query || text.includes(query)) ? '' : 'none';
+        });
+      });
+    });
+  }
+
+  // ---- Initialize Everything on Page Load ----
   window.addEventListener('load', () => {
     loadScrolls();
     loadRituals();
@@ -530,6 +583,7 @@
     initScrollspy();
     initJournalPersistence();
     initGating();
+    initSearch();
   });
 </script>
 </body>
