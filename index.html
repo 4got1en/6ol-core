@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>6ol Core Hub · v1.2</title>
+  <title>6ol Core Hub · v1.3</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     :root {
@@ -151,6 +151,7 @@
   <a href="#journal">Journal</a>
   <a href="#podcast">Podcast</a>
   <a href="#finance">Finance</a>
+  <a href="#legal">Legal</a>
   <a href="#navarre">Navarre</a>
   <a href="#contact">Contact</a>
 </nav>
@@ -208,6 +209,15 @@
     <p>Daily P&amp;L, payout summaries, or ledger entries.</p>
     <ul class="item-list" id="finance-list">
       <!-- Populated by loadFinance() -->
+    </ul>
+  </section>
+
+  <!-- Legal Tasks (level 0) -->
+  <section id="legal" data-level="0">
+    <h2>⚖️ Legal Tasks</h2>
+    <p>Upcoming deadlines, motions, and filings—stay on track.</p>
+    <ul class="item-list" id="legal-list">
+      <!-- Populated by loadLegalTasks() -->
     </ul>
   </section>
 
@@ -358,6 +368,31 @@
     }
   }
 
+  // ---- Load Legal Tasks Entries ----
+  async function loadLegalTasks() {
+    try {
+      const res = await fetch('legal/manifest.json');
+      if (!res.ok) throw new Error('Failed to fetch legal/manifest.json');
+      const items = await res.json();
+      const ul = document.getElementById('legal-list');
+      items.forEach(item => {
+        const li = document.createElement('li');
+        const link = document.createElement('a');
+        link.href = `legal/${item.filename}`;
+        link.textContent = item.title;
+        link.target = '_blank';
+        li.appendChild(link);
+        li.appendChild(document.createElement('br'));
+        const small = document.createElement('small');
+        small.textContent = item.summary;
+        li.appendChild(small);
+        ul.appendChild(li);
+      });
+    } catch (e) {
+      console.error('Error loading legal manifest:', e);
+    }
+  }
+
   // ---- Load Navarre Emails ----
   async function loadNavarreEmails() {
     try {
@@ -464,6 +499,7 @@
     loadJournalEntries();
     loadPodcast();
     loadFinance();
+    loadLegalTasks();
     loadNavarreEmails();
     initScrollspy();
     initJournalPersistence();
