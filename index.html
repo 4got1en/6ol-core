@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>6ol Core Hub · v1.1</title>
+  <title>6ol Core Hub · v1.2</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     :root {
@@ -150,6 +150,7 @@
   <a href="#rituals">Rituals</a>
   <a href="#journal">Journal</a>
   <a href="#podcast">Podcast</a>
+  <a href="#finance">Finance</a>
   <a href="#navarre">Navarre</a>
   <a href="#contact">Contact</a>
 </nav>
@@ -173,7 +174,7 @@
     </ul>
   </section>
 
-  <!-- Journal (open to all) -->
+  <!-- Journal (level 0) -->
   <section id="journal" data-level="0">
     <h2>✍️ Journal</h2>
     <textarea
@@ -192,7 +193,7 @@
     </div>
   </section>
 
-  <!-- Podcast (open to all) -->
+  <!-- Podcast (level 0) -->
   <section id="podcast" data-level="0">
     <h2>🎧 OnTheComeUp Podcast</h2>
     <p>Episode captions &amp; show notes, organized by episode number.</p>
@@ -201,7 +202,16 @@
     </ul>
   </section>
 
-  <!-- Navarre Email Kit (open to all) -->
+  <!-- Finance (level 0) -->
+  <section id="finance" data-level="0">
+    <h2>💰 Finance Streams</h2>
+    <p>Daily P&amp;L, payout summaries, or ledger entries.</p>
+    <ul class="item-list" id="finance-list">
+      <!-- Populated by loadFinance() -->
+    </ul>
+  </section>
+
+  <!-- Navarre Email Kit (level 0) -->
   <section id="navarre" data-level="0">
     <h2>✉️ Navarre Email Kit</h2>
     <p>Legal email drafts, organized and ready to send.</p>
@@ -210,7 +220,7 @@
     </ul>
   </section>
 
-  <!-- Contact (open to all) -->
+  <!-- Contact (level 0) -->
   <section id="contact" data-level="0">
     <h2>📬 Contact</h2>
     <p>Email: ellery.p.costaiii@icloud.com</p>
@@ -298,7 +308,7 @@
     }
   }
 
-  // ---- Load Podcast (OnTheComeUp) Entries ----
+  // ---- Load Podcast Entries ----
   async function loadPodcast() {
     try {
       const res = await fetch('onthecomeup/manifest.json');
@@ -320,6 +330,31 @@
       });
     } catch (e) {
       console.error('Error loading podcast manifest:', e);
+    }
+  }
+
+  // ---- Load Finance Entries ----
+  async function loadFinance() {
+    try {
+      const res = await fetch('finance/manifest.json');
+      if (!res.ok) throw new Error('Failed to fetch finance/manifest.json');
+      const items = await res.json();
+      const ul = document.getElementById('finance-list');
+      items.forEach(item => {
+        const li = document.createElement('li');
+        const link = document.createElement('a');
+        link.href = `finance/${item.filename}`;
+        link.textContent = item.title;
+        link.target = '_blank';
+        li.appendChild(link);
+        li.appendChild(document.createElement('br'));
+        const small = document.createElement('small');
+        small.textContent = item.summary;
+        li.appendChild(small);
+        ul.appendChild(li);
+      });
+    } catch (e) {
+      console.error('Error loading finance manifest:', e);
     }
   }
 
@@ -428,6 +463,7 @@
     loadRituals();
     loadJournalEntries();
     loadPodcast();
+    loadFinance();
     loadNavarreEmails();
     initScrollspy();
     initJournalPersistence();
