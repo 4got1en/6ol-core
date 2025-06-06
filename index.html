@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>6ol Core Hub · v1.8</title>
+  <title>6ol Core Hub · v1.9</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
+    /* ==== SCREEN STYLES (unchanged) ==== */
     :root {
       --bg: #111;
       --fg: #eee;
@@ -168,6 +169,61 @@
     }
     #past-entries h3 {
       margin-bottom: 1rem;
+    }
+
+    /* ==== PRINT STYLES ==== */
+    @media print {
+      /* Force white background & black text */
+      body {
+        background: #fff !important;
+        color: #000 !important;
+      }
+      /* Hide nav, search, passform, footer, “no results” */
+      nav,
+      #search-container,
+      footer,
+      form#pass-form,
+      #no-results {
+        display: none !important;
+      }
+      /* Make headers black */
+      h1, h2, h3, h4, h5 {
+        color: #000 !important;
+        margin-top: 1.5rem;
+        margin-bottom: 0.5rem;
+      }
+      /* Remove background from textareas */
+      textarea {
+        background: transparent !important;
+        border: 1px solid #000 !important;
+        color: #000 !important;
+      }
+      /* Ensure links print their URL in parentheses */
+      a::after {
+        content: " (" attr(href) ")";
+        font-size: 0.85em;
+      }
+      a {
+        color: #000 !important;
+        text-decoration: underline !important;
+      }
+      /* Make list bullets solid black */
+      .item-list li::before {
+        content: "•";
+        color: #000;
+      }
+      /* Remove item-list indentation for compactness */
+      .item-list {
+        padding-left: 1rem !important;
+      }
+      .item-list li {
+        padding-left: 0.5rem !important;
+      }
+      /* Show all unlocked sections by default */
+      [data-level] {
+        opacity: 1 !important;
+        filter: none !important;
+      }
     }
   </style>
 </head>
@@ -596,7 +652,6 @@
         });
       });
 
-      // Show “No results” if search is non-empty and nothing is visible
       if (query && !anyVisible) {
         noResults.style.display = 'block';
       } else {
@@ -610,7 +665,6 @@
     const p = document.getElementById('last-updated');
     const modified = document.lastModified; // format: "MM/DD/YYYY HH:MM:SS"
     if (modified) {
-      // Convert to ISO‐like YYYY-MM-DD HH:MM:SS
       const [datePart, timePart] = modified.split(' ');
       const [m, d, y] = datePart.split('/');
       p.textContent = `Last updated: ${y}-${m.padStart(2,'0')}-${d.padStart(2,'0')} ${timePart}`;
