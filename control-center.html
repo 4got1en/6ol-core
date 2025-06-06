@@ -65,6 +65,11 @@
       padding: 0.2rem 0.4rem;
       border-radius: 3px;
     }
+    hr {
+      border: none;
+      border-top: 1px solid var(--fg);
+      margin: 2rem 0;
+    }
     footer {
       text-align: center;
       padding: 2rem 1rem;
@@ -75,18 +80,229 @@
 <body>
 
 <header>
-  <h1>Control Center</h1>
+  <h1>6ol Control Center</h1>
   <p>
     <a class="back-link" href="index.html">← Back to Hub</a>
   </p>
 </header>
 
 <main>
-  <!-- Paste your control-center.md content here, converted to HTML -->
-  <!-- Example:
-  <h2>OnTheComeUp Podcast Captions</h2>
-  <p>…etc…</p>
-  -->
+  <blockquote>
+    A phone-friendly dashboard in Markdown. Keep this file up to date with:
+    <ul>
+      <li>Active Projects</li>
+      <li>Content Library (Scrolls &amp; Rituals)</li>
+      <li>Journal Entries</li>
+    </ul>
+  </blockquote>
+
+  <hr />
+
+  <h2>📂 1. Projects</h2>
+  <blockquote>
+    Tracks every initiative in the 6ol ecosystem.
+  </blockquote>
+
+  <ul>
+    <li>
+      <strong>6ol Core Hub</strong>
+      <ul>
+        <li><strong>Status:</strong> In Progress</li>
+        <li><strong>Priority:</strong> High</li>
+        <li><strong>GitHub Link:</strong> <a href="https://github.com/4got1en/6ol-core/index.html" style="color: var(--accent);" target="_blank">https://github.com/4got1en/6ol-core/index.html</a></li>
+        <li><strong>Loop Level:</strong> 0</li>
+        <li><strong>Next Action:</strong> Continue gating logic</li>
+        <li><strong>Tags:</strong> web, automation</li>
+      </ul>
+    </li>
+    <li>
+      <strong>Navarre Email Kit</strong>
+      <ul>
+        <li><strong>Status:</strong> Backlog</li>
+        <li><strong>Priority:</strong> Medium</li>
+        <li><strong>GitHub Link:</strong> (none yet—draft on phone)</li>
+        <li><strong>Loop Level:</strong> 0</li>
+        <li><strong>Next Action:</strong> Draft first email</li>
+        <li><strong>Tags:</strong> legal, email</li>
+      </ul>
+    </li>
+    <li>
+      <strong>OnTheComeUp Podcast Captions</strong>
+      <ul>
+        <li><strong>Status:</strong> Complete</li>
+        <li><strong>Priority:</strong> Low</li>
+        <li><strong>GitHub Link:</strong> <a href="https://github.com/4got1en/onthecomeup-captions" style="color: var(--accent);" target="_blank">https://github.com/4got1en/onthecomeup-captions</a></li>
+        <li><strong>Loop Level:</strong> 0</li>
+        <li><strong>Next Action:</strong> Begin next episode</li>
+        <li><strong>Tags:</strong> media, captions</li>
+      </ul>
+    </li>
+  </ul>
+
+  <hr />
+
+  <h2>📖 2. Content Library (Scrolls &amp; Rituals)</h2>
+  <blockquote>
+    Houses each gated item, its passphrase, status, and link.
+    Whenever you add a new Scroll or Ritual, copy a block below and edit.
+  </blockquote>
+
+  <h3>Scrolls</h3>
+  <ul>
+    <li>
+      <strong>Daylight Initiation</strong>
+      <ul>
+        <li><strong>Type:</strong> Scroll</li>
+        <li><strong>Loop Level:</strong> 1</li>
+        <li><strong>Passphrase:</strong> <code>sol</code></li>
+        <li><strong>Status:</strong> Published</li>
+        <li><strong>GitHub URL:</strong> <a href="https://github.com/4got1en/6ol-core/scrolls/daylight.md" style="color: var(--accent);" target="_blank">https://github.com/4got1en/6ol-core/scrolls/daylight.md</a></li>
+        <li><strong>Summary:</strong> Introduce 6ol’s mission &amp; first ritual.</li>
+      </ul>
+    </li>
+    <li>
+      <strong>Night-Vision Insight</strong>
+      <ul>
+        <li><strong>Type:</strong> Scroll</li>
+        <li><strong>Loop Level:</strong> 2</li>
+        <li><strong>Passphrase:</strong> <code>luna</code></li>
+        <li><strong>Status:</strong> Draft</li>
+        <li><strong>GitHub URL:</strong> <a href="https://github.com/4got1en/6ol-core/scrolls/nightvision.md" style="color: var(--accent);" target="_blank">https://github.com/4got1en/6ol-core/scrolls/nightvision.md</a></li>
+        <li><strong>Summary:</strong> Self-reflection guide (in progress).</li>
+      </ul>
+    </li>
+    <li>
+      <strong>Shadow Work Depth</strong>
+      <ul>
+        <li><strong>Type:</strong> Scroll</li>
+        <li><strong>Loop Level:</strong> 3</li>
+        <li><strong>Passphrase:</strong> <code>umbra</code></li>
+        <li><strong>Status:</strong> Draft</li>
+        <li><strong>GitHub URL:</strong> <a href="https://github.com/4got1en/6ol-core/scrolls/shadowdepth.md" style="color: var(--accent);" target="_blank">https://github.com/4got1en/6ol-core/scrolls/shadowdepth.md</a></li>
+        <li><strong>Summary:</strong> Advanced hidden insights (needs expansion).</li>
+      </ul>
+    </li>
+  </ul>
+
+  <h3>Rituals</h3>
+  <ul>
+    <li>
+      <strong>Morning Seed Offering</strong>
+      <ul>
+        <li><strong>Type:</strong> Ritual</li>
+        <li><strong>Loop Level:</strong> 1</li>
+        <li><strong>Passphrase:</strong> <code>sol</code></li>
+        <li><strong>Status:</strong> Published</li>
+        <li><strong>GitHub URL:</strong> <a href="https://github.com/4got1en/6ol-core/rituals/morningseed.md" style="color: var(--accent);" target="_blank">https://github.com/4got1en/6ol-core/rituals/morningseed.md</a></li>
+        <li><strong>Summary:</strong> 10-minute journaling &amp; intention-setting exercise.</li>
+      </ul>
+    </li>
+    <li>
+      <strong>Midday Flow Check</strong>
+      <ul>
+        <li><strong>Type:</strong> Ritual</li>
+        <li><strong>Loop Level:</strong> 1</li>
+        <li><strong>Passphrase:</strong> <code>sol</code></li>
+        <li><strong>Status:</strong> Published</li>
+        <li><strong>GitHub URL:</strong> <a href="https://github.com/4got1en/6ol-core/rituals/middayflow.md" style="color: var(--accent);" target="_blank">https://github.com/4got1en/6ol-core/rituals/middayflow.md</a></li>
+        <li><strong>Summary:</strong> Breath-work &amp; quick gratitude pause.</li>
+      </ul>
+    </li>
+    <li>
+      <strong>Evening Harvest</strong>
+      <ul>
+        <li><strong>Type:</strong> Ritual</li>
+        <li><strong>Loop Level:</strong> 1</li>
+        <li><strong>Passphrase:</strong> <code>sol</code></li>
+        <li><strong>Status:</strong> Published</li>
+        <li><strong>GitHub URL:</strong> <a href="https://github.com/4got1en/6ol-core/rituals/eveningharvest.md" style="color: var(--accent);" target="_blank">https://github.com/4got1en/6ol-core/rituals/eveningharvest.md</a></li>
+        <li><strong>Summary:</strong> Black journal reflection &amp; sync ritual.</li>
+      </ul>
+    </li>
+  </ul>
+
+  <hr />
+
+  <h2>📝 3. Journal Entries</h2>
+  <blockquote>
+    Log daily reflections here. Add one bullet per day, copy/paste the template below.
+  </blockquote>
+
+  <ul>
+    <li>
+      <strong>2025-06-05</strong>
+      <ul>
+        <li><strong>Content:</strong> “Felt energized after Morning Seed”</li>
+        <li><strong>Related Ritual:</strong> Morning Seed Offering</li>
+        <li><strong>Loop Level:</strong> 1</li>
+        <li><strong>Mood:</strong> Reflective</li>
+      </ul>
+    </li>
+    <li>
+      <strong>2025-06-04</strong>
+      <ul>
+        <li><strong>Content:</strong> “Struggled to stay present midday”</li>
+        <li><strong>Related Ritual:</strong> Midday Flow Check</li>
+        <li><strong>Loop Level:</strong> 1</li>
+        <li><strong>Mood:</strong> Neutral</li>
+      </ul>
+    </li>
+  </ul>
+
+  <blockquote>
+    (To add today’s entry, copy this format and change the date. You can also remove “Related Ritual” or “Mood” if you don’t need them.)
+  </blockquote>
+
+  <hr />
+
+  <h2>🚀 How to Use &amp; Update</h2>
+  <ol>
+    <li>
+      <strong>Edit directly in GitHub (or your phone’s Markdown editor).</strong>
+      <ul>
+        <li>Anytime a project changes status (Backlog → In Progress → Complete), update that bullet under <strong>Projects</strong>.</li>
+        <li>When you draft a new Scroll/Ritual, add a new block under <strong>Content Library</strong> with its details and GitHub URL.</li>
+        <li>At the end of each day (or whenever you journal), append a new entry under <strong>Journal Entries</strong>.</li>
+      </ul>
+    </li>
+    <li>
+      <strong>Linking in GitHub</strong>
+      <ul>
+        <li>If you later create a real file at <code>scrolls/daylight.md</code>, update the “GitHub URL” so it points to that Markdown or HTML file.</li>
+        <li>Same for rituals: once you build <code>rituals/morningseed.md</code>, adjust the URL here.</li>
+      </ul>
+    </li>
+    <li>
+      <strong>Naming conventions</strong>
+      <ul>
+        <li>Give every new file in GitHub a matching slug (e.g., <code>nightvision.md</code> for Night-Vision Insight).</li>
+        <li>Keep “passphrase” lowercase (it’s case-sensitive in your <code>loop-engine.js</code>).</li>
+      </ul>
+    </li>
+    <li>
+      <strong>No tables needed</strong>
+      <ul>
+        <li>Everything is bullet-list style—phone-friendly and easy to scan.</li>
+        <li>If you want to reorder, just drag the bullets up or down in GitHub’s editor.</li>
+      </ul>
+    </li>
+    <li>
+      <strong>Future automation</strong>
+      <ul>
+        <li>Whenever you add a new Scroll/Ritual in the repo, you’ll manually copy its metadata into this file.</li>
+        <li>Down the line, you could write a simple Node.js script or GitHub Action to parse these blocks and cross-check with actual files, but that’s optional.</li>
+      </ul>
+    </li>
+  </ol>
+
+  <hr />
+
+  <h3>Summary</h3>
+  <ul>
+    <li><strong>Projects:</strong> Keep one bullet per initiative, update status / priority / next action as you go.</li>
+    <li><strong>Content Library:</strong> List each Scroll and Ritual with loop level, passphrase, status, summary, and a GitHub link.</li>
+    <li><strong>Journal Entries:</strong> Daily reflections—date, content, ritual used, mood.</li>
+  </ul>
 </main>
 
 <footer>© 2025 4got1en · 6ol</footer>
