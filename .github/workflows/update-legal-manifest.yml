@@ -1,0 +1,61 @@
+name: Update Legal Manifest
+
+# Grant write permission so the action can commit updated manifest
+permissions:
+  contents: write
+
+# Trigger whenever any .html under /legal/ is created/modified/deleted
+on:
+  push:
+    paths:
+      - 'legal/*.html'
+
+jobs:
+  regenerate_legal_manifest:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out repository (with write creds)
+      uses: actions/checkout@v3
+      with:
+        persist-credentials: true
+
+    - name: Regenerate legal/manifest.json
+      run: |
+        # Start a fresh JSON array
+        printf "[" > legal/manifest.json
+        first=true
+        # Loop over each HTML file in legal/, sorted alphabetically
+        for f in legal/*.html; do
+          name=$(basename "$f")
+          # Extract <h1>…</h1> as title
+          title=$(sed -n 's/.*<h1>\(.*\)<\/h1>.*/\1/p' "$f")
+          # Fallback to filename (minus .html) if no <h1> found
+          if [ -z "$title" ]; then
+            title="${name%.html}"
+          fi
+          # Extract first <small>…</small> as summary (if present)
+          summary=$(sed -n 's/.*<small>\(.*\)<\/small>.*/\1/p' "$f")
+          if [ "$first" = true ]; then
+            first=false
+          else
+            echo "," >> legal/manifest.json
+          fi
+          # Escape quotes in title/summary
+          esc_title=$(printf '%s' "$title" | sed 's/"/\\"/g')
+          esc_summary=$(printf '%s' "$summary" | sed 's/"/\\"/g')
+          echo '{"filename": "'"$name"'", "title": "'"$esc_title"'", "summary": "'"$esc_summary"'"}' >> legal/manifest.json
+        done
+        # Close the JSON array
+        printf "]" >> legal/manifest.json
+
+    - name: Commit updated manifest.json
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git add legal/manifest.json
+        git commit -m "Auto-update legal/manifest.json" || echo "No changes to commit"
+
+    - name: Push changes
+      run: |
+        git push
