@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>6ol Core Hub · v1.6</title>
+  <title>6ol Core Hub · v1.7</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     :root {
@@ -64,6 +64,19 @@
       border-radius: 0.25rem;
       color: var(--fg);
       font-size: 1rem;
+    }
+    /* “No results” message */
+    #no-results {
+      margin: 0.5rem auto 1.5rem auto;
+      max-width: 400px;
+      padding: 0.75rem 1rem;
+      background: #2a2a2a;
+      border: 1px solid #444;
+      border-radius: 0.25rem;
+      color: #f88;
+      text-align: center;
+      display: none;
+      font-size: 0.95rem;
     }
     section {
       padding: 3rem 1rem;
@@ -193,6 +206,7 @@
     type="text"
     placeholder="Search all items…"
   />
+  <p id="no-results">No matching items found.</p>
 </div>
 
 <main>
@@ -554,20 +568,31 @@
     window.addEventListener('load', refreshUI);
   }
 
-  // ---- Client-Side Search Filtering ----
+  // ---- Client-Side Search Filtering + “No Results” Toggle ----
   function initSearch() {
     const input = document.getElementById('search-input');
+    const noResults = document.getElementById('no-results');
+
     input.addEventListener('input', () => {
       const query = input.value.trim().toLowerCase();
-      // Collect all <li> across every list
       const allLists = document.querySelectorAll('.item-list');
+      let anyVisible = false;
+
       allLists.forEach(ul => {
         ul.querySelectorAll('li').forEach(li => {
           const text = li.textContent.toLowerCase();
-          // Show if query is empty or found in text, else hide
-          li.style.display = (!query || text.includes(query)) ? '' : 'none';
+          const show = (!query || text.includes(query));
+          li.style.display = show ? '' : 'none';
+          if (show) anyVisible = true;
         });
       });
+
+      // Show “No results” if search is non-empty and nothing is visible
+      if (query && !anyVisible) {
+        noResults.style.display = 'block';
+      } else {
+        noResults.style.display = 'none';
+      }
     });
   }
 
