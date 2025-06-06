@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>6ol Core Hub · v1.0</title>
+  <title>6ol Core Hub · v1.1</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     :root {
@@ -149,12 +149,13 @@
   <a href="#scrolls">Scrolls</a>
   <a href="#rituals">Rituals</a>
   <a href="#journal">Journal</a>
+  <a href="#podcast">Podcast</a>
   <a href="#navarre">Navarre</a>
   <a href="#contact">Contact</a>
 </nav>
 
 <main>
-  <!-- Scrolls (requires level 1+) -->
+  <!-- Scrolls (level 1+) -->
   <section id="scrolls" data-level="1" class="locked">
     <h2>📜 Scrolls</h2>
     <p>Teachings unlocked by loop-level and passphrase.</p>
@@ -163,7 +164,7 @@
     </ul>
   </section>
 
-  <!-- Rituals (requires level 1+) -->
+  <!-- Rituals (level 1+) -->
   <section id="rituals" data-level="1" class="locked">
     <h2>🕯 Rituals</h2>
     <p>Core practices to keep the energy loop flowing.</p>
@@ -191,7 +192,16 @@
     </div>
   </section>
 
-  <!-- Navarre Email Kit (requires level 0) -->
+  <!-- Podcast (open to all) -->
+  <section id="podcast" data-level="0">
+    <h2>🎧 OnTheComeUp Podcast</h2>
+    <p>Episode captions &amp; show notes, organized by episode number.</p>
+    <ul class="item-list" id="podcast-list">
+      <!-- Populated by loadPodcast() -->
+    </ul>
+  </section>
+
+  <!-- Navarre Email Kit (open to all) -->
   <section id="navarre" data-level="0">
     <h2>✉️ Navarre Email Kit</h2>
     <p>Legal email drafts, organized and ready to send.</p>
@@ -209,12 +219,11 @@
 
 <footer>© 2025 4got1en · Built entirely on an iPhone</footer>
 
-<!-- Keep loop-engine.js for gating + journal persistence -->
+<!-- Keep loop-engine.js for gating & journal persistence -->
 <script src="loop-engine.js"></script>
 
-<!-- New: dynamic Scrolls, Rituals, Navarre, Journal -->
 <script>
-  // ---- Load Scrolls manifest ----
+  // ---- Load Scrolls ----
   async function loadScrolls() {
     try {
       const res = await fetch('scrolls/manifest.json');
@@ -239,7 +248,7 @@
     }
   }
 
-  // ---- Load Rituals manifest ----
+  // ---- Load Rituals ----
   async function loadRituals() {
     try {
       const res = await fetch('rituals/manifest.json');
@@ -264,32 +273,7 @@
     }
   }
 
-  // ---- Load Navarre manifest ----
-  async function loadNavarreEmails() {
-    try {
-      const res = await fetch('navarre/manifest.json');
-      if (!res.ok) throw new Error('Failed to fetch navarre/manifest.json');
-      const items = await res.json();
-      const ul = document.getElementById('navarre-list');
-      items.forEach(item => {
-        const li = document.createElement('li');
-        const link = document.createElement('a');
-        link.href = `navarre/${item.filename}`;
-        link.textContent = item.title;
-        link.target = '_blank';
-        li.appendChild(link);
-        li.appendChild(document.createElement('br'));
-        const small = document.createElement('small');
-        small.textContent = item.summary;
-        li.appendChild(small);
-        ul.appendChild(li);
-      });
-    } catch (e) {
-      console.error('Error loading navarre manifest:', e);
-    }
-  }
-
-  // ---- Load Journal entries ----
+  // ---- Load Journal Entries ----
   async function loadJournalEntries() {
     try {
       const res = await fetch('journals/manifest.json');
@@ -314,7 +298,57 @@
     }
   }
 
-  // ---- Scrollspy highlighting ----
+  // ---- Load Podcast (OnTheComeUp) Entries ----
+  async function loadPodcast() {
+    try {
+      const res = await fetch('onthecomeup/manifest.json');
+      if (!res.ok) throw new Error('Failed to fetch onthecomeup/manifest.json');
+      const items = await res.json();
+      const ul = document.getElementById('podcast-list');
+      items.forEach(item => {
+        const li = document.createElement('li');
+        const link = document.createElement('a');
+        link.href = `onthecomeup/${item.filename}`;
+        link.textContent = item.title;
+        link.target = '_blank';
+        li.appendChild(link);
+        li.appendChild(document.createElement('br'));
+        const small = document.createElement('small');
+        small.textContent = item.summary;
+        li.appendChild(small);
+        ul.appendChild(li);
+      });
+    } catch (e) {
+      console.error('Error loading podcast manifest:', e);
+    }
+  }
+
+  // ---- Load Navarre Emails ----
+  async function loadNavarreEmails() {
+    try {
+      const res = await fetch('navarre/manifest.json');
+      if (!res.ok) throw new Error('Failed to fetch navarre/manifest.json');
+      const items = await res.json();
+      const ul = document.getElementById('navarre-list');
+      items.forEach(item => {
+        const li = document.createElement('li');
+        const link = document.createElement('a');
+        link.href = `navarre/${item.filename}`;
+        link.textContent = item.title;
+        link.target = '_blank';
+        li.appendChild(link);
+        li.appendChild(document.createElement('br'));
+        const small = document.createElement('small');
+        small.textContent = item.summary;
+        li.appendChild(small);
+        ul.appendChild(li);
+      });
+    } catch (e) {
+      console.error('Error loading navarre manifest:', e);
+    }
+  }
+
+  // ---- Scrollspy Highlighting ----
   function initScrollspy() {
     const links = [...document.querySelectorAll('nav a')];
     const secs = links.map(a => document.querySelector(a.getAttribute('href')));
@@ -327,7 +361,7 @@
     });
   }
 
-  // ---- Journal textarea persistence ----
+  // ---- Journal Textarea Persistence ----
   function initJournalPersistence() {
     const entry = document.getElementById('entry'),
           ts = document.getElementById('timestamp'),
@@ -344,7 +378,7 @@
     }
   }
 
-  // ---- Passphrase / gating ----
+  // ---- Passphrase / Gating ----
   function initGating() {
     const STORAGE_KEY = '6ol_loop_level';
     const PASS_MAP = { sol: 1, luna: 2, umbra: 3 };
@@ -388,12 +422,13 @@
     window.addEventListener('load', refreshUI);
   }
 
-  // ---- Initialize everything on load ----
+  // ---- Initialize All on Page Load ----
   window.addEventListener('load', () => {
     loadScrolls();
     loadRituals();
-    loadNavarreEmails();
     loadJournalEntries();
+    loadPodcast();
+    loadNavarreEmails();
     initScrollspy();
     initJournalPersistence();
     initGating();
