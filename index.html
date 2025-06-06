@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>6ol Core Hub · v1.7</title>
+  <title>6ol Core Hub · v1.8</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     :root {
@@ -127,6 +127,12 @@
       padding: 0.5rem;
       font-family: inherit;
       font-size: 1rem;
+    }
+    #last-updated {
+      text-align: center;
+      font-size: 0.85rem;
+      opacity: 0.7;
+      margin: 1rem 0;
     }
     footer {
       text-align: center;
@@ -311,6 +317,9 @@
     <h2>📬 Contact</h2>
     <p>Email: ellery.p.costaiii@icloud.com</p>
   </section>
+
+  <!-- Last updated timestamp -->
+  <p id="last-updated">Last updated: </p>
 </main>
 
 <footer>© 2025 4got1en · Built entirely on an iPhone</footer>
@@ -596,7 +605,21 @@
     });
   }
 
-  // ---- Initialize Everything on Page Load ----
+  // ---- Insert “Last Updated” timestamp ----
+  function insertLastUpdated() {
+    const p = document.getElementById('last-updated');
+    const modified = document.lastModified; // format: "MM/DD/YYYY HH:MM:SS"
+    if (modified) {
+      // Convert to ISO‐like YYYY-MM-DD HH:MM:SS
+      const [datePart, timePart] = modified.split(' ');
+      const [m, d, y] = datePart.split('/');
+      p.textContent = `Last updated: ${y}-${m.padStart(2,'0')}-${d.padStart(2,'0')} ${timePart}`;
+    } else {
+      p.textContent = 'Last updated: (unknown)';
+    }
+  }
+
+  // ---- Initialize everything on page load ----
   window.addEventListener('load', () => {
     loadScrolls();
     loadRituals();
@@ -609,6 +632,7 @@
     initJournalPersistence();
     initGating();
     initSearch();
+    insertLastUpdated();
   });
 </script>
 </body>
