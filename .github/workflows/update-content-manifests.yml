@@ -1,0 +1,79 @@
+name: Update Scrolls & Rituals Manifests
+
+# Grant write access so the action can push updated files
+permissions:
+  contents: write
+
+# Trigger whenever a .html is added/modified/deleted under /scrolls/ or /rituals/
+on:
+  push:
+    paths:
+      - 'scrolls/*.html'
+      - 'rituals/*.html'
+
+jobs:
+  regenerate_manifests:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out repository (with write creds)
+      uses: actions/checkout@v3
+      with:
+        persist-credentials: true
+
+    - name: Regenerate scrolls/manifest.json
+      run: |
+        printf "[" > scrolls/manifest.json
+        first=true
+        for f in scrolls/*.html; do
+          name=$(basename "$f")
+          title=$(sed -n 's/.*<h1>\(.*\)<\/h1>.*/\1/p' "$f")
+          # If no <h1> is found, fall back to filename (remove .html)
+          if [ -z "$title" ]; then
+            title="${name%.html}"
+          fi
+          summary=$(sed -n 's/.*<small>\(.*\)<\/small>.*/\1/p' "$f")
+          if [ "$first" = true ]; then
+            first=false
+          else
+            echo "," >> scrolls/manifest.json
+          fi
+          # Escape quotes in title/summary
+          esc_title=$(printf '%s' "$title" | sed 's/"/\\"/g')
+          esc_summary=$(printf '%s' "$summary" | sed 's/"/\\"/g')
+          echo "{\"filename\": \"$name\", \"title\": \"$esc_title\", \"summary\": \"$esc_summary\"}" >> scrolls/manifest.json
+        done
+        printf "]" >> scrolls/manifest.json
+
+    - name: Regenerate rituals/manifest.json
+      run: |
+        printf "[" > rituals/manifest.json
+        first=true
+        for f in rituals/*.html; do
+          name=$(basename "$f")
+          title=$(sed -n 's/.*<h1>\(.*\)<\/h1>.*/\1/p' "$f")
+          if [ -z "$title" ]; then
+            title="${name%.html}"
+          fi
+          summary=$(sed -n 's/.*<small>\(.*\)<\/small>.*/\1/p' "$f")
+          if [ "$first" = true ]; then
+            first=false
+          else
+            echo "," >> rituals/manifest.json
+          fi
+          esc_title=$(printf '%s' "$title" | sed 's/"/\\"/g')
+          esc_summary=$(printf '%s' "$summary" | sed 's/"/\\"/g')
+          echo "{\"filename\": \"$name\", \"title\": \"$esc_title\", \"summary\": \"$esc_summary\"}" >> rituals/manifest.json
+        done
+        printf "]" >> rituals/manifest.json
+
+    - name: Commit updated manifests
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git add scrolls/manifest.json rituals/manifest.json
+        git commit -m "Auto-update scrolls & rituals manifests" || echo "No changes to commit"
+
+    - name: Push changes
+      run: |
+        git push
