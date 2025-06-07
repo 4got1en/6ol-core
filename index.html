@@ -2,9 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>6ol Core Hub · v1.11</title>
+  <title>6ol Core Hub · v1.10</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
   <!-- FAVICON -->
   <link rel="icon" type="image/png" href="IMG_3069.png" />
 
@@ -17,10 +16,7 @@
       --search-bg: #222;
       --search-border: #444;
     }
-    * {
-      box-sizing: border-box;
-      scroll-behavior: smooth;
-    }
+    * { box-sizing: border-box; scroll-behavior: smooth; }
     body {
       margin: 0;
       font-family: "Helvetica Neue", sans-serif;
@@ -28,10 +24,7 @@
       color: var(--fg);
       line-height: 1.6;
     }
-    header {
-      padding: 2rem 1rem;
-      text-align: center;
-    }
+    header { padding: 2rem 1rem; text-align: center; }
     nav {
       position: sticky;
       top: 0;
@@ -86,17 +79,9 @@
       max-width: 800px;
       margin: auto;
     }
-    section h2 {
-      margin-bottom: 1rem;
-    }
-    .locked {
-      opacity: 0.35;
-      filter: blur(2px);
-    }
-    .item-list {
-      list-style: none;
-      padding-left: 0;
-    }
+    section h2 { margin-bottom: 1rem; }
+    .locked { opacity: 0.35; filter: blur(2px); }
+    .item-list { list-style: none; padding-left: 0; }
     .item-list li {
       margin-bottom: 0.75rem;
       padding-left: 1.5rem;
@@ -113,9 +98,7 @@
       text-decoration: none;
       font-weight: bold;
     }
-    .item-list li a:hover {
-      text-decoration: underline;
-    }
+    .item-list li a:hover { text-decoration: underline; }
     .item-list li small {
       display: block;
       font-size: 0.85rem;
@@ -166,43 +149,40 @@
       color: #000;
       cursor: pointer;
     }
-    #past-entries {
-      margin-top: 2rem;
-    }
-    #past-entries h3 {
-      margin-bottom: 1rem;
-    }
+    #past-entries { margin-top: 2rem; }
+    #past-entries h3 { margin-bottom: 1rem; }
 
     /* ==== PRINT STYLES ==== */
     @media print {
       body { background: #fff !important; color: #000 !important; }
-      nav, #search-container, footer, form#pass-form, #no-results { display: none !important; }
-      h1, h2, h3, h4, h5 { color: #000 !important; margin:1.5rem 0 0.5rem; }
-      a::after { content: " (" attr(href) ")"; font-size:0.85em; }
-      a { color:#000 !important; text-decoration:underline !important; }
-      .item-list li::before { content:"•"; color:#000; }
-      textarea { background:transparent!important; border:1px solid#000!important; color:#000!important; }
-      [data-level] { opacity:1!important; filter:none!important; }
-    }
-
-    /* ==== BACK TO TOP BUTTON ==== */
-    #toTop {
-      position: fixed;
-      bottom: 1.5rem;
-      right: 1.5rem;
-      background: var(--accent);
-      color: #000;
-      border: none;
-      padding: 0.75rem;
-      border-radius: 50%;
-      font-size: 1.25rem;
-      cursor: pointer;
-      display: none;
-      z-index: 20;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
-    }
-    #toTop:hover {
-      background: #e0b837;
+      nav, #search-container, footer, form#pass-form, #no-results {
+        display: none !important;
+      }
+      h1, h2, h3, h4, h5 {
+        color: #000 !important;
+        margin-top: 1.5rem;
+        margin-bottom: 0.5rem;
+      }
+      textarea {
+        background: transparent !important;
+        border: 1px solid #000 !important;
+        color: #000 !important;
+      }
+      a::after {
+        content: " (" attr(href) ")";
+        font-size: 0.85em;
+      }
+      a {
+        color: #000 !important;
+        text-decoration: underline !important;
+      }
+      .item-list li::before {
+        content: "•";
+        color: #000;
+      }
+      .item-list { padding-left: 1rem !important; }
+      .item-list li { padding-left: 0.5rem !important; }
+      [data-level] { opacity: 1 !important; filter: none !important; }
     }
   </style>
 </head>
@@ -211,7 +191,6 @@
 <header>
   <h1>6ol Core Hub</h1>
   <p class="tagline">A sovereign playground for seekers &amp; builders.</p>
-
   <form id="pass-form">
     <input id="pass-input" type="password" placeholder="Enter passphrase" autocomplete="off"/>
     <button type="submit">Unlock</button>
@@ -240,32 +219,303 @@
 </div>
 
 <main>
-  <!-- sections as before… -->
-  <!-- Scrolls, Rituals, Journal, Podcast, Finance, Legal, Analytics, Control Center, Navarre, Contact -->
+  <section id="scrolls" data-level="1" class="locked">
+    <h2>📜 Scrolls</h2>
+    <p>Teachings unlocked by loop-level and passphrase.</p>
+    <ul class="item-list" id="scrolls-list"></ul>
+  </section>
+
+  <section id="rituals" data-level="1" class="locked">
+    <h2>🕯 Rituals</h2>
+    <p>Core practices to keep the energy loop flowing.</p>
+    <ul class="item-list" id="rituals-list"></ul>
+  </section>
+
+  <section id="journal" data-level="0">
+    <h2>✍️ Journal</h2>
+    <textarea id="entry" rows="8" placeholder="Write today’s reflection..."></textarea>
+    <p id="timestamp" style="font-size:0.8rem;opacity:0.7;"></p>
+    <div id="past-entries">
+      <h3>🗂 Past Entries</h3>
+      <ul class="item-list" id="entries-list"></ul>
+    </div>
+  </section>
+
+  <section id="podcast" data-level="0">
+    <h2>🎧 OnTheComeUp Podcast</h2>
+    <p>Episode captions &amp; show notes, organized by episode number.</p>
+    <ul class="item-list" id="podcast-list"></ul>
+  </section>
+
+  <section id="finance" data-level="0">
+    <h2>💰 Finance Streams</h2>
+    <p>Daily P&amp;L, payout summaries, or ledger entries.</p>
+    <ul class="item-list" id="finance-list"></ul>
+  </section>
+
+  <section id="legal" data-level="0">
+    <h2>⚖️ Legal Tasks</h2>
+    <p>Upcoming deadlines, motions, and filings—stay on track.</p>
+    <ul class="item-list" id="legal-list"></ul>
+  </section>
+
+  <section id="analytics" data-level="0">
+    <h2>📊 Analytics</h2>
+    <p>Monthly revenue and key metrics.</p>
+    <p>
+      <a href="analytics/monthly-revenue-2025-06.html" target="_blank"
+         style="color:var(--accent);font-weight:bold;">
+        View June 2025 Revenue Report →
+      </a>
+    </p>
+  </section>
+
+  <section id="control-center" data-level="0">
+    <h2>🗄 Control Center</h2>
+    <p>Your master project dashboard and notes.</p>
+    <p>
+      <a href="control-center.html" target="_blank"
+         style="color:var(--accent);font-weight:bold;">
+        Open Control Center →
+      </a>
+    </p>
+  </section>
+
+  <section id="navarre" data-level="0">
+    <h2>✉️ Navarre Email Kit</h2>
+    <p>Legal email drafts, organized and ready to send.</p>
+    <ul class="item-list" id="navarre-list"></ul>
+  </section>
+
+  <section id="contact" data-level="0">
+    <h2>📬 Contact</h2>
+    <p>Email: ellery.p.costaiii@icloud.com</p>
+  </section>
+
   <p id="last-updated">Last updated: </p>
 </main>
-
-<!-- BACK TO TOP BUTTON -->
-<button id="toTop" aria-label="Back to top">↑</button>
 
 <footer>© 2025 4got1en · Built entirely on an iPhone</footer>
 
 <script src="loop-engine.js"></script>
 <script>
-  // …all your existing loadX(), initSearch(), initGating(), etc. …
-
-  // ---- Back to Top Button ----
-  const toTop = document.getElementById('toTop');
-  window.addEventListener('scroll', () => {
-    toTop.style.display = window.scrollY > 200 ? 'block' : 'none';
-  });
-  toTop.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-
-  // Initialize on load
-  window.addEventListener('load', () => {
-    // …your other inits…
+  async function loadScrolls() {
+    try {
+      const res = await fetch('scrolls/manifest.json');
+      if (!res.ok) throw new Error();
+      const items = await res.json();
+      const ul = document.getElementById('scrolls-list');
+      items.forEach(i => {
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.href = `scrolls/${i.filename}`; a.textContent = i.title; a.target = '_blank';
+        li.append(a, document.createElement('br'));
+        const s = document.createElement('small'); s.textContent = i.summary;
+        li.appendChild(s);
+        ul.appendChild(li);
+      });
+    } catch {}
+  }
+  async function loadRituals() {
+    try {
+      const res = await fetch('rituals/manifest.json');
+      if (!res.ok) throw new Error();
+      const items = await res.json();
+      const ul = document.getElementById('rituals-list');
+      items.forEach(i => {
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.href = `rituals/${i.filename}`; a.textContent = i.title; a.target = '_blank';
+        li.append(a, document.createElement('br'));
+        const s = document.createElement('small'); s.textContent = i.summary;
+        li.appendChild(s);
+        ul.appendChild(li);
+      });
+    } catch {}
+  }
+  async function loadJournalEntries() {
+    try {
+      const res = await fetch('journals/manifest.json');
+      if (!res.ok) throw new Error();
+      const items = await res.json();
+      const ul = document.getElementById('entries-list');
+      items.forEach(i => {
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.href = `journals/${i.filename}`; a.textContent = i.date; a.target = '_blank';
+        li.append(a, document.createElement('br'));
+        const s = document.createElement('small'); s.textContent = i.summary;
+        li.appendChild(s);
+        ul.appendChild(li);
+      });
+    } catch {}
+  }
+  async function loadPodcast() {
+    try {
+      const res = await fetch('onthecomeup/manifest.json');
+      if (!res.ok) throw new Error();
+      const items = await res.json();
+      const ul = document.getElementById('podcast-list');
+      items.forEach(i => {
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.href = `onthecomeup/${i.filename}`; a.textContent = i.title; a.target = '_blank';
+        li.append(a, document.createElement('br'));
+        const s = document.createElement('small'); s.textContent = i.summary;
+        li.appendChild(s);
+        ul.appendChild(li);
+      });
+    } catch {}
+  }
+  async function loadFinance() {
+    try {
+      const res = await fetch('finance/manifest.json');
+      if (!res.ok) throw new Error();
+      const items = await res.json();
+      const ul = document.getElementById('finance-list');
+      items.forEach(i => {
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.href = `finance/${i.filename}`; a.textContent = i.title; a.target = '_blank';
+        li.append(a, document.createElement('br'));
+        const s = document.createElement('small'); s.textContent = i.summary;
+        li.appendChild(s);
+        ul.appendChild(li);
+      });
+    } catch {}
+  }
+  async function loadLegalTasks() {
+    try {
+      const res = await fetch('legal/manifest.json');
+      if (!res.ok) throw new Error();
+      const items = await res.json();
+      const ul = document.getElementById('legal-list');
+      items.forEach(i => {
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.href = `legal/${i.filename}`; a.textContent = i.title; a.target = '_blank';
+        li.append(a, document.createElement('br'));
+        const s = document.createElement('small'); s.textContent = i.summary;
+        li.appendChild(s);
+        ul.appendChild(li);
+      });
+    } catch {}
+  }
+  async function loadNavarreEmails() {
+    try {
+      const res = await fetch('navarre/manifest.json');
+      if (!res.ok) throw new Error();
+      const items = await res.json();
+      const ul = document.getElementById('navarre-list');
+      items.forEach(i => {
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.href = `navarre/${i.filename}`; a.textContent = i.title; a.target = '_blank';
+        li.append(a, document.createElement('br'));
+        const s = document.createElement('small'); s.textContent = i.summary;
+        li.appendChild(s);
+        ul.appendChild(li);
+      });
+    } catch {}
+  }
+  function initScrollspy() {
+    const links = [...document.querySelectorAll('nav a')];
+    const secs = links.map(a => document.querySelector(a.getAttribute('href')));
+    window.addEventListener('scroll', () => {
+      let i = secs.findIndex(s =>
+        s.getBoundingClientRect().top <= 60 &&
+        s.getBoundingClientRect().bottom >= 60
+      );
+      if (i === -1) i = 0;
+      links.forEach((a, ix) => a.classList.toggle('active', ix === i));
+    });
+  }
+  function initJournalPersistence() {
+    const entry = document.getElementById('entry'),
+          ts = document.getElementById('timestamp'),
+          KEY = '6ol_journal';
+    function save() {
+      localStorage.setItem(KEY, entry.value);
+      ts.textContent = 'Last saved: ' + new Date().toLocaleString();
+    }
+    entry.addEventListener('input', save);
+    const d = localStorage.getItem(KEY);
+    if (d) {
+      entry.value = d;
+      ts.textContent = 'Last saved: ' + new Date().toLocaleString();
+    }
+  }
+  function initGating() {
+    const KEY = '6ol_loop_level';
+    const MAP = { sol:1, luna:2, umbra:3 };
+    function lvl() { return Number(localStorage.getItem(KEY)||0); }
+    function set(l) { localStorage.setItem(KEY,l); refresh(); }
+    function refresh() {
+      const l = lvl();
+      document.getElementById('current-level').textContent = l;
+      document.querySelectorAll('[data-level]').forEach(sec => {
+        const req = Number(sec.dataset.level);
+        if (l>=req) {
+          sec.classList.remove('locked');
+          sec.style.display = '';
+        } else {
+          sec.classList.add('locked');
+          sec.style.display = (req===0?'':'');
+        }
+      });
+    }
+    document.getElementById('pass-form').addEventListener('submit',e=>{
+      e.preventDefault();
+      const p = document.getElementById('pass-input').value.trim().toLowerCase();
+      if (MAP.hasOwnProperty(p)) {
+        const nl = MAP[p];
+        if (nl>lvl()) {
+          set(nl);
+          alert('🔓 Unlocked level '+nl+'!');
+        } else alert('You already have this level or higher.');
+      } else alert('❌ Invalid passphrase');
+      e.target.reset();
+    });
+    window.addEventListener('load', refresh);
+  }
+  function initSearch() {
+    const inp = document.getElementById('search-input');
+    const no = document.getElementById('no-results');
+    inp.addEventListener('input',()=>{
+      const q = inp.value.trim().toLowerCase();
+      const lists = document.querySelectorAll('.item-list');
+      let any=false;
+      lists.forEach(ul=>{
+        ul.querySelectorAll('li').forEach(li=>{
+          const ok = (!q||li.textContent.toLowerCase().includes(q));
+          li.style.display = ok?'':'none';
+          if(ok) any=true;
+        });
+      });
+      no.style.display = (q&&!any)?'block':'none';
+    });
+  }
+  function insertLastUpdated() {
+    const p = document.getElementById('last-updated');
+    const m = document.lastModified;
+    if (m) {
+      const [d,t] = m.split(' ');
+      const [mo,da,yr] = d.split('/');
+      p.textContent = `Last updated: ${yr}-${mo.padStart(2,'0')}-${da.padStart(2,'0')} ${t}`;
+    } else p.textContent = 'Last updated: (unknown)';
+  }
+  window.addEventListener('load',()=>{
+    loadScrolls();
+    loadRituals();
+    loadJournalEntries();
+    loadPodcast();
+    loadFinance();
+    loadLegalTasks();
+    loadNavarreEmails();
+    initScrollspy();
+    initJournalPersistence();
+    initGating();
+    initSearch();
     insertLastUpdated();
   });
 </script>
