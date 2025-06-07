@@ -1,17 +1,6 @@
-[
-  {
-    "filename": "morningseed.html",
-    "title": "Morning Seed Offering",
-    "summary": "10-minute journaling & intention-setting exercise."
-  },
-  {
-    "filename": "middayflow.html",
-    "title": "Midday Flow Check",
-    "summary": "Breath-work & quick gratitude pause."
-  },
-  {
-    "filename": "eveningharvest.html",
-    "title": "Evening Harvest",
-    "summary": "Black journal reflection & sync ritual."
-  }
+[{"filename": "eveningharvest.html", "title": "Evening Harvest", "summary": ""}
+,
+{"filename": "middayflow.html", "title": "Midday Flow Check", "summary": ""}
+,
+{"filename": "morningseed.html", "title": "Morning Seed Offering", "summary": ""}
 ]
