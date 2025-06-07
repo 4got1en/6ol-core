@@ -2,6 +2,9 @@
   "name": "6ol-content-regenerator",
   "version": "1.0.0",
   "type": "module",
+  "scripts": {
+    "regen": "node scripts/regenerate-manifests.js"
+  },
   "dependencies": {
     "jsdom": "^22.1.0"
   }
