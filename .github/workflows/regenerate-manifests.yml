@@ -3,10 +3,10 @@ name: Auto-Regenerate Manifests
 on:
   schedule:
     - cron: '0 3 * * *'    # every day at 03:00 UTC
-  workflow_dispatch:      # manual trigger
+  workflow_dispatch:      # allows you to kick it off manually
 
 permissions:
-  contents: write        # allow pushing commits
+  contents: write        # so it can push back to the repo
 
 jobs:
   regen:
@@ -24,7 +24,7 @@ jobs:
           node-version: '18'
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci       # <-- back to npm ci now that you have package-lock.json
 
       - name: Regenerate manifests
         run: npm run regen
