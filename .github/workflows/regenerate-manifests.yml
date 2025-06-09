@@ -2,18 +2,18 @@ name: Auto-Regenerate Manifests
 
 on:
   schedule:
-    - cron: '0 3 * * *'    # every day at 03:00 UTC
-  workflow_dispatch:      # allows you to kick it off manually
+    - cron: '0 3 * * *'    # daily at 03:00 UTC
+  workflow_dispatch:      # manual trigger
 
 permissions:
-  contents: write        # so it can push back to the repo
+  contents: write         # allows pushing back to the repo
 
 jobs:
   regen:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v4
         with:
           persist-credentials: true
@@ -23,17 +23,20 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Install dependencies
-        run: npm ci       # <-- back to npm ci now that you have package-lock.json
-
       - name: Regenerate manifests
-        run: npm run regen
+        run: node scripts/regenerate-manifests.js
 
       - name: Commit & push if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add scrolls/manifest.json rituals/manifest.json journals/manifest.json onthecomeup/manifest.json finance/manifest.json legal/manifest.json navarre/manifest.json
+          git add scrolls/manifest.json \
+                  rituals/manifest.json \
+                  journals/manifest.json \
+                  onthecomeup/manifest.json \
+                  finance/manifest.json \
+                  legal/manifest.json \
+                  navarre/manifest.json
           git diff --quiet || git commit -m "chore: auto-regenerate manifests"
           git push
         env:
