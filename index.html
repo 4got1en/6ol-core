@@ -4,45 +4,108 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>6ol Core Hub · v1.10</title>
+
+  <!-- Ensure all relative URLs point into /6ol-core/ on GitHub Pages -->
   <base href="/6ol-core/" />
+
+  <!-- Favicon -->
   <link rel="icon" type="image/png" href="IMG_3069.png" />
-  <style> /* …your CSS… */ </style>
-</head>
+
+  <style>
+    :root {
+      --bg: #111;
+      --fg: #eee;
+      --accent: #f5c84c;
+      --search-bg: #222;
+      --search-border: #444;
+    }
+    * { box-sizing: border-box; scroll-behavior: smooth; }
     body {
-      background: #111;
-      color: #eee;
-      font-family: sans-serif;
-      line-height: 1.5;
+      margin: 0;
+      font-family: "Helvetica Neue", sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.6;
       padding: 0 1rem;
     }
-    header, nav, section {
-      margin-bottom: 2rem;
+    header { text-align: center; padding: 2rem 0; }
+    nav {
+      position: sticky; top: 0; z-index: 10;
+      background: #000c; backdrop-filter: blur(6px);
+      display: flex; gap: 1rem; justify-content: center;
+      padding: 0.5rem 0;
     }
     nav a {
-      margin-right: 1rem;
-      color: #ccc;
-      text-decoration: none;
+      color: var(--fg); text-decoration: none;
+      padding: 0.25rem 0.5rem; border-radius: 0.25rem;
+      transition: background 0.2s;
     }
-    nav a.active, nav a:hover {
-      color: #ffd662;
+    nav a.active,
+    nav a:hover {
+      background: var(--accent); color: #000;
     }
-    h1, h2 {
-      margin: 1rem 0 0.5rem;
+    #search-container {
+      margin: 1rem auto; max-width: 400px; padding: 0 1rem;
     }
-    .item {
-      margin-bottom: 0.75rem;
+    #search-input {
+      width: 100%; padding: 0.5rem 1rem;
+      background: var(--search-bg);
+      border: 1px solid var(--search-border);
+      border-radius: 0.25rem;
+      color: var(--fg); font-size: 1rem;
     }
-    .item a {
-      color: #ffd662;
-      text-decoration: none;
+    #no-results {
+      margin: 0.5rem auto 1.5rem;
+      max-width: 400px; padding: 0.75rem 1rem;
+      background: #2a2a2a; border: 1px solid #444;
+      border-radius: 0.25rem; color: #f88;
+      text-align: center; display: none; font-size: 0.95rem;
     }
-    .item a:hover {
-      text-decoration: underline;
+    section { padding: 2rem 0; }
+    section h2 { margin-bottom: 1rem; }
+    .item-list { list-style: none; padding-left: 0; }
+    .item-list li {
+      margin-bottom: 0.75rem; padding-left: 1.5rem;
+      position: relative;
     }
-    small {
-      display: block;
-      color: #999;
-      margin-left: 1rem;
+    .item-list li::before {
+      content: "🔹"; position: absolute; left: 0; top: 0;
+    }
+    .item-list a {
+      color: var(--fg); text-decoration: none; font-weight: bold;
+    }
+    .item-list a:hover { text-decoration: underline; }
+    .item-list small {
+      display: block; font-size: 0.85rem; opacity: 0.75;
+      margin-top: 0.25rem;
+    }
+    textarea {
+      width: 100%; max-width: 100%; background: #222;
+      border: 1px solid var(--search-border);
+      border-radius: 0.25rem; color: var(--fg);
+      padding: 0.5rem; font-family: inherit; font-size: 1rem;
+    }
+    #last-updated {
+      text-align: center; font-size: 0.85rem;
+      opacity: 0.7; margin: 1rem 0;
+    }
+    footer {
+      text-align: center; padding: 2rem 0; font-size: 0.875rem;
+    }
+    form#pass-form {
+      margin: 1rem auto; max-width: 280px; display: flex;
+      gap: 0.5rem;
+    }
+    form#pass-form input,
+    form#pass-form button {
+      border: none; border-radius: 0.25rem; font-family: inherit;
+    }
+    form#pass-form input {
+      flex: 1; padding: 0.5rem; background: #222; color: var(--fg);
+    }
+    form#pass-form button {
+      padding: 0.5rem 1rem; background: var(--accent);
+      color: #000; cursor: pointer;
     }
   </style>
 </head>
@@ -51,161 +114,146 @@
   <header>
     <h1>6ol Core Hub</h1>
     <p>A sovereign playground for seekers &amp; builders.</p>
+    <form id="pass-form">
+      <input id="pass-input" type="password" placeholder="Enter passphrase" autocomplete="off"/>
+      <button type="submit">Unlock</button>
+    </form>
+    <p style="font-size:0.9rem;">
+      Current level: <span id="current-level">0</span>
+    </p>
   </header>
 
-  <nav id="mainNav">
-    <a href="#scrolls"            id="link-scrolls">Scrolls</a>
-    <a href="#rituals"            id="link-rituals">Rituals</a>
-    <a href="#journal"            id="link-journal">Journal</a>
-    <a href="#podcast"            id="link-podcast">Podcast</a>
-    <a href="#finance"            id="link-finance">Finance</a>
-    <a href="#legal"              id="link-legal">Legal</a>
-    <a href="#analytics"          id="link-analytics">Analytics</a>
-    <a href="#control-center"     id="link-cc">Control Center</a>
-    <a href="#navarre"            id="link-navarre">Navarre</a>
-    <a href="#contact"            id="link-contact">Contact</a>
+  <nav id="navbar">
+    <a href="#scrolls">Scrolls</a>
+    <a href="#rituals">Rituals</a>
+    <a href="#journal">Journal</a>
+    <a href="#podcast">Podcast</a>
+    <a href="#finance">Finance</a>
+    <a href="#legal">Legal</a>
+    <a href="#analytics">Analytics</a>
+    <a href="#control-center">Control Center</a>
+    <a href="#navarre">Navarre</a>
+    <a href="#contact">Contact</a>
   </nav>
 
-  <!-- Scrolls -->
-  <section id="scrolls">
-    <h2>📜 Scrolls</h2>
-    <div id="scrollsList">Loading…</div>
-  </section>
+  <div id="search-container">
+    <input id="search-input" type="text" placeholder="Search all items…"/>
+    <p id="no-results">No matching items found.</p>
+  </div>
 
-  <!-- Rituals -->
-  <section id="rituals">
-    <h2>🕯️ Rituals</h2>
-    <div id="ritualsList">Loading…</div>
-  </section>
+  <main>
+    <section id="scrolls" data-level="1" class="locked">
+      <h2>📜 Scrolls</h2>
+      <ul class="item-list" id="scrolls-list"><li>Loading…</li></ul>
+    </section>
 
-  <!-- Journal -->
-  <section id="journal">
-    <h2>✍️ Journal Entries</h2>
-    <div id="journalList">Loading…</div>
-  </section>
+    <section id="rituals" data-level="1" class="locked">
+      <h2>🕯️ Rituals</h2>
+      <ul class="item-list" id="rituals-list"><li>Loading…</li></ul>
+    </section>
 
-  <!-- Podcast -->
-  <section id="podcast">
-    <h2>🎧 OnTheComeUp Podcast</h2>
-    <div id="podcastList">Loading…</div>
-  </section>
+    <section id="journal" data-level="0">
+      <h2>✍️ Journal Entries</h2>
+      <ul class="item-list" id="journalList"><li>Loading…</li></ul>
+    </section>
 
-  <!-- Finance -->
-  <section id="finance">
-    <h2>💰 Finance Streams</h2>
-    <div id="financeList">Loading…</div>
-  </section>
+    <section id="podcast" data-level="0">
+      <h2>🎧 OnTheComeUp Podcast</h2>
+      <ul class="item-list" id="podcast-list"><li>Loading…</li></ul>
+    </section>
 
-  <!-- Legal -->
-  <section id="legal">
-    <h2>⚖️ Legal Tasks</h2>
-    <div id="legalList">Loading…</div>
-  </section>
+    <section id="finance" data-level="0">
+      <h2>💰 Finance Streams</h2>
+      <ul class="item-list" id="finance-list"><li>Loading…</li></ul>
+    </section>
 
-  <!-- Analytics -->
-  <section id="analytics">
-    <h2>📊 Analytics</h2>
-    <p><a href="analytics/2025-06-report.html">View June 2025 Revenue Report →</a></p>
-  </section>
+    <section id="legal" data-level="0">
+      <h2>⚖️ Legal Tasks</h2>
+      <ul class="item-list" id="legal-list"><li>Loading…</li></ul>
+    </section>
 
-  <!-- Control Center -->
-  <section id="control-center">
-    <h2>🗄️ Control Center</h2>
-    <p><a href="control-center/index.html">Open Control Center →</a></p>
-  </section>
+    <section id="analytics" data-level="0">
+      <h2>📊 Analytics</h2>
+      <p><a href="analytics/monthly-revenue-2025-06.html">View June 2025 Revenue Report →</a></p>
+    </section>
 
-  <!-- Navarre Email Kit -->
-  <section id="navarre">
-    <h2>✉️ Navarre Email Kit</h2>
-    <div id="navarreList">Loading…</div>
-  </section>
+    <section id="control-center" data-level="0">
+      <h2>🗄️ Control Center</h2>
+      <p><a href="control-center.html">Open Control Center →</a></p>
+    </section>
 
-  <!-- Contact -->
-  <section id="contact">
-    <h2>📬 Contact</h2>
-    <p>Email: <a href="mailto:ellery.p.costaiii@icloud.com">ellery.p.costaiii@icloud.com</a></p>
-  </section>
+    <section id="navarre" data-level="0">
+      <h2>✉️ Navarre Email Kit</h2>
+      <ul class="item-list" id="navarre-list"><li>Loading…</li></ul>
+    </section>
 
-  <footer>
-    <p>© 2025 4got1en · Built entirely on an iPhone</p>
-  </footer>
+    <section id="contact" data-level="0">
+      <h2>📬 Contact</h2>
+      <p><a href="mailto:ellery.p.costaiii@icloud.com">ellery.p.costaiii@icloud.com</a></p>
+    </section>
 
+    <p id="last-updated">Last updated: </p>
+  </main>
+
+  <footer>© 2025 4got1en · Built entirely on an iPhone</footer>
+
+  <script src="loop-engine.js"></script>
   <script>
-    // Highlight active nav link
-    function highlightNav() {
-      const hash = location.hash || '#scrolls';
-      document.querySelectorAll('nav a').forEach(a => {
-        a.classList.toggle('active', a.getAttribute('href') === hash);
-      });
+    // Scrollspy highlighting
+    function updateNav() {
+      const links = [...document.querySelectorAll('nav a')];
+      const sections = links.map(a => document.querySelector(a.getAttribute('href')));
+      let idx = sections.findIndex(sec =>
+        sec.getBoundingClientRect().top <= 60 &&
+        sec.getBoundingClientRect().bottom >= 60
+      );
+      if (idx < 0) idx = 0;
+      links.forEach((a,i)=>a.classList.toggle('active', i===idx));
     }
-    window.addEventListener('hashchange', highlightNav);
-    highlightNav();
+    window.addEventListener('scroll', updateNav);
+    updateNav();
 
-    // Utility: fetch and parse JSON
-    async function fetchManifest(folder) {
-      const res = await fetch(\`\${folder}/manifest.json\`);
-      if (!res.ok) throw new Error(\`Failed to load \${folder}/manifest.json\`);
-      return res.json();
-    }
+    // Journal persistence, gating, search, last-updated ...
+    // (reuse your existing functions here)
 
-    // Render a list of items into the given container
-    function renderItems(data, container, folder, isJournal=false) {
-      container.innerHTML = '';
-      data.forEach(item => {
-        const div = document.createElement('div');
-        div.className = 'item';
-
-        const a = document.createElement('a');
-        a.href = \`\${folder}/\${item.filename}\`;
-        if (isJournal) {
-          a.textContent = item.date;
-          div.appendChild(a);
-          if (item.summary) {
-            const sm = document.createElement('small');
-            sm.textContent = item.summary;
-            div.appendChild(sm);
-          }
-        } else {
-          a.textContent = item.title;
-          div.appendChild(a);
-          if (item.summary) {
-            const sm = document.createElement('small');
-            sm.textContent = item.summary;
-            div.appendChild(sm);
-          }
-        }
-
-        container.appendChild(div);
-      });
-    }
-
-    // Load & render each section
-    ;(async ()=> {
+    // Fetch & render manifests
+    async function renderManifest(folder, listId, isJournal=false) {
       try {
-        const scrolls    = await fetchManifest('scrolls');
-        renderItems(scrolls, document.getElementById('scrollsList'), 'scrolls');
-
-        const rituals    = await fetchManifest('rituals');
-        renderItems(rituals, document.getElementById('ritualsList'), 'rituals');
-
-        const journals   = await fetchManifest('journals');
-        renderItems(journals, document.getElementById('journalList'), 'journals', true);
-
-        const podcast    = await fetchManifest('onthecomeup');
-        renderItems(podcast, document.getElementById('podcastList'), 'onthecomeup');
-
-        const finance    = await fetchManifest('finance');
-        renderItems(finance, document.getElementById('financeList'), 'finance');
-
-        const legal      = await fetchManifest('legal');
-        renderItems(legal, document.getElementById('legalList'), 'legal');
-
-        const navarre    = await fetchManifest('navarre');
-        renderItems(navarre, document.getElementById('navarreList'), 'navarre');
-      } catch (err) {
-        console.error(err);
+        const res = await fetch(`${folder}/manifest.json`);
+        const data = await res.json();
+        const ul = document.getElementById(listId);
+        ul.innerHTML = '';
+        data.forEach(item => {
+          const li = document.createElement('li');
+          li.className = 'item';
+          const a = document.createElement('a');
+          a.href = `${folder}/${item.filename}`;
+          if (isJournal) a.textContent = item.date;
+          else a.textContent = item.title;
+          a.target = '_blank';
+          li.appendChild(a);
+          if (item.summary) {
+            const sm = document.createElement('small');
+            sm.textContent = item.summary;
+            li.appendChild(sm);
+          }
+          ul.appendChild(li);
+        });
+      } catch (e) {
+        console.error(`Error loading ${folder}:`, e);
       }
-    })();
+    }
+
+    window.addEventListener('load', () => {
+      renderManifest('scrolls','scrolls-list');
+      renderManifest('rituals','rituals-list');
+      renderManifest('journals','journalList',true);
+      renderManifest('onthecomeup','podcast-list');
+      renderManifest('finance','finance-list');
+      renderManifest('legal','legal-list');
+      renderManifest('navarre','navarre-list');
+      // insertLastUpdated(); initSearch(); initGating(); initJournalPersistence(); etc.
+    });
   </script>
 </body>
 </html>
