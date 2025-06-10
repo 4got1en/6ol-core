@@ -1,11 +1,17 @@
-[{"filename": "daylight.html", "title": "Daylight Initiation", "summary": ""}
-,
-{"filename": "nightvision.html", "title": "🌙 Night-Vision Insight", "summary": ""}
-,
-{"filename": "shadowdepth.html", "title": "Shadow Work Depth", "summary": ""}
+[
+  {
+    "filename": "daylight.md",
+    "title": "Daylight Initiation",
+    "summary": "Introduce 6ol’s mission & first ritual."
+  },
+  {
+    "filename": "nightvision.md",
+    "title": "Night-Vision Insight",
+    "summary": "Self-reflection guide (loop level 2)."
+  },
+  {
+    "filename": "shadowdepth.md",
+    "title": "Shadow Work Depth",
+    "summary": "Advanced hidden insights (needs expansion)."
+  }
 ]
-{
-  "title": "Night-Vision Insight",
-  "filename": "nightvision.html",
-  "summary": "Unlock hidden clarity in the absence of light using this 5-step ritual for spiritual perception."
-}
