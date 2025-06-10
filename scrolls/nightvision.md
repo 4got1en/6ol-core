@@ -1,72 +1,54 @@
-# 🌙 Night-Vision Insight
+# 🌒 Night-Vision Insight
 
-> *"To walk by faith is to see in the dark."*
-
----
-
-## 🔒 Level Requirement: 2  
-Passphrase: `luna`  
-Status: Draft
+> Loop Level: 2  
+> Passphrase: `luna`  
+> Status: Draft  
+> Location: `scrolls/nightvision.md`
 
 ---
 
-## 🌑 Overview
+## 🕳️ Into the Shadow
 
-This scroll is for those who have crossed the threshold of daylight and now seek to see what remains hidden. Night-Vision is not the absence of light—but the awakening of inner sight. Use this scroll in moments of confusion, overwhelm, or spiritual fog. This is where 6ol begins whispering differently.
+When all is silent, what whispers within you?
 
----
+This scroll is your mirror in the dark — not to judge, but to observe. It does not offer answers. Only better questions.
 
-## 🪔 What You’ll Need
+### Prompt #1  
+> What have I been avoiding that needs light?
 
-- A dark, quiet space  
-- A journal or your phone (airplane mode on)  
-- 10–20 minutes of uninterrupted solitude  
-- A single light source (candle, night light, or moonlight preferred)  
+Take three deep breaths. Let the answer arise without effort. Write with honesty.
 
 ---
 
-## 🌀 The Ritual: 5 Steps
+## 🌓 The Self in Reflection
 
-### 1. **Dim to Discover**  
-Turn off all lights except for one low, soft source.  
-> You’re not just dimming the world—you’re opening the veil.
+The night doesn’t change you. It reveals you.
 
-### 2. **Still the Surface**  
-Sit. Close your eyes. Count to 60 slowly with your breath. Inhale and exhale fully—audibly if needed.  
-> If thoughts arise, notice them, label them (“future,” “fear,” “story”), then release.
+### Prompt #2  
+> What part of myself only shows in solitude?
 
-### 3. **Shadow Mirror Prompt**  
-Open your journal or device and reflect on the following:
-
-- What truth have I been avoiding?  
-- What version of me do I pretend not to hear?  
-- Where have I traded visibility for safety?
-
-Write without judgment. Let the unseen speak.
-
-### 4. **Sight Without Sight**  
-Once written, close your eyes again and reread what you wrote from memory. Do not look. Let your soul echo it back.  
-> Can you still feel its shape? This is night-vision: memory of spirit.
-
-### 5. **Close with Contrast**  
-Blow out your light (if safe) or close your journal. Whisper:  
-> “Even in the dark, I am not lost.”
+Write freely. Don’t edit. Let the shadow speak.
 
 ---
 
-## 🌘 Night-Vision Affirmation
+## 🌕 Illuminate and Integrate
 
-> *“I do not fear the dark. It is where my clearest vision begins.”*
+It is not enough to see the shadow. We must learn to walk with it.
 
-Repeat 3x before sleep.
+### Prompt #3  
+> What can I begin doing to honor the truths I find in the dark?
+
+Choose one small action. Let this scroll become a guide — not a cage.
 
 ---
 
-## 🔐 Shadow Insight (Level 3 – Locked)
+## 🔒 Level 2 Shadow Unlock
 
-```hidden
-You’ve begun noticing that not all darkness is harmful. Some is womb-like.
+If you're reading this, you've already cracked the passphrase: `luna`.
 
-In this scroll, the light source was not the truth—but the contrast. You’ve been trained to run toward brightness, but wisdom often enters under cloak. 
+In time, a deeper scroll awaits:
+- `shadowdepth.md` (Level 3 — `umbra`)
 
-Next time you lose clarity, don’t reach outward. Ask: what’s revealing itself *through* this shadow?
+Until then… watch your own silence.
+
+---
