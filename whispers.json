@@ -1,0 +1,44 @@
+{
+  "scrolls": {
+    "0": "Your scrolls await. The first unlocks with a spark of curiosity.",
+    "1": "Daylight speaks—do you see its message forming?",
+    "2": "Only the quiet ones can read by moonlight.",
+    "3": "Shadow welcomes you back. But not all truths like the light."
+  },
+  "rituals": {
+    "0": "Your rhythms begin here. Three rituals light the path ahead.",
+    "1": "You’ve planted seeds. Water them daily, even if it rains.",
+    "2": "Momentum builds. Time to trust the rhythm.",
+    "3": "Now, harvest wisely—what did your habits reveal?"
+  },
+  "journal": {
+    "0": "This is your mirror. Try writing something real.",
+    "1": "Notice the patterns—what repeats may be asking to change.",
+    "2": "Don’t just log. Listen.",
+    "3": "This isn’t a journal. It’s evidence."
+  },
+  "podcast": {
+    "0": "Listen closely. Some guests are teachers in disguise.",
+    "1": "Truth leaks out between questions.",
+    "2": "Pay attention to what isn’t said.",
+    "3": "Every voice carries a code. Yours included."
+  },
+  "finance": {
+    "0": "Money moves. Are you moving it with meaning?",
+    "1": "Every dollar has a destination. Pick it on purpose.",
+    "2": "Are you earning peace or pressure?",
+    "3": "Real wealth isn’t what you hold. It’s what holds you."
+  },
+  "legal": {
+    "0": "The system’s a maze. Don’t enter blind.",
+    "1": "Study your rights before they’re tested.",
+    "2": "Paperwork is armor.",
+    "3": "Know the law better than the one enforcing it."
+  },
+  "navarre": {
+    "0": "This isn’t just about him. It’s about justice.",
+    "1": "Document everything. Even silence.",
+    "2": "The truth needs advocates, not just evidence.",
+    "3": "Freedom comes from relentless clarity."
+  }
+}
