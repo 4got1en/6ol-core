@@ -1,311 +1,183 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>6ol Core Hub · v2.0</title>
-
-  <!-- Base URL for GitHub Pages -->
-  <base href="/6ol-core/"/>
-
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="IMG_3069.png"/>
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>6ol Core Hub · v1.11</title>
+  <base href="/6ol-core/" />
+  <link rel="icon" type="image/png" href="IMG_3069.png" />
   <style>
-    /* ==== SCREEN STYLES ==== */
-    :root {
-      --bg: #111; --fg: #eee; --accent: #f5c84c;
-      --search-bg: #222; --search-border: #444;
-    }
-    * { box-sizing: border-box; scroll-behavior: smooth; }
     body {
-      margin:0; padding:0 1rem;
-      font-family:"Helvetica Neue",sans-serif;
-      background:var(--bg); color:var(--fg); line-height:1.6;
+      background-color: #000;
+      color: #fff;
+      font-family: 'Helvetica Neue', sans-serif;
+      margin: 0;
+      padding: 2rem;
+      line-height: 1.6;
     }
-    header { text-align:center; padding:2rem 0; }
     nav {
-      position:sticky; top:0; z-index:10;
-      background:#000c; backdrop-filter:blur(6px);
-      display:flex; gap:1rem; justify-content:center; padding:.5rem 0;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: #111;
+      padding: 0.5rem 1rem;
+      z-index: 100;
+      border-bottom: 1px solid #333;
     }
     nav a {
-      color:var(--fg); text-decoration:none;
-      padding:.25rem .5rem; border-radius:.25rem;
-      transition:background .2s;
+      margin-right: 1rem;
+      color: #888;
+      text-decoration: none;
     }
-    nav a.active, nav a:hover {
-      background:var(--accent); color:#000;
+    nav a.active {
+      color: #fff;
+      font-weight: bold;
     }
-    #search-container {
-      margin:1rem auto; max-width:400px; padding:0 1rem;
+    section {
+      padding-top: 3rem;
+      margin-top: 3rem;
+      border-top: 1px solid #333;
     }
-    #search-input {
-      width:100%; padding:.5rem 1rem;
-      background:var(--search-bg); border:1px solid var(--search-border);
-      border-radius:.25rem; color:var(--fg); font-size:1rem;
+    .whisper {
+      font-style: italic;
+      color: #aaa;
+      margin-top: 0.5rem;
+      font-size: 0.95em;
     }
-    #no-results {
-      margin:.5rem auto 1.5rem; max-width:400px;
-      padding:.75rem 1rem; background:#2a2a2a; border:1px solid #444;
-      border-radius:.25rem; color:#f88; text-align:center;
-      display:none; font-size:.95rem;
-    }
-    section { padding:2rem 0; }
-    h2 { margin-bottom:1rem; }
-    .item-list { list-style:none; padding-left:0; }
-    .item-list li {
-      position:relative; margin-bottom:.75rem; padding-left:1.5rem;
-    }
-    .item-list li::before {
-      content:"🔹"; position:absolute; left:0; top:0;
-    }
-    .item-list a {
-      color:var(--fg); text-decoration:none; font-weight:bold;
-    }
-    .item-list a:hover { text-decoration:underline; }
-    .item-list small {
-      display:block; font-size:.85rem; opacity:.75; margin-top:.25rem;
-    }
-    textarea {
-      width:100%; max-width:100%; padding:.5rem;
-      background:#222; border:1px solid var(--search-border);
-      border-radius:.25rem; color:var(--fg); font-family:inherit;
-      font-size:1rem;
-    }
-    #last-updated {
-      text-align:center; font-size:.85rem; opacity:.7; margin:1rem 0;
-    }
-    footer {
-      text-align:center; padding:2rem 0; font-size:.875rem;
-    }
-    form#pass-form {
-      margin:1rem auto; max-width:280px; display:flex; gap:.5rem;
-    }
-    form#pass-form input,
-    form#pass-form button {
-      border:none; border-radius:.25rem; font-family:inherit;
-    }
-    form#pass-form input {
-      flex:1; padding:.5rem; background:#222; color:var(--fg);
-    }
-    form#pass-form button {
-      padding:.5rem 1rem; background:var(--accent);
-      color:#000; cursor:pointer;
-    }
-
-    /* ==== Gating: hide locked sections ==== */
-    .locked { opacity:.35; filter:blur(2px); }
-
-    /* ==== PRINT STYLES ==== */
-    @media print {
-      body { background:#fff!important; color:#000!important; }
-      nav,#search-container,footer,form#pass-form,#no-results { display:none!important; }
-      h1,h2,h3,h4,h5 { color:#000!important; margin:1.5rem 0 .5rem!important; }
-      textarea { background:transparent!important; border:1px solid #000!important; color:#000!important; }
-      a::after { content:" (" attr(href) ")"; font-size:.85em; }
-      a { color:#000!important; text-decoration:underline!important; }
-      .item-list li::before { content:"•"; color:#000!important; }
-      .item-list { padding-left:1rem!important; }
-      .item-list li { padding-left:.5rem!important; }
-      [data-level] { opacity:1!important; filter:none!important; }
+    #lastUpdated {
+      font-size: 0.8rem;
+      color: #666;
+      text-align: center;
+      margin-top: 3rem;
     }
   </style>
 </head>
 <body>
-
-  <header>
-    <h1>6ol Core Hub</h1>
-    <p>A sovereign playground for seekers &amp; builders.</p>
-    <form id="pass-form">
-      <input id="pass-input" type="password" placeholder="Enter passphrase" autocomplete="off"/>
-      <button type="submit">Unlock</button>
-    </form>
-    <p style="font-size:.9rem;">
-      Current level: <span id="current-level">0</span>
-    </p>
-  </header>
-
   <nav id="navbar">
-    <a href="#scrolls">Scrolls</a>
-    <a href="#rituals">Rituals</a>
-    <a href="#journal">Journal</a>
-    <a href="#podcast">Podcast</a>
-    <a href="#finance">Finance</a>
-    <a href="#legal">Legal</a>
-    <a href="#analytics">Analytics</a>
-    <a href="#control-center">Control Center</a>
-    <a href="#navarre">Navarre</a>
-    <a href="#contact">Contact</a>
+    <a href="#scrolls">📜 Scrolls</a>
+    <a href="#rituals">🕯️ Rituals</a>
+    <a href="#journal">✍️ Journal</a>
+    <a href="#podcast">🎙️ Podcast</a>
+    <a href="#finance">💸 Finance</a>
+    <a href="#legal">⚖️ Legal</a>
+    <a href="#navarre">🧾 Navarre</a>
   </nav>
 
-  <div id="search-container">
-    <input id="search-input" type="text" placeholder="Search all items…"/>
-    <p id="no-results">No matching items found.</p>
-  </div>
-
   <main>
-    <section id="scrolls" data-level="1" class="locked">
+    <section id="scrolls">
       <h2>📜 Scrolls</h2>
-      <ul class="item-list" id="scrolls-list"><li>Loading…</li></ul>
+      <div class="whisper" data-type="scrolls"></div>
+      <div id="scrollsList">Loading...</div>
     </section>
 
-    <section id="rituals" data-level="1" class="locked">
+    <section id="rituals">
       <h2>🕯️ Rituals</h2>
-      <ul class="item-list" id="rituals-list"><li>Loading…</li></ul>
+      <div class="whisper" data-type="rituals"></div>
+      <div id="ritualsList">Loading...</div>
     </section>
 
-    <section id="journal" data-level="0">
-      <h2>✍️ Journal Entries</h2>
-      <textarea id="entry" rows="6" placeholder="Write today’s reflection…"></textarea>
-      <p id="timestamp" style="font-size:.8rem;opacity:.7;"></p>
-      <ul class="item-list" id="journalList"><li>Loading…</li></ul>
+    <section id="journal">
+      <h2>✍️ Journal</h2>
+      <div class="whisper" data-type="journal"></div>
+      <div id="journalEntries">Loading...</div>
     </section>
 
-    <section id="podcast" data-level="0">
-      <h2>🎧 OnTheComeUp Podcast</h2>
-      <ul class="item-list" id="podcast-list"><li>Loading…</li></ul>
+    <section id="podcast">
+      <h2>🎙️ Podcast</h2>
+      <div class="whisper" data-type="podcast"></div>
+      <div id="podcastList">Loading...</div>
     </section>
 
-    <section id="finance" data-level="0">
-      <h2>💰 Finance Streams</h2>
-      <ul class="item-list" id="finance-list"><li>Loading…</li></ul>
+    <section id="finance">
+      <h2>💸 Finance</h2>
+      <div class="whisper" data-type="finance"></div>
+      <div id="financeList">Loading...</div>
     </section>
 
-    <section id="legal" data-level="0">
-      <h2>⚖️ Legal Tasks</h2>
-      <ul class="item-list" id="legal-list"><li>Loading…</li></ul>
+    <section id="legal">
+      <h2>⚖️ Legal</h2>
+      <div class="whisper" data-type="legal"></div>
+      <div id="legalList">Loading...</div>
     </section>
 
-    <section id="analytics" data-level="0">
-      <h2>📊 Analytics</h2>
-      <p><a href="analytics/monthly-revenue-2025-06.html">View June 2025 Revenue Report →</a></p>
+    <section id="navarre">
+      <h2>🧾 Navarre</h2>
+      <div class="whisper" data-type="navarre"></div>
+      <div id="navarreList">Loading...</div>
     </section>
-
-    <section id="control-center" data-level="0">
-      <h2>🗄️ Control Center</h2>
-      <p><a href="control-center.html">Open Control Center →</a></p>
-    </section>
-
-    <section id="navarre" data-level="0">
-      <h2>✉️ Navarre Email Kit</h2>
-      <ul class="item-list" id="navarre-list"><li>Loading…</li></ul>
-    </section>
-
-    <section id="contact" data-level="0">
-      <h2>📬 Contact</h2>
-      <p><a href="mailto:ellery.p.costaiii@icloud.com">ellery.p.costaiii@icloud.com</a></p>
-    </section>
-
-    <p id="last-updated">Last updated: </p>
   </main>
 
-  <footer>© 2025 4got1en · Built entirely on an iPhone</footer>
+  <div id="lastUpdated"></div>
 
-  <script src="loop-engine.js"></script>
   <script>
-    // ===== Scrollspy =====
-    function scrollSpy() {
-      const links = [...document.querySelectorAll('nav a')];
-      const secs   = links.map(a=>document.querySelector(a.hash));
-      let idx = secs.findIndex(s=>
-        s.getBoundingClientRect().top <= 60 && s.getBoundingClientRect().bottom > 60
-      );
-      if(idx<0) idx=0;
-      links.forEach((a,i)=>a.classList.toggle('active',i===idx));
+    const loopLevel = 3; // update this if you implement dynamic unlocking
+
+    async function fetchManifest(folder) {
+      const res = await fetch(`${folder}/manifest.json`);
+      if (!res.ok) return [];
+      return await res.json();
     }
-    window.addEventListener('scroll',scrollSpy);
-    scrollSpy();
 
-    // ===== Journal Persistence =====
-    (()=>{
-      const k='6ol_journal', e=document.getElementById('entry'),
-            ts=document.getElementById('timestamp');
-      e.addEventListener('input',()=>{
-        localStorage.setItem(k,e.value);
-        ts.textContent='Last saved: '+new Date().toLocaleString();
-      });
-      const v=localStorage.getItem(k);
-      if(v){e.value=v;ts.textContent='Last saved: '+new Date().toLocaleString();}
-    })();
+    async function renderList(folder, containerId) {
+      const items = await fetchManifest(folder);
+      const container = document.getElementById(containerId);
+      container.innerHTML = '';
 
-    // ===== Passphrase Gating =====
-    (()=>{
-      const M={'sol':1,'luna':2,'umbra':3}, SK='6ol_loop_level';
-      const getL=()=>+localStorage.getItem(SK)||0;
-      const setL=l=>{localStorage.setItem(SK,l);refresh();};
-      const refresh=()=>{
-        document.getElementById('current-level').textContent=getL();
-        document.querySelectorAll('[data-level]').forEach(sec=>{
-          const req=+sec.dataset.level;
-          if(getL()>=req){sec.classList.remove('locked');sec.style.display='';}
-          else sec.classList.add('locked');
-        });
-      };
-      document.getElementById('pass-form').addEventListener('submit',e=>{
-        e.preventDefault();
-        const pw=document.getElementById('pass-input').value.trim().toLowerCase();
-        if(M[pw]>getL()){setL(M[pw]);alert('🔓 Unlocked level '+M[pw]);}
-        else alert('❌ Invalid or no new level');
-        e.target.reset();
-      });
-      window.addEventListener('load',refresh);
-    })();
+      if (!items.length) {
+        container.innerHTML = '<em>No matching items found.</em>';
+        return;
+      }
 
-    // ===== Search & No-Results =====
-    (()=>{
-      const inp=document.getElementById('search-input'),
-            no=document.getElementById('no-results');
-      inp.addEventListener('input',()=>{
-        const q=inp.value.trim().toLowerCase();
-        let any=false;
-        document.querySelectorAll('.item-list li').forEach(li=>{
-          const ok=!q||li.textContent.toLowerCase().includes(q);
-          li.style.display=ok?'':'none'; if(ok) any=true;
-        });
-        no.style.display=(q&&!any)?'block':'none';
-      });
-    })();
-
-    // ===== Last Updated =====
-    (()=>{
-      const p=document.getElementById('last-updated'),
-            m=document.lastModified.split(' '),
-            [mo,da,yr]=m[0].split('/');
-      p.textContent=`Last updated: ${yr}-${mo.padStart(2,'0')}-${da.padStart(2,'0')} ${m[1]}`;
-    })();
-
-    // ===== Manifest Rendering =====
-    async function render(folder,id,isJ=false){
-      const ul=document.getElementById(id);
-      try{
-        const res=await fetch(`${folder}/manifest.json`);
-        if(!res.ok) throw 0;
-        const items=await res.json();
-        ul.innerHTML='';
-        items.forEach(it=>{
-          const li=document.createElement('li'), a=document.createElement('a');
-          a.href=`${folder}/${it.filename}`; a.target='_blank';
-          a.textContent=isJ?it.date:it.title;
-          li.appendChild(a);
-          if(it.summary){
-            const sm=document.createElement('small');
-            sm.textContent=it.summary; li.appendChild(sm);
-          }
-          ul.appendChild(li);
-        });
-      }catch(e){
-        ul.innerHTML='<li>Error loading</li>';
+      for (const item of items) {
+        const link = document.createElement('a');
+        link.href = `${folder}/${item.filename}`;
+        link.textContent = item.title || item.date || 'Untitled';
+        link.style.display = 'block';
+        container.appendChild(link);
       }
     }
-    window.addEventListener('load',()=>{
-      render('scrolls','scrolls-list');
-      render('rituals','rituals-list');
-      render('journals','journalList',true);
-      render('onthecomeup','podcast-list');
-      render('finance','finance-list');
-      render('legal','legal-list');
-      render('navarre','navarre-list');
+
+    async function loadWhispers() {
+      const res = await fetch('whispers.json');
+      const data = await res.json();
+
+      document.querySelectorAll('.whisper').forEach(div => {
+        const type = div.dataset.type;
+        if (data[type] && data[type][loopLevel] !== undefined) {
+          div.textContent = data[type][loopLevel];
+        }
+      });
+    }
+
+    async function main() {
+      await Promise.all([
+        renderList('scrolls', 'scrollsList'),
+        renderList('rituals', 'ritualsList'),
+        renderList('journals', 'journalEntries'),
+        renderList('podcasts', 'podcastList'),
+        renderList('finances', 'financeList'),
+        renderList('legal', 'legalList'),
+        renderList('navarre', 'navarreList'),
+        loadWhispers()
+      ]);
+
+      document.getElementById('lastUpdated').textContent =
+        'Last updated: ' + new Date().toLocaleString();
+    }
+
+    main();
+
+    window.addEventListener('scroll', () => {
+      const links = document.querySelectorAll('nav a');
+      let fromTop = window.scrollY + 10;
+
+      links.forEach(link => {
+        let section = document.querySelector(link.hash);
+        if (section.offsetTop <= fromTop && section.offsetTop + section.offsetHeight > fromTop) {
+          links.forEach(l => l.classList.remove('active'));
+          link.classList.add('active');
+        }
+      });
     });
   </script>
 </body>
