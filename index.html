@@ -1,111 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>6ol Core Hub · v1.10</title>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>6ol Core Hub · v2.0</title>
 
-  <!-- Ensure all relative URLs point into /6ol-core/ on GitHub Pages -->
-  <base href="/6ol-core/" />
+  <!-- Base URL for GitHub Pages -->
+  <base href="/6ol-core/"/>
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="IMG_3069.png" />
+  <link rel="icon" type="image/png" href="IMG_3069.png"/>
 
   <style>
+    /* ==== SCREEN STYLES ==== */
     :root {
-      --bg: #111;
-      --fg: #eee;
-      --accent: #f5c84c;
-      --search-bg: #222;
-      --search-border: #444;
+      --bg: #111; --fg: #eee; --accent: #f5c84c;
+      --search-bg: #222; --search-border: #444;
     }
     * { box-sizing: border-box; scroll-behavior: smooth; }
     body {
-      margin: 0;
-      font-family: "Helvetica Neue", sans-serif;
-      background: var(--bg);
-      color: var(--fg);
-      line-height: 1.6;
-      padding: 0 1rem;
+      margin:0; padding:0 1rem;
+      font-family:"Helvetica Neue",sans-serif;
+      background:var(--bg); color:var(--fg); line-height:1.6;
     }
-    header { text-align: center; padding: 2rem 0; }
+    header { text-align:center; padding:2rem 0; }
     nav {
-      position: sticky; top: 0; z-index: 10;
-      background: #000c; backdrop-filter: blur(6px);
-      display: flex; gap: 1rem; justify-content: center;
-      padding: 0.5rem 0;
+      position:sticky; top:0; z-index:10;
+      background:#000c; backdrop-filter:blur(6px);
+      display:flex; gap:1rem; justify-content:center; padding:.5rem 0;
     }
     nav a {
-      color: var(--fg); text-decoration: none;
-      padding: 0.25rem 0.5rem; border-radius: 0.25rem;
-      transition: background 0.2s;
+      color:var(--fg); text-decoration:none;
+      padding:.25rem .5rem; border-radius:.25rem;
+      transition:background .2s;
     }
-    nav a.active,
-    nav a:hover {
-      background: var(--accent); color: #000;
+    nav a.active, nav a:hover {
+      background:var(--accent); color:#000;
     }
     #search-container {
-      margin: 1rem auto; max-width: 400px; padding: 0 1rem;
+      margin:1rem auto; max-width:400px; padding:0 1rem;
     }
     #search-input {
-      width: 100%; padding: 0.5rem 1rem;
-      background: var(--search-bg);
-      border: 1px solid var(--search-border);
-      border-radius: 0.25rem;
-      color: var(--fg); font-size: 1rem;
+      width:100%; padding:.5rem 1rem;
+      background:var(--search-bg); border:1px solid var(--search-border);
+      border-radius:.25rem; color:var(--fg); font-size:1rem;
     }
     #no-results {
-      margin: 0.5rem auto 1.5rem;
-      max-width: 400px; padding: 0.75rem 1rem;
-      background: #2a2a2a; border: 1px solid #444;
-      border-radius: 0.25rem; color: #f88;
-      text-align: center; display: none; font-size: 0.95rem;
+      margin:.5rem auto 1.5rem; max-width:400px;
+      padding:.75rem 1rem; background:#2a2a2a; border:1px solid #444;
+      border-radius:.25rem; color:#f88; text-align:center;
+      display:none; font-size:.95rem;
     }
-    section { padding: 2rem 0; }
-    section h2 { margin-bottom: 1rem; }
-    .item-list { list-style: none; padding-left: 0; }
+    section { padding:2rem 0; }
+    h2 { margin-bottom:1rem; }
+    .item-list { list-style:none; padding-left:0; }
     .item-list li {
-      margin-bottom: 0.75rem; padding-left: 1.5rem;
-      position: relative;
+      position:relative; margin-bottom:.75rem; padding-left:1.5rem;
     }
     .item-list li::before {
-      content: "🔹"; position: absolute; left: 0; top: 0;
+      content:"🔹"; position:absolute; left:0; top:0;
     }
     .item-list a {
-      color: var(--fg); text-decoration: none; font-weight: bold;
+      color:var(--fg); text-decoration:none; font-weight:bold;
     }
-    .item-list a:hover { text-decoration: underline; }
+    .item-list a:hover { text-decoration:underline; }
     .item-list small {
-      display: block; font-size: 0.85rem; opacity: 0.75;
-      margin-top: 0.25rem;
+      display:block; font-size:.85rem; opacity:.75; margin-top:.25rem;
     }
     textarea {
-      width: 100%; max-width: 100%; background: #222;
-      border: 1px solid var(--search-border);
-      border-radius: 0.25rem; color: var(--fg);
-      padding: 0.5rem; font-family: inherit; font-size: 1rem;
+      width:100%; max-width:100%; padding:.5rem;
+      background:#222; border:1px solid var(--search-border);
+      border-radius:.25rem; color:var(--fg); font-family:inherit;
+      font-size:1rem;
     }
     #last-updated {
-      text-align: center; font-size: 0.85rem;
-      opacity: 0.7; margin: 1rem 0;
+      text-align:center; font-size:.85rem; opacity:.7; margin:1rem 0;
     }
     footer {
-      text-align: center; padding: 2rem 0; font-size: 0.875rem;
+      text-align:center; padding:2rem 0; font-size:.875rem;
     }
     form#pass-form {
-      margin: 1rem auto; max-width: 280px; display: flex;
-      gap: 0.5rem;
+      margin:1rem auto; max-width:280px; display:flex; gap:.5rem;
     }
     form#pass-form input,
     form#pass-form button {
-      border: none; border-radius: 0.25rem; font-family: inherit;
+      border:none; border-radius:.25rem; font-family:inherit;
     }
     form#pass-form input {
-      flex: 1; padding: 0.5rem; background: #222; color: var(--fg);
+      flex:1; padding:.5rem; background:#222; color:var(--fg);
     }
     form#pass-form button {
-      padding: 0.5rem 1rem; background: var(--accent);
-      color: #000; cursor: pointer;
+      padding:.5rem 1rem; background:var(--accent);
+      color:#000; cursor:pointer;
+    }
+
+    /* ==== Gating: hide locked sections ==== */
+    .locked { opacity:.35; filter:blur(2px); }
+
+    /* ==== PRINT STYLES ==== */
+    @media print {
+      body { background:#fff!important; color:#000!important; }
+      nav,#search-container,footer,form#pass-form,#no-results { display:none!important; }
+      h1,h2,h3,h4,h5 { color:#000!important; margin:1.5rem 0 .5rem!important; }
+      textarea { background:transparent!important; border:1px solid #000!important; color:#000!important; }
+      a::after { content:" (" attr(href) ")"; font-size:.85em; }
+      a { color:#000!important; text-decoration:underline!important; }
+      .item-list li::before { content:"•"; color:#000!important; }
+      .item-list { padding-left:1rem!important; }
+      .item-list li { padding-left:.5rem!important; }
+      [data-level] { opacity:1!important; filter:none!important; }
     }
   </style>
 </head>
@@ -118,7 +121,7 @@
       <input id="pass-input" type="password" placeholder="Enter passphrase" autocomplete="off"/>
       <button type="submit">Unlock</button>
     </form>
-    <p style="font-size:0.9rem;">
+    <p style="font-size:.9rem;">
       Current level: <span id="current-level">0</span>
     </p>
   </header>
@@ -154,6 +157,8 @@
 
     <section id="journal" data-level="0">
       <h2>✍️ Journal Entries</h2>
+      <textarea id="entry" rows="6" placeholder="Write today’s reflection…"></textarea>
+      <p id="timestamp" style="font-size:.8rem;opacity:.7;"></p>
       <ul class="item-list" id="journalList"><li>Loading…</li></ul>
     </section>
 
@@ -199,60 +204,108 @@
 
   <script src="loop-engine.js"></script>
   <script>
-    // Scrollspy highlighting
-    function updateNav() {
+    // ===== Scrollspy =====
+    function scrollSpy() {
       const links = [...document.querySelectorAll('nav a')];
-      const sections = links.map(a => document.querySelector(a.getAttribute('href')));
-      let idx = sections.findIndex(sec =>
-        sec.getBoundingClientRect().top <= 60 &&
-        sec.getBoundingClientRect().bottom >= 60
+      const secs   = links.map(a=>document.querySelector(a.hash));
+      let idx = secs.findIndex(s=>
+        s.getBoundingClientRect().top <= 60 && s.getBoundingClientRect().bottom > 60
       );
-      if (idx < 0) idx = 0;
-      links.forEach((a,i)=>a.classList.toggle('active', i===idx));
+      if(idx<0) idx=0;
+      links.forEach((a,i)=>a.classList.toggle('active',i===idx));
     }
-    window.addEventListener('scroll', updateNav);
-    updateNav();
+    window.addEventListener('scroll',scrollSpy);
+    scrollSpy();
 
-    // Journal persistence, gating, search, last-updated ...
-    // (reuse your existing functions here)
+    // ===== Journal Persistence =====
+    (()=>{
+      const k='6ol_journal', e=document.getElementById('entry'),
+            ts=document.getElementById('timestamp');
+      e.addEventListener('input',()=>{
+        localStorage.setItem(k,e.value);
+        ts.textContent='Last saved: '+new Date().toLocaleString();
+      });
+      const v=localStorage.getItem(k);
+      if(v){e.value=v;ts.textContent='Last saved: '+new Date().toLocaleString();}
+    })();
 
-    // Fetch & render manifests
-    async function renderManifest(folder, listId, isJournal=false) {
-      try {
-        const res = await fetch(`${folder}/manifest.json`);
-        const data = await res.json();
-        const ul = document.getElementById(listId);
-        ul.innerHTML = '';
-        data.forEach(item => {
-          const li = document.createElement('li');
-          li.className = 'item';
-          const a = document.createElement('a');
-          a.href = `${folder}/${item.filename}`;
-          if (isJournal) a.textContent = item.date;
-          else a.textContent = item.title;
-          a.target = '_blank';
+    // ===== Passphrase Gating =====
+    (()=>{
+      const M={'sol':1,'luna':2,'umbra':3}, SK='6ol_loop_level';
+      const getL=()=>+localStorage.getItem(SK)||0;
+      const setL=l=>{localStorage.setItem(SK,l);refresh();};
+      const refresh=()=>{
+        document.getElementById('current-level').textContent=getL();
+        document.querySelectorAll('[data-level]').forEach(sec=>{
+          const req=+sec.dataset.level;
+          if(getL()>=req){sec.classList.remove('locked');sec.style.display='';}
+          else sec.classList.add('locked');
+        });
+      };
+      document.getElementById('pass-form').addEventListener('submit',e=>{
+        e.preventDefault();
+        const pw=document.getElementById('pass-input').value.trim().toLowerCase();
+        if(M[pw]>getL()){setL(M[pw]);alert('🔓 Unlocked level '+M[pw]);}
+        else alert('❌ Invalid or no new level');
+        e.target.reset();
+      });
+      window.addEventListener('load',refresh);
+    })();
+
+    // ===== Search & No-Results =====
+    (()=>{
+      const inp=document.getElementById('search-input'),
+            no=document.getElementById('no-results');
+      inp.addEventListener('input',()=>{
+        const q=inp.value.trim().toLowerCase();
+        let any=false;
+        document.querySelectorAll('.item-list li').forEach(li=>{
+          const ok=!q||li.textContent.toLowerCase().includes(q);
+          li.style.display=ok?'':'none'; if(ok) any=true;
+        });
+        no.style.display=(q&&!any)?'block':'none';
+      });
+    })();
+
+    // ===== Last Updated =====
+    (()=>{
+      const p=document.getElementById('last-updated'),
+            m=document.lastModified.split(' '),
+            [mo,da,yr]=m[0].split('/');
+      p.textContent=`Last updated: ${yr}-${mo.padStart(2,'0')}-${da.padStart(2,'0')} ${m[1]}`;
+    })();
+
+    // ===== Manifest Rendering =====
+    async function render(folder,id,isJ=false){
+      const ul=document.getElementById(id);
+      try{
+        const res=await fetch(`${folder}/manifest.json`);
+        if(!res.ok) throw 0;
+        const items=await res.json();
+        ul.innerHTML='';
+        items.forEach(it=>{
+          const li=document.createElement('li'), a=document.createElement('a');
+          a.href=`${folder}/${it.filename}`; a.target='_blank';
+          a.textContent=isJ?it.date:it.title;
           li.appendChild(a);
-          if (item.summary) {
-            const sm = document.createElement('small');
-            sm.textContent = item.summary;
-            li.appendChild(sm);
+          if(it.summary){
+            const sm=document.createElement('small');
+            sm.textContent=it.summary; li.appendChild(sm);
           }
           ul.appendChild(li);
         });
-      } catch (e) {
-        console.error(`Error loading ${folder}:`, e);
+      }catch(e){
+        ul.innerHTML='<li>Error loading</li>';
       }
     }
-
-    window.addEventListener('load', () => {
-      renderManifest('scrolls','scrolls-list');
-      renderManifest('rituals','rituals-list');
-      renderManifest('journals','journalList',true);
-      renderManifest('onthecomeup','podcast-list');
-      renderManifest('finance','finance-list');
-      renderManifest('legal','legal-list');
-      renderManifest('navarre','navarre-list');
-      // insertLastUpdated(); initSearch(); initGating(); initJournalPersistence(); etc.
+    window.addEventListener('load',()=>{
+      render('scrolls','scrolls-list');
+      render('rituals','rituals-list');
+      render('journals','journalList',true);
+      render('onthecomeup','podcast-list');
+      render('finance','finance-list');
+      render('legal','legal-list');
+      render('navarre','navarre-list');
     });
   </script>
 </body>
