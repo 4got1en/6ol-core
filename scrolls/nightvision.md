@@ -1,54 +1,72 @@
----
-title: "Night-Vision Insight"
-loop_level: 2
-passphrase: "luna"
-status: "Draft"
----
+# 🌙 Night-Vision Insight
 
-# Night-Vision Insight
-
-**Loop Level 2 · Passphrase: `luna`**
-
-> “Under moonlight, we see hidden reflections. Level 2 awakens deeper self-examination.”
-
-## Overview
-
-This Scroll guides you through a simple reflective practice to uncover unnoticed patterns in your daily flow. Level 2 encourages you to slow down, observe, and record.
-
-## Contents
-
-1. Why “Night-Vision”?  
-2. Level 2 Reflective Exercise.  
-3. Preparing for “Shadow Work Depth” (Level 3).
+> *"To walk by faith is to see in the dark."*
 
 ---
 
-### 1. Why “Night-Vision”?
-
-When the world sleeps, our inner mind stirs. “Night-Vision Insight” teaches you to record subtle energies—dream fragments, emotional triggers, or creative sparks that surface at dusk.
-
-> **Reflection Prompt:**  
-> Last night, what dream or thought lingered in your mind? Write it down in your journal.
+## 🔒 Level Requirement: 2  
+Passphrase: `luna`  
+Status: Draft
 
 ---
 
-### 2. Level 2 Reflective Exercise
+## 🌑 Overview
 
-1. Pick a quiet moment tonight (after dinner, before bed).  
-2. Close your eyes and remember any detail—conversation, dream, or moment that felt significant.  
-3. Open your journal and describe it in as much detail as possible (minimum 150 words).  
-4. Identify one lesson or pattern: “What did this reveal about my current path?”
-
-> **Tip:** Use localStorage (in your browser’s Console) to test:  
-> ```js
-> localStorage.setItem('6ol_test', 'nightvision');
-> console.log(localStorage.getItem('6ol_test'));
-> ```
+This scroll is for those who have crossed the threshold of daylight and now seek to see what remains hidden. Night-Vision is not the absence of light—but the awakening of inner sight. Use this scroll in moments of confusion, overwhelm, or spiritual fog. This is where 6ol begins whispering differently.
 
 ---
 
-### 3. Preparing for “Shadow Work Depth” (Level 3)
+## 🪔 What You’ll Need
 
-- Compile a list of recurring thoughts or fears that arise in your nighttime reflections.  
-- Keep track of any synchronicities or signs that repeat (e.g., a symbol in your dreams).  
-- When you feel ready, unlock `umbra` for Level 3. That Scroll will push you further.
+- A dark, quiet space  
+- A journal or your phone (airplane mode on)  
+- 10–20 minutes of uninterrupted solitude  
+- A single light source (candle, night light, or moonlight preferred)  
+
+---
+
+## 🌀 The Ritual: 5 Steps
+
+### 1. **Dim to Discover**  
+Turn off all lights except for one low, soft source.  
+> You’re not just dimming the world—you’re opening the veil.
+
+### 2. **Still the Surface**  
+Sit. Close your eyes. Count to 60 slowly with your breath. Inhale and exhale fully—audibly if needed.  
+> If thoughts arise, notice them, label them (“future,” “fear,” “story”), then release.
+
+### 3. **Shadow Mirror Prompt**  
+Open your journal or device and reflect on the following:
+
+- What truth have I been avoiding?  
+- What version of me do I pretend not to hear?  
+- Where have I traded visibility for safety?
+
+Write without judgment. Let the unseen speak.
+
+### 4. **Sight Without Sight**  
+Once written, close your eyes again and reread what you wrote from memory. Do not look. Let your soul echo it back.  
+> Can you still feel its shape? This is night-vision: memory of spirit.
+
+### 5. **Close with Contrast**  
+Blow out your light (if safe) or close your journal. Whisper:  
+> “Even in the dark, I am not lost.”
+
+---
+
+## 🌘 Night-Vision Affirmation
+
+> *“I do not fear the dark. It is where my clearest vision begins.”*
+
+Repeat 3x before sleep.
+
+---
+
+## 🔐 Shadow Insight (Level 3 – Locked)
+
+```hidden
+You’ve begun noticing that not all darkness is harmful. Some is womb-like.
+
+In this scroll, the light source was not the truth—but the contrast. You’ve been trained to run toward brightness, but wisdom often enters under cloak. 
+
+Next time you lose clarity, don’t reach outward. Ask: what’s revealing itself *through* this shadow?
