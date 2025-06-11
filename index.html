@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>6ol Core Hub · v1.17</title>
+  <title>6ol Core Hub · v1.18</title>
   <base href="/6ol-core/" />
   <link rel="icon" type="image/png" href="IMG_3069.png" />
   <style>
@@ -203,6 +203,18 @@
       6: "The temple doors creak. Few make it this far."
     };
 
+    const nameFragments = {
+      first: ["Ash", "Silver", "Night", "Sun", "Veil", "Eclipse", "Light", "Bound", "Fallen", "Whisper"],
+      second: ["Descent", "Tide", "Vein", "Echo", "Core", "Bend", "Spiral", "Gate", "Dream", "Hollow"]
+    };
+
+    function generateUniqueRitualName() {
+      const a = nameFragments.first[Math.floor(Math.random() * nameFragments.first.length)];
+      const b = nameFragments.second[Math.floor(Math.random() * nameFragments.second.length)];
+      const salt = Date.now().toString().slice(-4); // 4-digit timestamp tail
+      return `${a} ${b} · ${salt}`;
+    }
+
     async function fetchManifest(folder) {
       const res = await fetch(`${folder}/manifest.json`);
       if (!res.ok) return [];
@@ -252,9 +264,6 @@
         loadWhispers()
       ]);
 
-      document.getElementById('lastUpdated').textContent =
-        'Last updated: ' + new Date().toLocaleString();
-
       const journal = document.getElementById('journalEntries');
       const saved = localStorage.getItem('journal');
       if (saved) journal.value = saved;
@@ -263,17 +272,19 @@
         localStorage.setItem('journal', journal.value);
       });
 
+      document.getElementById('lastUpdated').textContent =
+        'Last updated: ' + new Date().toLocaleString();
+
       document.getElementById('beginRitualBtn').addEventListener('click', () => {
         const input = document.getElementById('passphraseInput').value.trim().toLowerCase();
+        const ritualName = generateUniqueRitualName();
         RitualCore.init(loopLevel, input);
         RitualCore.beginRitual();
 
-        // Animate scrolls
         document.querySelectorAll('.unlocked').forEach((el, i) => {
           el.style.animationDelay = `${i * 0.2}s`;
         });
 
-        // Whisper response
         const whisper = document.getElementById('ritualWhisper');
         const levelMsg = ritualResponses[loopLevel] || "";
         const passMsg = ritualResponses[input] || ritualResponses.default;
@@ -281,9 +292,8 @@
         whisper.textContent = combined;
         whisper.classList.add("show");
 
-        // Auto-log to journal
         const timestamp = new Date().toLocaleString();
-        const entry = `#ritual\n[${timestamp}]\nLevel: ${loopLevel}\nPassphrase: ${input}\nWhisper: ${combined}\n\n`;
+        const entry = `#ritual\n[${timestamp}]\n🕯️ ${ritualName}\nLevel: ${loopLevel}\nPassphrase: ${input}\nWhisper: ${combined}\n\n`;
         journal.value = entry + journal.value;
         localStorage.setItem('journal', journal.value);
       });
