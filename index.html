@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>6ol Core Hub · v1.12</title>
+  <title>6ol Core Hub · v1.13</title>
   <base href="/6ol-core/" />
   <link rel="icon" type="image/png" href="IMG_3069.png" />
   <style>
@@ -69,6 +69,10 @@
     }
     .unlocked {
       display: block;
+      border-left: 2px solid #0ff;
+      padding-left: 1rem;
+      margin-top: 1rem;
+      color: #0ff;
     }
   </style>
 </head>
@@ -88,6 +92,18 @@
       <h2>📜 Scrolls</h2>
       <div class="whisper" data-type="scrolls"></div>
       <div id="scrollsList">Loading...</div>
+
+      <!-- 🔐 Shadow Locked Scroll (level-based) -->
+      <div class="locked" data-lock-level="3">
+        <h3>Shadow Scroll: Night-Vision Insight</h3>
+        <p>This scroll is only visible at level 3 or higher. You now walk with night-vision.</p>
+      </div>
+
+      <!-- 🔐 Shadow Locked Scroll (passphrase-based) -->
+      <div class="locked" data-lock-passphrase="solstice">
+        <h3>Secret Scroll: Solstice Awakening</h3>
+        <p>Unlocked by invoking the sacred passphrase. The sun folds into you.</p>
+      </div>
     </section>
 
     <section id="rituals">
@@ -131,7 +147,8 @@
   <div id="lastUpdated"></div>
 
   <script>
-    const loopLevel = 3; // update this if you implement dynamic unlocking
+    const loopLevel = 3; // update this if needed
+    const passphrase = 'solstice'; // manually defined for now
 
     async function fetchManifest(folder) {
       const res = await fetch(`${folder}/manifest.json`);
@@ -185,9 +202,10 @@
       document.getElementById('lastUpdated').textContent =
         'Last updated: ' + new Date().toLocaleString();
 
-      // Initialize Ritual Core
-      RitualCore.init(loopLevel);
+      // 🔐 Initialize Ritual Core
+      RitualCore.init(loopLevel, passphrase);
 
+      // 🧿 Bind Ritual Trigger
       document.getElementById('beginRitualBtn').addEventListener('click', () => {
         RitualCore.beginRitual();
       });
