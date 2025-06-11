@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>6ol Core Hub · v1.14</title>
+  <title>6ol Core Hub · v1.15</title>
   <base href="/6ol-core/" />
   <link rel="icon" type="image/png" href="IMG_3069.png" />
   <style>
@@ -71,19 +71,33 @@
       border: 1px solid #0ff;
       border-radius: 4px;
     }
+
     .ritual-active {
       background: radial-gradient(circle, #111 0%, #000 100%);
       transition: background 2s ease;
     }
+
     .locked {
       display: none;
     }
+
     .unlocked {
       display: block;
       border-left: 2px solid #0ff;
       padding-left: 1rem;
       margin-top: 1rem;
       color: #0ff;
+
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 1s ease forwards;
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
   </style>
 </head>
@@ -161,7 +175,7 @@
   <div id="lastUpdated"></div>
 
   <script>
-    const loopLevel = 3; // can be made dynamic later
+    const loopLevel = 3;
 
     async function fetchManifest(folder) {
       const res = await fetch(`${folder}/manifest.json`);
@@ -219,6 +233,12 @@
         const input = document.getElementById('passphraseInput').value.trim();
         RitualCore.init(loopLevel, input);
         RitualCore.beginRitual();
+
+        // Stagger animation appearance
+        const unlockedEls = document.querySelectorAll('.unlocked');
+        unlockedEls.forEach((el, i) => {
+          el.style.animationDelay = `${i * 0.2}s`;
+        });
       });
     }
 
