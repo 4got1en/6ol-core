@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>6ol Core Hub · v1.19</title>
+  <title>6ol Core Hub · v1.20</title>
   <base href="/6ol-core/" />
   <link rel="icon" type="image/png" href="IMG_3069.png" />
   <style>
@@ -84,28 +84,16 @@
       border: 1px solid #0ff;
       border-radius: 4px;
     }
-    .ritual-active {
-      background: radial-gradient(circle, #111 0%, #000 100%);
-      transition: background 2s ease;
+    .archive-entry {
+      background: #111;
+      border: 1px solid #0ff;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-radius: 6px;
     }
-    .locked {
-      display: none;
-    }
-    .unlocked {
-      display: block;
-      border-left: 2px solid #0ff;
-      padding-left: 1rem;
-      margin-top: 1rem;
+    .archive-entry h4 {
+      margin: 0 0 0.5rem 0;
       color: #0ff;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeInUp 1s ease forwards;
-    }
-    @keyframes fadeInUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
     }
     textarea {
       width: 100%;
@@ -118,28 +106,6 @@
       border-radius: 5px;
       margin-top: 1rem;
       resize: vertical;
-    }
-    #archiveFilter {
-      width: 100%;
-      max-width: 300px;
-      padding: 0.5rem;
-      margin-bottom: 1rem;
-      font-size: 1rem;
-      background: #111;
-      color: #0ff;
-      border: 1px solid #0ff;
-      border-radius: 4px;
-    }
-    .archive-entry {
-      background: #111;
-      border: 1px solid #0ff;
-      padding: 1rem;
-      margin-bottom: 1rem;
-      border-radius: 6px;
-    }
-    .archive-entry h4 {
-      margin: 0 0 0.5rem 0;
-      color: #0ff;
     }
   </style>
 </head>
@@ -183,29 +149,10 @@
       <div id="ritualArchive"></div>
     </section>
 
-    <section id="podcast">
-      <h2>🎙️ Podcast</h2>
-      <div class="whisper" data-type="podcast"></div>
-      <div id="podcastList">Loading...</div>
-    </section>
-
-    <section id="finance">
-      <h2>💸 Finance</h2>
-      <div class="whisper" data-type="finance"></div>
-      <div id="financeList">Loading...</div>
-    </section>
-
-    <section id="legal">
-      <h2>⚖️ Legal</h2>
-      <div class="whisper" data-type="legal"></div>
-      <div id="legalList">Loading...</div>
-    </section>
-
-    <section id="navarre">
-      <h2>🧾 Navarre</h2>
-      <div class="whisper" data-type="navarre"></div>
-      <div id="navarreList">Loading...</div>
-    </section>
+    <section id="podcast"><h2>🎙️ Podcast</h2><div class="whisper" data-type="podcast"></div><div id="podcastList">Loading...</div></section>
+    <section id="finance"><h2>💸 Finance</h2><div class="whisper" data-type="finance"></div><div id="financeList">Loading...</div></section>
+    <section id="legal"><h2>⚖️ Legal</h2><div class="whisper" data-type="legal"></div><div id="legalList">Loading...</div></section>
+    <section id="navarre"><h2>🧾 Navarre</h2><div class="whisper" data-type="navarre"></div><div id="navarreList">Loading...</div></section>
   </main>
 
   <div id="lastUpdated"></div>
@@ -233,12 +180,25 @@
       return `${a} ${b} · ${salt}`;
     }
 
+    function sanitizeForFilename(str) {
+      return str.replace(/[^\w\- ]+/g, '').replace(/ /g, '_');
+    }
+
+    function generateMarkdownFile(name, timestamp, level, passphrase, whisper) {
+      const md = `# 🕯️ ${name}\n\n**Date:** ${timestamp}\n**Level:** ${level}\n**Passphrase:** ${passphrase}\n**Whisper:** ${whisper}\n`;
+      const blob = new Blob([md], { type: "text/markdown" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = `rituals/${sanitizeForFilename(name)}.md`;
+      link.click();
+    }
+
     function updateArchive(filter = "") {
       const journal = document.getElementById("journalEntries").value;
       const archive = document.getElementById("ritualArchive");
       archive.innerHTML = "";
 
-      const rituals = journal.split("#ritual").slice(1); // skip before first
+      const rituals = journal.split("#ritual").slice(1);
       rituals.forEach(raw => {
         const lines = raw.trim().split("\n");
         const time = lines[0]?.replace(/[\[\]]/g, "").trim();
@@ -287,17 +247,11 @@
       document.getElementById("beginRitualBtn").addEventListener("click", () => {
         const input = document.getElementById("passphraseInput").value.trim().toLowerCase();
         const ritualName = generateUniqueRitualName();
-        RitualCore.init(loopLevel, input);
-        RitualCore.beginRitual();
-
-        document.querySelectorAll(".unlocked").forEach((el, i) => {
-          el.style.animationDelay = `${i * 0.2}s`;
-        });
-
-        const whisperBox = document.getElementById("ritualWhisper");
         const levelMsg = ritualResponses[loopLevel] || "";
         const passMsg = ritualResponses[input] || ritualResponses.default;
         const combined = `${levelMsg} ${passMsg}`.trim();
+
+        const whisperBox = document.getElementById("ritualWhisper");
         whisperBox.textContent = combined;
         whisperBox.classList.add("show");
 
@@ -306,6 +260,8 @@
         journal.value = entry + journal.value;
         localStorage.setItem("journal", journal.value);
         updateArchive(document.getElementById("archiveFilter").value);
+
+        generateMarkdownFile(ritualName, timestamp, loopLevel, input, combined);
       });
 
       document.getElementById("lastUpdated").textContent =
