@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>6ol Core Hub · v1.16</title>
+  <title>6ol Core Hub · v1.17</title>
   <base href="/6ol-core/" />
   <link rel="icon" type="image/png" href="IMG_3069.png" />
   <style>
@@ -107,6 +107,18 @@
         transform: translateY(0);
       }
     }
+    textarea {
+      width: 100%;
+      height: 200px;
+      background: #111;
+      color: #0ff;
+      font-size: 1rem;
+      padding: 1rem;
+      border: 1px solid #0ff;
+      border-radius: 5px;
+      margin-top: 1rem;
+      resize: vertical;
+    }
   </style>
 </head>
 <body>
@@ -150,7 +162,7 @@
     <section id="journal">
       <h2>✍️ Journal</h2>
       <div class="whisper" data-type="journal"></div>
-      <div id="journalEntries">Loading...</div>
+      <textarea id="journalEntries" placeholder="Your thoughts go here..."></textarea>
     </section>
 
     <section id="podcast">
@@ -243,24 +255,37 @@
       document.getElementById('lastUpdated').textContent =
         'Last updated: ' + new Date().toLocaleString();
 
+      const journal = document.getElementById('journalEntries');
+      const saved = localStorage.getItem('journal');
+      if (saved) journal.value = saved;
+
+      journal.addEventListener('input', () => {
+        localStorage.setItem('journal', journal.value);
+      });
+
       document.getElementById('beginRitualBtn').addEventListener('click', () => {
         const input = document.getElementById('passphraseInput').value.trim().toLowerCase();
         RitualCore.init(loopLevel, input);
         RitualCore.beginRitual();
 
-        // Animate newly unlocked scrolls
-        const unlockedEls = document.querySelectorAll('.unlocked');
-        unlockedEls.forEach((el, i) => {
+        // Animate scrolls
+        document.querySelectorAll('.unlocked').forEach((el, i) => {
           el.style.animationDelay = `${i * 0.2}s`;
         });
 
-        // Whisper reaction
+        // Whisper response
         const whisper = document.getElementById('ritualWhisper');
         const levelMsg = ritualResponses[loopLevel] || "";
         const passMsg = ritualResponses[input] || ritualResponses.default;
-
-        whisper.textContent = `${levelMsg} ${passMsg}`.trim();
+        const combined = `${levelMsg} ${passMsg}`.trim();
+        whisper.textContent = combined;
         whisper.classList.add("show");
+
+        // Auto-log to journal
+        const timestamp = new Date().toLocaleString();
+        const entry = `#ritual\n[${timestamp}]\nLevel: ${loopLevel}\nPassphrase: ${input}\nWhisper: ${combined}\n\n`;
+        journal.value = entry + journal.value;
+        localStorage.setItem('journal', journal.value);
       });
     }
 
