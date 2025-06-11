@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>6ol Core Hub · v1.18</title>
+  <title>6ol Core Hub · v1.19</title>
   <base href="/6ol-core/" />
   <link rel="icon" type="image/png" href="IMG_3069.png" />
   <style>
@@ -119,6 +119,28 @@
       margin-top: 1rem;
       resize: vertical;
     }
+    #archiveFilter {
+      width: 100%;
+      max-width: 300px;
+      padding: 0.5rem;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+      background: #111;
+      color: #0ff;
+      border: 1px solid #0ff;
+      border-radius: 4px;
+    }
+    .archive-entry {
+      background: #111;
+      border: 1px solid #0ff;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-radius: 6px;
+    }
+    .archive-entry h4 {
+      margin: 0 0 0.5rem 0;
+      color: #0ff;
+    }
   </style>
 </head>
 <body>
@@ -126,6 +148,7 @@
     <a href="#scrolls">📜 Scrolls</a>
     <a href="#rituals">🕯️ Rituals</a>
     <a href="#journal">✍️ Journal</a>
+    <a href="#archive">📜 Archive</a>
     <a href="#podcast">🎙️ Podcast</a>
     <a href="#finance">💸 Finance</a>
     <a href="#legal">⚖️ Legal</a>
@@ -137,23 +160,12 @@
       <h2>📜 Scrolls</h2>
       <div class="whisper" data-type="scrolls"></div>
       <div id="scrollsList">Loading...</div>
-
-      <div class="locked" data-lock-level="3">
-        <h3>Shadow Scroll: Night-Vision Insight</h3>
-        <p>This scroll is only visible at level 3 or higher. You now walk with night-vision.</p>
-      </div>
-
-      <div class="locked" data-lock-passphrase="solstice">
-        <h3>Secret Scroll: Solstice Awakening</h3>
-        <p>Unlocked by invoking the sacred passphrase. The sun folds into you.</p>
-      </div>
     </section>
 
     <section id="rituals">
       <h2>🕯️ Rituals</h2>
       <div class="whisper" data-type="rituals"></div>
       <div id="ritualsList">Loading...</div>
-
       <input id="passphraseInput" type="text" placeholder="Enter passphrase..." />
       <button id="beginRitualBtn">Begin Ritual</button>
       <div id="ritualWhisper" class="ritual-whisper"></div>
@@ -163,6 +175,12 @@
       <h2>✍️ Journal</h2>
       <div class="whisper" data-type="journal"></div>
       <textarea id="journalEntries" placeholder="Your thoughts go here..."></textarea>
+    </section>
+
+    <section id="archive">
+      <h2>📜 Ritual Archive</h2>
+      <input id="archiveFilter" type="text" placeholder="Search rituals..." />
+      <div id="ritualArchive"></div>
     </section>
 
     <section id="podcast">
@@ -211,105 +229,99 @@
     function generateUniqueRitualName() {
       const a = nameFragments.first[Math.floor(Math.random() * nameFragments.first.length)];
       const b = nameFragments.second[Math.floor(Math.random() * nameFragments.second.length)];
-      const salt = Date.now().toString().slice(-4); // 4-digit timestamp tail
+      const salt = Date.now().toString().slice(-4);
       return `${a} ${b} · ${salt}`;
     }
 
-    async function fetchManifest(folder) {
-      const res = await fetch(`${folder}/manifest.json`);
-      if (!res.ok) return [];
-      return await res.json();
-    }
+    function updateArchive(filter = "") {
+      const journal = document.getElementById("journalEntries").value;
+      const archive = document.getElementById("ritualArchive");
+      archive.innerHTML = "";
 
-    async function renderList(folder, containerId) {
-      const items = await fetchManifest(folder);
-      const container = document.getElementById(containerId);
-      container.innerHTML = '';
+      const rituals = journal.split("#ritual").slice(1); // skip before first
+      rituals.forEach(raw => {
+        const lines = raw.trim().split("\n");
+        const time = lines[0]?.replace(/[\[\]]/g, "").trim();
+        const name = lines[1]?.replace("🕯️", "").trim();
+        const level = lines.find(l => l.startsWith("Level:"))?.split(":")[1]?.trim();
+        const pass = lines.find(l => l.startsWith("Passphrase:"))?.split(":")[1]?.trim();
+        const whisper = lines.find(l => l.startsWith("Whisper:"))?.split(":")[1]?.trim();
+        const text = `${name} ${level} ${pass} ${whisper}`.toLowerCase();
 
-      if (!items.length) {
-        container.innerHTML = '<em>No matching items found.</em>';
-        return;
-      }
+        if (!text.includes(filter.toLowerCase())) return;
 
-      for (const item of items) {
-        const link = document.createElement('a');
-        link.href = `${folder}/${item.filename}`;
-        link.textContent = item.title || item.date || 'Untitled';
-        link.style.display = 'block';
-        container.appendChild(link);
-      }
+        const div = document.createElement("div");
+        div.className = "archive-entry";
+        div.innerHTML = `<h4>${name}</h4><p><strong>${time}</strong><br>Level: ${level} · Passphrase: ${pass}<br><em>${whisper}</em></p>`;
+        archive.appendChild(div);
+      });
     }
 
     async function loadWhispers() {
-      const res = await fetch('whispers.json');
+      const res = await fetch("whispers.json");
       const data = await res.json();
-
-      document.querySelectorAll('.whisper').forEach(div => {
+      document.querySelectorAll(".whisper").forEach(div => {
         const type = div.dataset.type;
-        if (data[type] && data[type][loopLevel] !== undefined) {
+        if (data[type] && data[type][loopLevel]) {
           div.textContent = data[type][loopLevel];
         }
       });
     }
 
     async function main() {
-      await Promise.all([
-        renderList('scrolls', 'scrollsList'),
-        renderList('rituals', 'ritualsList'),
-        renderList('journals', 'journalEntries'),
-        renderList('podcasts', 'podcastList'),
-        renderList('finances', 'financeList'),
-        renderList('legal', 'legalList'),
-        renderList('navarre', 'navarreList'),
-        loadWhispers()
-      ]);
-
-      const journal = document.getElementById('journalEntries');
-      const saved = localStorage.getItem('journal');
+      await loadWhispers();
+      const journal = document.getElementById("journalEntries");
+      const saved = localStorage.getItem("journal");
       if (saved) journal.value = saved;
+      updateArchive();
 
-      journal.addEventListener('input', () => {
-        localStorage.setItem('journal', journal.value);
+      journal.addEventListener("input", () => {
+        localStorage.setItem("journal", journal.value);
+        updateArchive(document.getElementById("archiveFilter").value);
       });
 
-      document.getElementById('lastUpdated').textContent =
-        'Last updated: ' + new Date().toLocaleString();
+      document.getElementById("archiveFilter").addEventListener("input", (e) => {
+        updateArchive(e.target.value);
+      });
 
-      document.getElementById('beginRitualBtn').addEventListener('click', () => {
-        const input = document.getElementById('passphraseInput').value.trim().toLowerCase();
+      document.getElementById("beginRitualBtn").addEventListener("click", () => {
+        const input = document.getElementById("passphraseInput").value.trim().toLowerCase();
         const ritualName = generateUniqueRitualName();
         RitualCore.init(loopLevel, input);
         RitualCore.beginRitual();
 
-        document.querySelectorAll('.unlocked').forEach((el, i) => {
+        document.querySelectorAll(".unlocked").forEach((el, i) => {
           el.style.animationDelay = `${i * 0.2}s`;
         });
 
-        const whisper = document.getElementById('ritualWhisper');
+        const whisperBox = document.getElementById("ritualWhisper");
         const levelMsg = ritualResponses[loopLevel] || "";
         const passMsg = ritualResponses[input] || ritualResponses.default;
         const combined = `${levelMsg} ${passMsg}`.trim();
-        whisper.textContent = combined;
-        whisper.classList.add("show");
+        whisperBox.textContent = combined;
+        whisperBox.classList.add("show");
 
         const timestamp = new Date().toLocaleString();
         const entry = `#ritual\n[${timestamp}]\n🕯️ ${ritualName}\nLevel: ${loopLevel}\nPassphrase: ${input}\nWhisper: ${combined}\n\n`;
         journal.value = entry + journal.value;
-        localStorage.setItem('journal', journal.value);
+        localStorage.setItem("journal", journal.value);
+        updateArchive(document.getElementById("archiveFilter").value);
       });
+
+      document.getElementById("lastUpdated").textContent =
+        "Last updated: " + new Date().toLocaleString();
     }
 
     main();
 
-    window.addEventListener('scroll', () => {
-      const links = document.querySelectorAll('nav a');
+    window.addEventListener("scroll", () => {
+      const links = document.querySelectorAll("nav a");
       let fromTop = window.scrollY + 10;
-
       links.forEach(link => {
         let section = document.querySelector(link.hash);
-        if (section.offsetTop <= fromTop && section.offsetTop + section.offsetHeight > fromTop) {
-          links.forEach(l => l.classList.remove('active'));
-          link.classList.add('active');
+        if (section?.offsetTop <= fromTop && section.offsetTop + section.offsetHeight > fromTop) {
+          links.forEach(l => l.classList.remove("active"));
+          link.classList.add("active");
         }
       });
     });
