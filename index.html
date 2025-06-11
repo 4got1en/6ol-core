@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>6ol Core Hub · v1.13</title>
+  <title>6ol Core Hub · v1.14</title>
   <base href="/6ol-core/" />
   <link rel="icon" type="image/png" href="IMG_3069.png" />
   <style>
@@ -60,6 +60,17 @@
       font-size: 1rem;
       cursor: pointer;
     }
+    #passphraseInput {
+      margin-top: 1rem;
+      padding: 0.5rem;
+      font-size: 1rem;
+      width: 100%;
+      max-width: 300px;
+      background: #111;
+      color: #0ff;
+      border: 1px solid #0ff;
+      border-radius: 4px;
+    }
     .ritual-active {
       background: radial-gradient(circle, #111 0%, #000 100%);
       transition: background 2s ease;
@@ -110,6 +121,9 @@
       <h2>🕯️ Rituals</h2>
       <div class="whisper" data-type="rituals"></div>
       <div id="ritualsList">Loading...</div>
+
+      <!-- 🗝️ Input + Trigger -->
+      <input id="passphraseInput" type="text" placeholder="Enter passphrase..." />
       <button id="beginRitualBtn">Begin Ritual</button>
     </section>
 
@@ -147,8 +161,7 @@
   <div id="lastUpdated"></div>
 
   <script>
-    const loopLevel = 3; // update this if needed
-    const passphrase = 'solstice'; // manually defined for now
+    const loopLevel = 3; // can be made dynamic later
 
     async function fetchManifest(folder) {
       const res = await fetch(`${folder}/manifest.json`);
@@ -202,11 +215,9 @@
       document.getElementById('lastUpdated').textContent =
         'Last updated: ' + new Date().toLocaleString();
 
-      // 🔐 Initialize Ritual Core
-      RitualCore.init(loopLevel, passphrase);
-
-      // 🧿 Bind Ritual Trigger
       document.getElementById('beginRitualBtn').addEventListener('click', () => {
+        const input = document.getElementById('passphraseInput').value.trim();
+        RitualCore.init(loopLevel, input);
         RitualCore.beginRitual();
       });
     }
