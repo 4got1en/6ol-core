@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>6ol Core Hub · v1.15</title>
+  <title>6ol Core Hub · v1.16</title>
   <base href="/6ol-core/" />
   <link rel="icon" type="image/png" href="IMG_3069.png" />
   <style>
@@ -44,6 +44,19 @@
       margin-top: 0.5rem;
       font-size: 0.95em;
     }
+    .ritual-whisper {
+      font-style: italic;
+      color: #0ff;
+      margin-top: 1rem;
+      font-size: 1rem;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .ritual-whisper.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
     #lastUpdated {
       font-size: 0.8rem;
       color: #666;
@@ -71,28 +84,23 @@
       border: 1px solid #0ff;
       border-radius: 4px;
     }
-
     .ritual-active {
       background: radial-gradient(circle, #111 0%, #000 100%);
       transition: background 2s ease;
     }
-
     .locked {
       display: none;
     }
-
     .unlocked {
       display: block;
       border-left: 2px solid #0ff;
       padding-left: 1rem;
       margin-top: 1rem;
       color: #0ff;
-
       opacity: 0;
       transform: translateY(20px);
       animation: fadeInUp 1s ease forwards;
     }
-
     @keyframes fadeInUp {
       to {
         opacity: 1;
@@ -118,13 +126,11 @@
       <div class="whisper" data-type="scrolls"></div>
       <div id="scrollsList">Loading...</div>
 
-      <!-- 🔐 Shadow Locked Scroll (level-based) -->
       <div class="locked" data-lock-level="3">
         <h3>Shadow Scroll: Night-Vision Insight</h3>
         <p>This scroll is only visible at level 3 or higher. You now walk with night-vision.</p>
       </div>
 
-      <!-- 🔐 Shadow Locked Scroll (passphrase-based) -->
       <div class="locked" data-lock-passphrase="solstice">
         <h3>Secret Scroll: Solstice Awakening</h3>
         <p>Unlocked by invoking the sacred passphrase. The sun folds into you.</p>
@@ -136,9 +142,9 @@
       <div class="whisper" data-type="rituals"></div>
       <div id="ritualsList">Loading...</div>
 
-      <!-- 🗝️ Input + Trigger -->
       <input id="passphraseInput" type="text" placeholder="Enter passphrase..." />
       <button id="beginRitualBtn">Begin Ritual</button>
+      <div id="ritualWhisper" class="ritual-whisper"></div>
     </section>
 
     <section id="journal">
@@ -176,6 +182,14 @@
 
   <script>
     const loopLevel = 3;
+
+    const ritualResponses = {
+      default: "The veil stirs, but offers no sign.",
+      solstice: "The shadow bends. You have spoken the true name of the sun.",
+      eclipse: "Two forces meet in silence. The moon has answered.",
+      3: "You now walk with night-vision. Scrolls tremble open.",
+      6: "The temple doors creak. Few make it this far."
+    };
 
     async function fetchManifest(folder) {
       const res = await fetch(`${folder}/manifest.json`);
@@ -230,15 +244,23 @@
         'Last updated: ' + new Date().toLocaleString();
 
       document.getElementById('beginRitualBtn').addEventListener('click', () => {
-        const input = document.getElementById('passphraseInput').value.trim();
+        const input = document.getElementById('passphraseInput').value.trim().toLowerCase();
         RitualCore.init(loopLevel, input);
         RitualCore.beginRitual();
 
-        // Stagger animation appearance
+        // Animate newly unlocked scrolls
         const unlockedEls = document.querySelectorAll('.unlocked');
         unlockedEls.forEach((el, i) => {
           el.style.animationDelay = `${i * 0.2}s`;
         });
+
+        // Whisper reaction
+        const whisper = document.getElementById('ritualWhisper');
+        const levelMsg = ritualResponses[loopLevel] || "";
+        const passMsg = ritualResponses[input] || ritualResponses.default;
+
+        whisper.textContent = `${levelMsg} ${passMsg}`.trim();
+        whisper.classList.add("show");
       });
     }
 
