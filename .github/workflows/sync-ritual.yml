@@ -1,0 +1,22 @@
+name: Sync Ritual
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - rituals/**.md
+
+jobs:
+  commit-ritual:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Commit new ritual
+        run: |
+          git config user.name "6ol Ritual Bot"
+          git config user.email "rituals@6ol.dev"
+          git add rituals/
+          git commit -m "🕯️ New ritual added" || echo "No changes to commit"
+          git push
