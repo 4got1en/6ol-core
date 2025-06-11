@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>6ol Core Hub · v1.11</title>
+  <title>6ol Core Hub · v1.12</title>
   <base href="/6ol-core/" />
   <link rel="icon" type="image/png" href="IMG_3069.png" />
   <style>
@@ -50,6 +50,26 @@
       text-align: center;
       margin-top: 3rem;
     }
+    #beginRitualBtn {
+      margin-top: 1rem;
+      padding: 0.6rem 1.2rem;
+      background: #222;
+      color: #0ff;
+      border: 1px solid #0ff;
+      border-radius: 4px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    .ritual-active {
+      background: radial-gradient(circle, #111 0%, #000 100%);
+      transition: background 2s ease;
+    }
+    .locked {
+      display: none;
+    }
+    .unlocked {
+      display: block;
+    }
   </style>
 </head>
 <body>
@@ -74,6 +94,7 @@
       <h2>🕯️ Rituals</h2>
       <div class="whisper" data-type="rituals"></div>
       <div id="ritualsList">Loading...</div>
+      <button id="beginRitualBtn">Begin Ritual</button>
     </section>
 
     <section id="journal">
@@ -163,6 +184,13 @@
 
       document.getElementById('lastUpdated').textContent =
         'Last updated: ' + new Date().toLocaleString();
+
+      // Initialize Ritual Core
+      RitualCore.init(loopLevel);
+
+      document.getElementById('beginRitualBtn').addEventListener('click', () => {
+        RitualCore.beginRitual();
+      });
     }
 
     main();
@@ -180,5 +208,7 @@
       });
     });
   </script>
+
+  <script src="ritual-core.js"></script>
 </body>
 </html>
