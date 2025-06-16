@@ -23,4 +23,4 @@ for (const [stage, keywords] of Object.entries(stageKeywords)) {
 }
 
 await writeFile('loop.json', JSON.stringify({ stage: detectedStage }, null, 2));
-console.log(`Detected stage: ${detectedStage}`);
+console.log(`Detected stage: ${detectedStage}`); 
