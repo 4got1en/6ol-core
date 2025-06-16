@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>6ol Core Hub · v2.2</title>
+  <title>6ol Core Hub · v2.3</title>
   <base href="/6ol-core/" />
   <link rel="icon" type="image/png" href="IMG_3069.png" />
   <style>
@@ -46,12 +46,25 @@
     <a href="index.html" class="active">Home</a>
     <a href="scrolls.html">Scrolls</a>
     <a href="journal.html">Journal</a>
-    <a href="spirit-map.html">Spirit Map</a>
+    <a id="spiritLink" href="spirit-map.html">Spirit Map</a>
   </nav>
 
   <main>
     <h1>Welcome to the 6ol Core Hub</h1>
     <p>This is your starting point for scrolls, journal syncing, spirit mapping, and ritual development.</p>
   </main>
+
+  <script>
+    fetch('loop.json')
+      .then(res => res.json())
+      .then(data => {
+        const stage = data.stage?.toLowerCase();
+        const link = document.getElementById('spiritLink');
+        if (stage) {
+          link.href = `spirit-map.html?stage=${stage}`;
+        }
+      })
+      .catch(err => console.error("Could not load loop stage:", err));
+  </script>
 </body>
 </html>
