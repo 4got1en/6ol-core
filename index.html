@@ -29,169 +29,29 @@
       color: #888;
       text-decoration: none;
     }
+    nav a:hover {
+      color: #f5c84c;
+    }
     nav a.active {
-      color: #fff;
+      color: #f5c84c;
       font-weight: bold;
     }
-    section {
-      padding-top: 3rem;
-      margin-top: 3rem;
-      border-top: 1px solid #333;
-    }
-    .whisper {
-      font-style: italic;
-      color: #aaa;
-      margin-top: 0.5rem;
-      font-size: 0.95em;
-    }
-    #lastUpdated {
-      font-size: 0.8rem;
-      color: #666;
-      text-align: center;
-      margin-top: 3rem;
-    }
-    .weeklyDrop {
-      background: #111;
-      border: 1px solid #0f0;
-      padding: 1rem;
-      margin-top: 1rem;
-      border-radius: 5px;
-    }
-    .weeklyDrop h4 {
-      margin: 0 0 0.5rem 0;
-      color: #0f0;
-    }
-    .weeklyDrop textarea {
-      width: 100%;
-      height: 120px;
-      background: #000;
-      color: #0f0;
-      border: 1px solid #0f0;
-      padding: 0.5rem;
-      font-family: monospace;
-      font-size: 1rem;
-      border-radius: 5px;
-    }
-    .toggleForce {
-      background: none;
-      border: 1px solid #0f0;
-      color: #0f0;
-      padding: 0.3rem 0.6rem;
-      font-size: 0.9rem;
-      margin-top: 0.5rem;
-      cursor: pointer;
+    main {
+      padding-top: 4rem;
     }
   </style>
 </head>
 <body>
-  <nav id="navbar">
-    <a href="#scrolls">📜 Scrolls</a>
-    <a href="#rituals">🕯️ Rituals</a>
-    <a href="#journal">✍️ Journal</a>
-    <a href="#archive">📜 Archive</a>
-    <a href="#podcast">🎙️ Podcast</a>
-    <a href="#finance">💸 Finance</a>
-    <a href="#legal">⚖️ Legal</a>
-    <a href="#navarre">🧾 Navarre</a>
+  <nav>
+    <a href="index.html" class="active">Home</a>
+    <a href="scrolls.html">Scrolls</a>
+    <a href="journal.html">Journal</a>
+    <a href="spirit-map.html">Spirit Map</a>
   </nav>
 
   <main>
-    <section id="scrolls"><h2>📜 Scrolls</h2><div class="whisper" data-type="scrolls"></div><div id="scrollsList">Loading...</div></section>
-    <section id="rituals"><h2>🕯️ Rituals</h2><div class="whisper" data-type="rituals"></div><div id="ritualsList">Loading...</div></section>
-    <section id="journal"><h2>✍️ Journal</h2><div class="whisper" data-type="journal"></div><textarea id="journalEntries" placeholder="Your thoughts go here..."></textarea></section>
-    <section id="archive"><h2>📜 Ritual Archive</h2><input id="archiveFilter" type="text" placeholder="Search rituals..." /><div id="ritualArchive"></div></section>
-
-    <section id="podcast"><h2>🎙️ Podcast</h2><div class="whisper" data-type="podcast"></div><div id="podcastList">Loading...</div></section>
-    <section id="finance"><h2>💸 Finance</h2><div class="whisper" data-type="finance"></div><div id="financeList">Loading...</div></section>
-    <section id="legal"><h2>⚖️ Legal</h2><div class="whisper" data-type="legal"></div><div id="legalList">Loading...</div></section>
-    <section id="navarre"><h2>🧾 Navarre</h2><div class="whisper" data-type="navarre"></div><div id="navarreList">Loading...</div></section>
-
-    <section id="weeklyDrop" style="display: none">
-      <div class="weeklyDrop">
-        <h4>🧾 Weekly Drop Log (Tuesdays)</h4>
-        <textarea id="dropLog" placeholder="What dropped this week?"></textarea>
-        <button class="toggleForce" onclick="toggleForceView()">Hide Drop View</button>
-      </div>
-    </section>
+    <h1>Welcome to the 6ol Core Hub</h1>
+    <p>This is your starting point for scrolls, journal syncing, spirit mapping, and ritual development.</p>
   </main>
-
-  <div id="lastUpdated"></div>
-
-  <script>
-    function isTuesday() {
-      return new Date().getDay() === 2; // 0=Sunday, 2=Tuesday
-    }
-
-    function toggleForceView(force = null) {
-      const section = document.getElementById("weeklyDrop");
-      const stored = localStorage.getItem("forceDropView");
-      const newState = force !== null ? force : !(stored === "true");
-      localStorage.setItem("forceDropView", newState);
-      section.style.display = newState || isTuesday() ? "block" : "none";
-    }
-
-    function setupDropLog() {
-      const log = document.getElementById("dropLog");
-      const saved = localStorage.getItem("weeklyDrop");
-      if (saved) log.value = saved;
-
-      log.addEventListener("input", () => {
-        localStorage.setItem("weeklyDrop", log.value);
-      });
-
-      toggleForceView();
-    }
-
-    function loadWhispers() {
-      fetch("whispers.json")
-        .then(res => res.json())
-        .then(data => {
-          document.querySelectorAll(".whisper").forEach(div => {
-            const type = div.dataset.type;
-            if (data[type]) div.textContent = data[type][3] || "";
-          });
-        });
-    }
-
-    function main() {
-      setupDropLog();
-      loadWhispers();
-      const journal = document.getElementById("journalEntries");
-      const saved = localStorage.getItem("journal");
-      if (saved) journal.value = saved;
-
-      journal.addEventListener("input", () => {
-        localStorage.setItem("journal", journal.value);
-      });
-
-      document.getElementById("archiveFilter").addEventListener("input", e => {
-        const filter = e.target.value.toLowerCase();
-        const archive = document.getElementById("ritualArchive");
-        archive.innerHTML = "";
-        const rituals = journal.value.split("#ritual").slice(1);
-        rituals.forEach(raw => {
-          const lines = raw.trim().split("\n");
-          const time = lines[0]?.replace(/[\[\]]/g, "").trim();
-          const name = lines[1]?.replace("🕯️", "").trim();
-          const level = lines.find(l => l.startsWith("Level:"))?.split(":")[1]?.trim();
-          const pass = lines.find(l => l.startsWith("Passphrase:"))?.split(":")[1]?.trim();
-          const whisper = lines.find(l => l.startsWith("Whisper:"))?.split(":")[1]?.trim();
-          const text = `${name} ${level} ${pass} ${whisper}`.toLowerCase();
-
-          if (!text.includes(filter)) return;
-
-          const div = document.createElement("div");
-          div.className = "archive-entry";
-          div.innerHTML = `<h4>${name}</h4><p><strong>${time}</strong><br>Level: ${level} · Passphrase: ${pass}<br><em>${whisper}</em></p>`;
-          archive.appendChild(div);
-        });
-      });
-
-      document.getElementById("lastUpdated").textContent =
-        "Last updated: " + new Date().toLocaleString();
-    }
-
-    main();
-  </script>
 </body>
 </html>
