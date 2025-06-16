@@ -1,0 +1,32 @@
+name: Update Loop Stage
+
+on:
+  push:
+    paths:
+      - 'journal.md'
+
+jobs:
+  detect-stage:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Run detect-stage.js
+        run: |
+          npm install
+          node detect-stage.js
+
+      - name: Commit changes
+        run: |
+          git config user.name "6ol Auto"
+          git config user.email "actions@github.com"
+          git add loop.json
+          git commit -m "Auto-update loop stage" || echo "No changes"
+          git push
