@@ -1,6 +1,6 @@
-const fs = require('fs');
+import { readFile, writeFile } from 'fs/promises';
 
-const journal = fs.readFileSync('journal.md', 'utf-8').toLowerCase();
+const journal = (await readFile('journal.md', 'utf-8')).toLowerCase();
 
 const stageKeywords = {
   seed:    ['why', 'what if', 'purpose', 'begin'],
@@ -22,5 +22,5 @@ for (const [stage, keywords] of Object.entries(stageKeywords)) {
   }
 }
 
-fs.writeFileSync('loop.json', JSON.stringify({ stage: detectedStage }, null, 2));
+await writeFile('loop.json', JSON.stringify({ stage: detectedStage }, null, 2));
 console.log(`Detected stage: ${detectedStage}`);
