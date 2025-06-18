@@ -2,69 +2,101 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>6ol Core Hub · v2.3</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>6ol · Ritual Core Hub · v3.0</title>
+
+  <!-- Base URL for GitHub Pages -->
   <base href="/6ol-core/" />
+
+  <!-- Favicon -->
   <link rel="icon" type="image/png" href="IMG_3069.png" />
+
+  <!-- =====================  BASIC STYLES  ===================== -->
   <style>
-    body {
-      background-color: #000;
-      color: #fff;
-      font-family: 'Helvetica Neue', sans-serif;
-      margin: 0;
-      padding: 2rem;
-      line-height: 1.6;
+    :root {
+      --bg:#0b0b0b; --fg:#eeeeee; --accent:#f5c84c;
+      --border:#333; --panel:#151515; --panel-edge:#222;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
     }
-    nav {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      background: #111;
-      padding: 0.5rem 1rem;
-      z-index: 100;
-      border-bottom: 1px solid #333;
-    }
-    nav a {
-      margin-right: 1rem;
-      color: #888;
-      text-decoration: none;
-    }
-    nav a:hover {
-      color: #f5c84c;
-    }
-    nav a.active {
-      color: #f5c84c;
-      font-weight: bold;
-    }
-    main {
-      padding-top: 4rem;
-    }
+    * { box-sizing:border-box; scroll-behavior:smooth; }
+
+    body   { margin:0; padding:0; background:var(--bg); color:var(--fg); }
+    nav    { position:fixed; top:0; left:0; width:100%; padding:.75rem 1rem;
+             background:var(--panel); border-bottom:1px solid var(--border); z-index:100; }
+    nav a  { margin-right:1rem; text-decoration:none; color:#aaa; }
+    main   { padding:4.5rem 1rem 3rem; max-width:900px; margin:auto; }
+
+    h1     { margin:0 0 1rem 0; color:var(--accent); font-size:1.7rem; }
+    h2     { margin:2.5rem 0 .5rem; font-size:1.2rem; color:var(--accent); }
+
+    /* Form panel */
+    .card        { background:var(--panel); border:1px solid var(--panel-edge);
+                   padding:1rem 1.25rem; border-radius:6px; margin-bottom:2rem; }
+    label        { display:block; font-size:.9rem; margin-top:.75rem; }
+    textarea,
+    input,
+    select       { width:100%; padding:.6rem .7rem; border-radius:4px;
+                   border:1px solid var(--border); background:#111; color:var(--fg); }
+    button       { margin-top:1rem; padding:.6rem 1.2rem; background:var(--accent);
+                   color:#000; border:none; border-radius:4px; font-weight:600; cursor:pointer; }
+    button:disabled { opacity:.5; cursor:not-allowed; }
+
+    /* Archive list */
+    .ritual-item { border:1px solid var(--panel-edge); border-left:4px solid var(--accent);
+                   margin-bottom:1rem; padding:.75rem 1rem; background:#131313; }
+    .ritual-header { display:flex; justify-content:space-between; align-items:center; }
+    .ritual-header span { font-size:.85rem; color:#aaa; }
+    pre { white-space:pre-wrap; font-family:inherit; margin:0; }
   </style>
 </head>
 <body>
+
   <nav>
-    <a href="index.html" class="active">Home</a>
-    <a href="scrolls.html">Scrolls</a>
-    <a href="journal.html">Journal</a>
-    <a id="spiritLink" href="spirit-map.html">Spirit Map</a>
+    <a href="#new">New Ritual</a>
+    <a href="#archive">Archive</a>
   </nav>
 
   <main>
-    <h1>Welcome to the 6ol Core Hub</h1>
-    <p>This is your starting point for scrolls, journal syncing, spirit mapping, and ritual development.</p>
+    <!-- ============ NEW RITUAL ============ -->
+    <section id="new">
+      <h1>Forge a New Ritual</h1>
+      <div class="card">
+        <form id="ritualForm">
+          <label for="body">Ritual Text</label>
+          <textarea id="body" rows="6" placeholder="Pour your intention here..." required></textarea>
+
+          <label for="loopLevel">Loop Level (required)</label>
+          <select id="loopLevel">
+            <option value="1">1 – Initiate</option>
+            <option value="2">2 – Seeker</option>
+            <option value="3">3 – Shadow Walker</option>
+            <option value="4">4 – Ascendant</option>
+            <option value="5">5 – Luminary</option>
+          </select>
+
+          <label for="tags">Tags (comma-separated)</label>
+          <input type="text" id="tags" placeholder="reflection, shadow, gratitude">
+
+          <label for="unlock">Unlock Condition (optional passphrase)</label>
+          <input type="text" id="unlock" placeholder="e.g., MIRROR">
+
+          <button type="submit">✨ Cast Ritual</button>
+        </form>
+      </div>
+      <h2>Live Preview</h2>
+      <div class="card">
+        <pre id="preview">// Start typing above…</pre>
+      </div>
+    </section>
+
+    <!-- ============ ARCHIVE ============ -->
+    <section id="archive">
+      <h1>Ritual Archive</h1>
+      <div id="ritualList"></div>
+    </section>
   </main>
 
-  <script>
-    fetch('loop.json')
-      .then(res => res.json())
-      .then(data => {
-        const stage = data.stage?.toLowerCase();
-        const link = document.getElementById('spiritLink');
-        if (stage) {
-          link.href = `spirit-map.html?stage=${stage}`;
-        }
-      })
-      .catch(err => console.error("Could not load loop stage:", err));
-  </script>
+  <!-- ========== CORE SCRIPT ========== -->
+  <script type="module" src="rituals.js"></script>
 </body>
 </html>
