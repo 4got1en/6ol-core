@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>6ol · Ritual Core Hub · v3.1</title>
+  <title>6ol · Ritual Core Hub · v3.3</title>
 
   <!-- Base URL for GitHub Pages -->
   <base href="/6ol-core/" />
@@ -49,6 +49,7 @@
 
     /* ----- Ritual List ----- */
     .ritual-item {
+      position:relative;
       border:1px solid var(--panel-edge); border-left:4px solid var(--accent);
       margin-bottom:1rem; padding:.75rem 1rem; background:#131313;
     }
@@ -56,7 +57,15 @@
     .ritual-header span { font-size:.85rem; color:#aaa; }
     pre { white-space:pre-wrap; font-family:inherit; margin:0; }
 
-    /* ===== TERMINAL ===== */
+    /* =====  DROP VEIL ===== */
+    .locked            { filter:blur(6px) brightness(0.5); pointer-events:none; }
+    .locked .veil      { position:absolute; inset:0; display:flex;
+                         align-items:center; justify-content:center;
+                         background:rgba(0,0,0,0.55); color:#ccc;
+                         font-size:.85rem; font-weight:600; }
+    .locked .veil span { margin-left:.4rem; }
+
+    /* ===== TERMINAL ===== (unchanged) */
     #terminal { background:#000; border:1px solid var(--panel-edge);
                 color:#0f0; font-family:monospace; border-radius:6px;
                 padding:0.75rem 0.75rem 0.5rem; max-height:300px;
@@ -90,9 +99,9 @@
           <select id="loopLevel">
             <option value="1">1 – Initiate</option>
             <option value="2">2 – Seeker</option>
-            <option value="3">3 – Shadow Walker</option>
-            <option value="4">4 – Ascendant</option>
-            <option value="5">5 – Luminary</option>
+            <option value="3">3 – Witness</option>
+            <option value="4">4 – Architect</option>
+            <option value="5">5 – Lightbearer</option>
           </select>
 
           <label for="tags">Tags (comma-separated)</label>
@@ -127,10 +136,7 @@
     </section>
   </main>
 
-  <!-- Core Ritual logic -->
   <script type="module" src="rituals.js"></script>
-
-  <!-- Terminal logic -->
   <script type="module" src="terminal.js"></script>
 </body>
 </html>
