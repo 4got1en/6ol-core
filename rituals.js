@@ -1,5 +1,6 @@
 /* ==========================================================
-   6ol · Ritual Core · v1.2 (rehydration + debug safe)
+   6ol · Ritual Core · v1.3
+   Rehydration + Terminal-Safe __archive + Debug Hooks
    ========================================================== */
 
 const OPENAI_API_KEY   = localStorage.getItem('OPENAI_KEY')   || '';
@@ -9,7 +10,7 @@ const GITHUB_REPO_FULL = '4got1en/6ol-data-vault';
 const uuid   = () => crypto.randomUUID();
 const nowISO = () => new Date().toISOString();
 
-/* ----------  Global error trap  ---------- */
+/* ----------  Error trap  ---------- */
 window.lastError = null;
 function trap(err) {
   window.lastError = err;
@@ -23,7 +24,7 @@ function trap(err) {
     out.scrollTop = out.scrollHeight;
   }
 }
-window.addEventListener('error',   e => trap(e.error || e));
+window.addEventListener('error', e => trap(e.error || e));
 window.addEventListener('unhandledrejection', e => trap(e.reason || e));
 
 /* ----------  AI AGENTS  ---------- */
@@ -82,15 +83,12 @@ const agents = {
       `tags: [${ritual.tags.join(', ')}]\n` +
       `unlock: ${ritual.unlock || null}\n` +
       `---\n\n${ritual.body}\n`);
-
     const url = `https://api.github.com/repos/${GITHUB_REPO_FULL}/contents/${path}`;
     const payload = { message: `🕯️ Ritual: ${ritual.name}`, content };
 
     try {
       const current = await fetch(url, {
-        headers: {
-          'Authorization': `Bearer ${GITHUB_TOKEN}`
-        }
+        headers: { 'Authorization': `Bearer ${GITHUB_TOKEN}` }
       }).then(r => r.json());
 
       if (current?.sha) payload.sha = current.sha;
@@ -112,16 +110,16 @@ const agents = {
 /* ----------  Ritual CLASS  ---------- */
 class Ritual {
   constructor({ body, loopLevel, tags, unlock }) {
-    this.id = uuid();
-    this.createdAt = nowISO();
+    this.id         = uuid();
+    this.createdAt  = nowISO();
     this.lastEdited = this.createdAt;
-    this.loopLevel = Number(loopLevel) || 1;
-    this.unlock = unlock || null;
-    this.body = body;
-    this.tags = tags.filter(Boolean);
-    this.synced = false;
-    this.name = '';
-    this.fileName = '';
+    this.loopLevel  = Number(loopLevel) || 1;
+    this.unlock     = unlock || null;
+    this.body       = body;
+    this.tags       = tags.filter(Boolean);
+    this.synced     = false;
+    this.name       = '';
+    this.fileName   = '';
   }
 
   async finalize() {
@@ -141,28 +139,29 @@ class Ritual {
   }
 }
 
-/* ----------  Local storage ---------- */
-const ARCHIVE_KEY = '6ol-rituals';
-const rawArchive = JSON.parse(localStorage.getItem(ARCHIVE_KEY) || '[]');
-const archive = rawArchive.map(obj => Object.setPrototypeOf(obj, Ritual.prototype));
+/* ----------  Local Storage ---------- */
+const ARCHIVE_KEY  = '6ol-rituals';
+const rawArchive   = JSON.parse(localStorage.getItem(ARCHIVE_KEY) || '[]');
+const archive      = rawArchive.map(obj => Object.setPrototypeOf(obj, Ritual.prototype));
+window.__archive   = archive; // expose clean alias for dev tools
 function saveArchive() {
   localStorage.setItem(ARCHIVE_KEY, JSON.stringify(archive));
 }
 
-/* ----------  DOM bindings ---------- */
-const form = document.getElementById('ritualForm');
-const bodyEl = document.getElementById('body');
-const tagsEl = document.getElementById('tags');
-const loopEl = document.getElementById('loopLevel');
+/* ----------  DOM References ---------- */
+const form     = document.getElementById('ritualForm');
+const bodyEl   = document.getElementById('body');
+const tagsEl   = document.getElementById('tags');
+const loopEl   = document.getElementById('loopLevel');
 const unlockEl = document.getElementById('unlock');
-const preview = document.getElementById('preview');
-const listEl = document.getElementById('ritualList');
+const preview  = document.getElementById('preview');
+const listEl   = document.getElementById('ritualList');
 
 bodyEl.addEventListener('input', () => {
   preview.textContent = bodyEl.value || '// Start typing above…';
 });
 
-/* ----------  Form logic ---------- */
+/* ----------  Form Submission ---------- */
 form.addEventListener('submit', async evt => {
   evt.preventDefault();
   const ritual = new Ritual({
@@ -177,10 +176,10 @@ form.addEventListener('submit', async evt => {
   saveArchive();
   form.reset();
   preview.textContent = '// Start typing above…';
-  ritual.pushToGitHub();  // background async
+  ritual.pushToGitHub();  // async in background
 });
 
-/* ----------  Display Rituals ---------- */
+/* ----------  Ritual Renderer ---------- */
 function renderItem(ritual, prepend = false) {
   const el = document.createElement('div');
   el.className = 'ritual-item';
@@ -196,11 +195,11 @@ function renderItem(ritual, prepend = false) {
   else listEl.appendChild(el);
 }
 
-/* Render stored rituals on load */
+/* ----------  Initial Render ---------- */
 archive.forEach(renderItem);
 
-/* ----------  Debug helper ---------- */
-window.forgeTestRitual = async (text = 'Test from terminal') => {
+/* ----------  Debug Helper ---------- */
+window.forgeTestRitual = async (text = 'Console ritual') => {
   const r = new Ritual({ body: text, loopLevel: 1, tags: [], unlock: null });
   await r.finalize();
   archive.unshift(r); renderItem(r, true); saveArchive(); r.pushToGitHub();
