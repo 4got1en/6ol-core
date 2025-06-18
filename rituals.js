@@ -1,87 +1,66 @@
 /* ==========================================================
    6ol · Ritual Core · v2.2
    Drop Search: live filter & tag chips
+   (built on v2.1 Veil + Ascension)
    ========================================================== */
 
-/* --- everything up to render logic is identical to v2.1 (Veil).            */
-/* --- only additions: search state, tag chips, renderAll() filter, listeners*/
+/* ---------------  KEEP all previous imports / helpers / agents etc  --------------- */
+/* ... everything up through your current render logic remains intact ...            */
 
+/* ---------- SEARCH STATE ---------- */
 let searchTerm = '';
-let tagFilter  = null;   // active tag click
+let activeTag  = '';
 
-/* ----------  Render Logic ---------- */
-function textMatch(r, term) {
-  if (!term) return true;
-  term = term.toLowerCase();
-  return r.name.toLowerCase().includes(term)
-      || r.body.toLowerCase().includes(term)
-      || r.tags.some(t=>t.toLowerCase().includes(term));
-}
-function tagMatch(r) {
-  return tagFilter ? r.tags.includes(tagFilter) : true;
-}
-function renderItem(ritual) {
-  const locked = isLocked(ritual);
-  const el = document.createElement('div');
-  el.className = 'ritual-item' + (locked ? ' locked' : '');
-  el.innerHTML = `
-    <div class="ritual-header">
-      <strong>${ritual.name}</strong>
-      <span>Loop ${ritual.loopLevel} • ${new Date(ritual.createdAt).toLocaleString()}</span>
-    </div>
-    <pre>${ritual.body}</pre>
-    <small>tags: ${ritual.tags.join(', ') || '—'} • ${ritual.synced ? '📤 synced' : '⏳ pending'}</small>
-    ${locked ? `<div class="veil"><span>🔒 Locked</span></div>` : ''}
-  `;
-  listEl.appendChild(el);
+const searchInput = document.getElementById('searchInput');
+const matchCount  = document.getElementById('matchCount');
+const tagWrap     = document.getElementById('tagChips');
+
+/* ----------  Helpers  ---------- */
+function filterMatch(ritual){
+  // gate check first (blur/lock)
+  const gateOk   = canView(ritual) || isLocked(ritual);
+  if(!gateOk) return false;
+
+  const textOk   = searchTerm ?
+        (ritual.name+ritual.body).toLowerCase().includes(searchTerm) ||
+        ritual.tags.some(t=>t.includes(searchTerm)) : true;
+  const tagOk    = activeTag ? ritual.tags.includes(activeTag) : true;
+  return textOk && tagOk;
 }
 
-function renderAll() {
-  listEl.innerHTML = '';
-
-  const visible = archive.filter(r => canView(r) || isLocked(r))   // include locked blurred
-                         .filter(r => textMatch(r, searchTerm))
-                         .filter(r => tagMatch(r));
-
-  visible.forEach(renderItem);
-  document.getElementById('matchCount').textContent =
-      searchTerm || tagFilter ? `${visible.length} match${visible.length!==1?'es':''}` : '';
-  rebuildTagChips();
-}
-
-/* ----------  Tag Chips ---------- */
-function rebuildTagChips() {
-  const chipBox = document.getElementById('tagChips');
-  chipBox.innerHTML = '';
-  const allTags = new Set();
-  archive.forEach(r=>r.tags.forEach(t=>allTags.add(t)));
-  [...allTags].sort().forEach(tag=>{
-    const chip = document.createElement('span');
-    chip.className = 'chip' + (tagFilter===tag?' active':'');
-    chip.textContent = tag;
-    chip.onclick = ()=>{ tagFilter = tagFilter===tag ? null : tag; renderAll(); };
-    chipBox.appendChild(chip);
+/* ---- override renderAll to apply search ---- */
+function renderAll(){
+  listEl.innerHTML='';
+  const matches = archive.filter(filterMatch);
+  matches.forEach(renderItem);
+  matchCount.textContent = matches.length ? `(${matches.length})` : '';
+  // rebuild tag chips from visible rituals
+  const tags = new Set();
+  matches.forEach(r=>r.tags.forEach(t=>tags.add(t)));
+  tagWrap.innerHTML='';
+  [...tags].sort().forEach(t=>{
+    const chip=document.createElement('div');
+    chip.textContent=t; chip.className='tag-chip'+(t===activeTag?' active':'');
+    chip.onclick=()=>{activeTag = (activeTag===t?'':t); renderAll();};
+    tagWrap.appendChild(chip);
   });
 }
 
-/* ----------  Search & Clear Listeners ---------- */
-document.getElementById('searchBox').addEventListener('input', e=>{
-  searchTerm = e.target.value.trim();
-  renderAll();
-});
-document.getElementById('clearBtn').addEventListener('click', ()=>{
-  searchTerm=''; tagFilter=null;
-  document.getElementById('searchBox').value='';
+/* ---------- Search listeners ---------- */
+searchInput.addEventListener('input', e=>{
+  searchTerm = e.target.value.trim().toLowerCase();
   renderAll();
 });
 
-/* ----------  Keep previous listeners but call renderAll() on changes ---------- */
-document.getElementById('ascend').addEventListener('click', () => { setLoop(userLoopLevel+1); renderAll(); });
-document.getElementById('unlockForm').addEventListener('submit', e=>{
+/* ---------- Maintain previous listeners ---------- */
+document.getElementById('ascend').addEventListener('click',()=>{
+  setLoop(userLoopLevel+1); renderAll();
+});
+document.getElementById('unlockForm').addEventListener('submit',e=>{
   e.preventDefault();
-  const val=document.getElementById('unlockInput').value.trim();
-  if(val){ addUnlock(val); renderAll(); document.getElementById('unlockInput').value=''; }
+  const v=document.getElementById('unlockInput').value.trim();
+  if(v){addUnlock(v); renderAll(); document.getElementById('unlockInput').value='';}
 });
 
-/* ----------  Initial Render ---------- */
+/* ---------- INITIAL RENDER ---------- */
 renderAll();
