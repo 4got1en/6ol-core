@@ -4,99 +4,85 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>6ol · Ritual Core Hub · v3.4</title>
-
   <base href="/6ol-core/" />
   <link rel="icon" type="image/png" href="IMG_3069.png" />
 
-  <!-- =============  GLOBAL STYLES  ============= -->
   <style>
-    :root { --bg:#0b0b0b; --fg:#eee; --accent:#f5c84c; --border:#333; --panel:#151515; --panel-edge:#222;
-            font-family: system-ui,-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif; }
-    *     { box-sizing:border-box; scroll-behavior:smooth; }
-    body  { margin:0; background:var(--bg); color:var(--fg); }
-
-    nav   { position:fixed; top:0; left:0; width:100%; padding:.75rem 1rem;
-            background:var(--panel); border-bottom:1px solid var(--border); z-index:100; }
-    nav a { margin-right:1rem; text-decoration:none; color:#aaa; }
-    nav a:hover { color:var(--accent); }
-
-    main  { padding:4.5rem 1rem 4rem; max-width:900px; margin:auto; }
-    h1    { margin:0 0 1rem 0; color:var(--accent); font-size:1.7rem; }
-    h2    { margin:2.5rem 0 .5rem; font-size:1.2rem; color:var(--accent); }
-
-    /* --- form / cards --- */
-    .card { background:var(--panel); border:1px solid var(--panel-edge);
-            padding:1rem 1.25rem; border-radius:6px; margin-bottom:2rem; }
-    textarea,input,select { width:100%; padding:.6rem .7rem; border-radius:4px;
-            border:1px solid var(--border); background:#111; color:var(--fg); }
-    button { padding:.55rem 1rem; background:var(--accent); color:#000; border:none;
-             border-radius:4px; font-weight:600; cursor:pointer; }
-    button:disabled { opacity:.5; cursor:not-allowed; }
-
-    /* ----- archive ----- */
-    .ritual-item { position:relative; border:1px solid var(--panel-edge);
-                   border-left:4px solid var(--accent); margin-bottom:1rem;
-                   padding:.75rem 1rem; background:#131313; }
-    .ritual-header{ display:flex; justify-content:space-between; align-items:center; }
-    .ritual-header span{ font-size:.85rem; color:#aaa; }
-    pre  { white-space:pre-wrap; font-family:inherit; margin:0; }
-
-    /* ----- veil ----- */
-    .locked            { filter:blur(6px) brightness(0.55); pointer-events:none; }
-    .locked .veil      { position:absolute; inset:0; display:flex; align-items:center;
-                         justify-content:center; background:rgba(0,0,0,0.55);
-                         font-size:.9rem; color:#ccc; font-weight:600; }
-    .locked .veil span { margin-left:.4rem; }
-
-    /* ----- search ----- */
-    #searchRow { display:flex; gap:.5rem; align-items:center; margin:1rem 0; flex-wrap:wrap; }
-    #searchBox { flex:1 1 200px; padding:.5rem .6rem; border:1px solid var(--border);
-                 border-radius:4px; background:#111; color:var(--fg); }
-    #clearBtn  { padding:.45rem .8rem; }
-    .chip      { display:inline-block; margin:.25rem .3rem; padding:.25rem .55rem;
-                 background:#222; border:1px solid #555; border-radius:12px;
-                 font-size:.8rem; cursor:pointer; }
-    .chip.active { background:var(--accent); color:#000; border-color:var(--accent); }
-
-    /* ----- terminal (unchanged) ----- */
-    #terminal { background:#000; border:1px solid var(--panel-edge); color:#0f0;
-                font-family:monospace; border-radius:6px; padding:0.75rem; max-height:300px; overflow-y:auto; }
-    #terminal-input { width:100%; padding:.5rem .6rem; margin-top:.6rem; background:#111;
-                      border:1px solid var(--border); border-radius:4px; color:#0f0; font-family:monospace; }
+    :root{--bg:#0b0b0b;--fg:#eee;--accent:#f5c84c;--border:#333;--panel:#151515;--panel-edge:#222;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif}
+    *{box-sizing:border-box;scroll-behavior:smooth}
+    body{margin:0;background:var(--bg);color:var(--fg)}
+    nav{position:fixed;inset:0 0 auto;display:flex;gap:1rem;padding:.75rem 1rem;background:var(--panel);border-bottom:1px solid var(--border);z-index:100}
+    nav a{color:#aaa;text-decoration:none}
+    nav a:hover{color:var(--accent)}
+    main{padding:4.5rem 1rem 4rem;max-width:900px;margin:auto}
+    h1{margin:0 0 1rem;color:var(--accent);font-size:1.7rem}
+    h2{margin:2.5rem 0 .5rem;color:var(--accent);font-size:1.2rem}
+    .card{background:var(--panel);border:1px solid var(--panel-edge);padding:1rem 1.25rem;border-radius:6px;margin-bottom:2rem}
+    label{display:block;margin-top:.75rem;font-size:.9rem}
+    textarea,input,select{width:100%;padding:.6rem .7rem;border-radius:4px;border:1px solid var(--border);background:#111;color:var(--fg)}
+    button{margin-top:1rem;padding:.6rem 1.2rem;background:var(--accent);color:#000;border:none;border-radius:4px;font-weight:600;cursor:pointer}
+    .ritual-item{position:relative;border:1px solid var(--panel-edge);border-left:4px solid var(--accent);margin-bottom:1rem;padding:.75rem 1rem;background:#131313}
+    .ritual-header{display:flex;justify-content:space-between;align-items:center}
+    .ritual-header span{font-size:.85rem;color:#aaa}
+    pre{white-space:pre-wrap;margin:0;font-family:inherit}
+    .locked{filter:blur(6px) brightness(.5);pointer-events:none}
+    .locked .veil{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.55);color:#ccc;font-size:.85rem;font-weight:600}
+    /* ---- SEARCH ---- */
+    #searchBar{display:flex;gap:.5rem;align-items:center;margin:1rem 0}
+    #searchInput{flex:1;padding:.45rem .6rem;background:#111;border:1px solid var(--border);border-radius:4px;color:var(--fg)}
+    .tag-chip{padding:.25rem .55rem;border:1px solid var(--border);border-radius:999px;font-size:.78rem;cursor:pointer;background:#111;margin:.15rem 0}
+    .tag-chip.active{background:var(--accent);color:#000;border-color:var(--accent)}
+    /* Terminal unchanged */
+    #terminal{background:#000;border:1px solid var(--panel-edge);color:#0f0;font-family:monospace;border-radius:6px;padding:.75rem .75rem .5rem;max-height:300px;overflow-y:auto}
+    #terminal-input{width:100%;padding:.5rem .6rem;margin-top:.6rem;background:#111;border:1px solid var(--border);border-radius:4px;color:#0f0;font-family:monospace}
   </style>
 </head>
 <body>
 
-  <nav>
-    <a href="#new">New Ritual</a>
-    <a href="#archive">Archive</a>
-    <a href="#console">Terminal</a>
-  </nav>
+<nav>
+  <a href="#new">New Ritual</a>
+  <a href="#archive">Archive</a>
+  <a href="#console">Terminal</a>
+</nav>
 
-  <main>
-    <!-- new ritual section (unchanged) -->
-    <section id="new"> … <!-- keep previous content here --> … </section>
+<main>
+  <!-- ========= NEW RITUAL ========= -->
+  <section id="new">
+    <h1>Forge a New Ritual</h1>
+    <div class="card">
+      <form id="ritualForm">
+        <label>Ritual Text<textarea id="body" rows="6" placeholder="Pour your intention here…" required></textarea></label>
+        <label>Loop Level<select id="loopLevel">
+          <option value="1">1 – Initiate</option><option value="2">2 – Seeker</option>
+          <option value="3">3 – Witness</option><option value="4">4 – Architect</option>
+          <option value="5">5 – Lightbearer</option></select></label>
+        <label>Tags<input id="tags" placeholder="reflection, shadow, gratitude"></label>
+        <label>Unlock Condition<input id="unlock" placeholder="e.g., MIRROR"></label>
+        <button type="submit">✨ Cast Ritual</button>
+      </form>
+    </div>
+    <h2>Live Preview</h2><div class="card"><pre id="preview">// Start typing above…</pre></div>
+  </section>
 
-    <!-- ===== ARCHIVE ===== -->
-    <section id="archive">
-      <h1>Ritual Archive</h1>
+  <!-- ========= ARCHIVE ========= -->
+  <section id="archive">
+    <h1>Ritual Archive</h1>
+    <!-- Search bar -->
+    <div id="searchBar">
+      <input id="searchInput" placeholder="🔍 search title, body or tag…">
+      <span id="matchCount"></span>
+    </div>
+    <div id="tagChips" style="display:flex;gap:.5rem;flex-wrap:wrap"></div>
+    <div id="ritualList"></div>
+  </section>
 
-      <!-- search row -->
-      <div id="searchRow">
-        <input id="searchBox" placeholder="🔍 search rituals…" />
-        <button id="clearBtn">Clear</button>
-        <span id="matchCount" style="font-size:.85rem;opacity:.7;"></span>
-        <div id="tagChips"></div>
-      </div>
+  <!-- ========= TERMINAL ========= -->
+  <section id="console"><h1>6ol Console</h1>
+    <div id="terminal"><div id="terminal-output"></div><input id="terminal-input" placeholder="type a command, then ↵"></div>
+  </section>
+</main>
 
-      <div id="ritualList"></div>
-    </section>
-
-    <!-- terminal section (unchanged) -->
-    <section id="console"> … </section>
-  </main>
-
-  <script type="module" src="rituals.js"></script>
-  <script type="module" src="terminal.js"></script>
+<script type="module" src="rituals.js"></script>
+<script type="module" src="terminal.js"></script>
 </body>
 </html>
