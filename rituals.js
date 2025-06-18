@@ -1,193 +1,146 @@
 /* ==========================================================
-   6ol · Ritual Core · v2.2
-   Full file – Veil, Loop Ascension, Passphrase Unlock, Live Search
+   6ol · Ritual Core · v2.2  (Veil + Ascension + Search)
    ========================================================== */
 
-/* ----------  CONFIG & STORED STATE  ---------- */
-const OPENAI_API_KEY   = localStorage.getItem('OPENAI_KEY') || '';
-const GITHUB_TOKEN     = localStorage.getItem('GH_TOKEN')   || '';
-const GITHUB_REPO_FULL = '4got1en/6ol-data-vault';
+/* ---------- CONFIG & SAVED STATE ---------- */
+const OPENAI_API_KEY = localStorage.getItem('OPENAI_KEY') || '';
+const GITHUB_TOKEN   = localStorage.getItem('GH_TOKEN')   || '';
+const REPO_FULL      = '4got1en/6ol-data-vault';
 
-let userLoopLevel = parseInt(localStorage.getItem('loopLevel') || '1');
-let unlockedPassphrases = JSON.parse(localStorage.getItem('unlocked') || '[]');
+let userLoop = parseInt(localStorage.getItem('loopLevel') || '1');
+let unlocked = JSON.parse(localStorage.getItem('unlocked') || '[]');
+
 let searchTerm = '';
 let activeTag  = '';
 
-/* ----------  UTILS  ---------- */
+/* ---------- UTILS ---------- */
 const uuid   = () => crypto.randomUUID();
 const nowISO = () => new Date().toISOString();
-function addUnlock(word){
-  if(!unlockedPassphrases.includes(word)){
-    unlockedPassphrases.push(word);
-    localStorage.setItem('unlocked', JSON.stringify(unlockedPassphrases));
+function saveUnlock(word){
+  if(!unlocked.includes(word)){
+    unlocked.push(word);
+    localStorage.setItem('unlocked', JSON.stringify(unlocked));
   }
 }
-function setLoop(lvl){
-  userLoopLevel = lvl;
-  localStorage.setItem('loopLevel', String(lvl));
-  updateLoopDisplay(); renderAll();
-}
+function setLoop(l){ userLoop = l; localStorage.setItem('loopLevel', String(l)); updateLoopDisplay(); renderAll(); }
 
-/* ----------  ERROR TRAP  ---------- */
-window.lastError = null;
-function trap(err){
-  window.lastError = err; console.error(err);
-  const out = document.getElementById('terminal-output');
-  if(out){
-    const span = document.createElement('span');
-    span.style.color='red'; span.textContent=`⚠️ ${err.message||err}`;
-    out.appendChild(span); out.scrollTop = out.scrollHeight;
-  }
-}
-window.addEventListener('error', e=>trap(e.error||e));
-window.addEventListener('unhandledrejection', e=>trap(e.reason||e));
+/* ---------- ERROR TRAP ---------- */
+window.lastError=null;
+function trap(e){ window.lastError=e; console.error(e); }
+window.addEventListener('error',   ev=>trap(ev.error||ev));
+window.addEventListener('unhandledrejection', ev=>trap(ev.reason||ev));
 
-/* ----------  AI AGENTS  ---------- */
-const agents = {
-  async nameMaster(){
-    if(!OPENAI_API_KEY) return `Untitled-${uuid().slice(0,8)}`;
-    try{
-      const rsp = await fetch('https://api.openai.com/v1/chat/completions',{
-        method:'POST',
-        headers:{'Content-Type':'application/json','Authorization':`Bearer ${OPENAI_API_KEY}`},
-        body:JSON.stringify({
-          model:'gpt-4o-mini',
-          messages:[{role:'user',content:'Generate a 2-4-word poetic ritual title. Return ONLY the title.'}],
-          temperature:0.9,max_tokens:12
-        })
-      }).then(r=>r.json());
-      return rsp?.choices?.[0]?.message?.content?.trim()||`Untitled-${uuid().slice(0,8)}`;
-    }catch(err){trap(err);return`Untitled-${uuid().slice(0,8)}`;}
-  },
-  async whisperEngine(text){
-    if(!OPENAI_API_KEY) return [];
-    try{
-      const rsp = await fetch('https://api.openai.com/v1/chat/completions',{
-        method:'POST',
-        headers:{'Content-Type':'application/json','Authorization':`Bearer ${OPENAI_API_KEY}`},
-        body:JSON.stringify({
-          model:'gpt-4o-mini',
-          messages:[{role:'user',content:`Return 3 concise, lowercase tags for:\n\n"""${text}"""`}],
-          temperature:0.4,max_tokens:20
-        })
-      }).then(r=>r.json());
-      return rsp?.choices?.[0]?.message?.content?.split(',').map(t=>t.trim())||[];
-    }catch(err){trap(err);return[];}
-  },
-  async archivistPush(ritual){
-    if(!GITHUB_TOKEN) return false;
-    const path=`rituals/${ritual.fileName}`;
-    const content=btoa(`---\nid: ${ritual.id}\nname: "${ritual.name}"\ncreatedAt: ${ritual.createdAt}\nloopLevel: ${ritual.loopLevel}\ntags: [${ritual.tags.join(', ')}]\nunlock: ${ritual.unlock||null}\n---\n\n${ritual.body}\n`);
-    const url=`https://api.github.com/repos/${GITHUB_REPO_FULL}/contents/${path}`;
+/* ---------- AI AGENTS ---------- */
+async function titleAI(){
+  if(!OPENAI_API_KEY) return `Untitled-${uuid().slice(0,8)}`;
+  try{
+    const r=await fetch('https://api.openai.com/v1/chat/completions',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':`Bearer ${OPENAI_API_KEY}`},
+      body:JSON.stringify({model:'gpt-4o-mini',messages:[{role:'user',content:'Generate a 2-4 word poetic ritual title. Return ONLY the title.'}],temperature:0.9,max_tokens:12})
+    }).then(r=>r.json());
+    return r?.choices?.[0]?.message?.content?.trim()||`Untitled-${uuid().slice(0,8)}`;
+  }catch(e){trap(e);return`Untitled-${uuid().slice(0,8)}`;}
+}
+async function tagAI(text){
+  if(!OPENAI_API_KEY) return [];
+  try{
+    const r=await fetch('https://api.openai.com/v1/chat/completions',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':`Bearer ${OPENAI_API_KEY}`},
+      body:JSON.stringify({model:'gpt-4o-mini',messages:[{role:'user',content:`Return 3 concise, lowercase tags:\n\n"""${text}"""`}],temperature:0.4,max_tokens:20})
+    }).then(r=>r.json());
+    return r?.choices?.[0]?.message?.content?.split(',').map(t=>t.trim())||[];
+  }catch(e){trap(e);return[];}
+}
+async function pushGit(ritual){
+  if(!GITHUB_TOKEN) return false;
+  const path=`rituals/${ritual.fileName}`;
+  const content=btoa(`---\nid:${ritual.id}\nname:"${ritual.name}"\ncreatedAt:${ritual.createdAt}\nloopLevel:${ritual.loopLevel}\ntags:[${ritual.tags.join(', ')}]\nunlock:${ritual.unlock||null}\n---\n\n${ritual.body}\n`);
+  const url=`https://api.github.com/repos/${REPO_FULL}/contents/${path}`;
+  const headers={'Content-Type':'application/json','Accept':'application/vnd.github+json','Authorization':`Bearer ${GITHUB_TOKEN}`};
+  try{
+    const cur=await fetch(url,{headers}).then(r=>r.json());
     const payload={message:`🕯️ Ritual: ${ritual.name}`,content};
-    try{
-      const current = await fetch(url,{headers:{Authorization:`Bearer ${GITHUB_TOKEN}`}}).then(r=>r.json());
-      if(current?.sha) payload.sha=current.sha;
-      const res = await fetch(url,{
-        method:'PUT',
-        headers:{'Content-Type':'application/json','Accept':'application/vnd.github+json','Authorization':`Bearer ${GITHUB_TOKEN}`},
-        body:JSON.stringify(payload)
-      });
-      return res.ok;
-    }catch(err){trap(err);return false;}
-  }
-};
+    if(cur?.sha) payload.sha=cur.sha;
+    const res=await fetch(url,{method:'PUT',headers,body:JSON.stringify(payload)});
+    return res.ok;
+  }catch(e){trap(e);return false;}
+}
 
-/* ----------  RITUAL CLASS  ---------- */
+/* ---------- RITUAL CLASS ---------- */
 class Ritual{
   constructor({body,loopLevel,tags,unlock}){
     this.id=uuid(); this.createdAt=nowISO(); this.lastEdited=this.createdAt;
     this.loopLevel=Number(loopLevel)||1; this.unlock=unlock||null;
-    this.body=body; this.tags=tags.filter(Boolean); this.synced=false;
-    this.name=''; this.fileName='';
+    this.body=body; this.tags=tags.filter(Boolean); this.synced=false; this.name=''; this.fileName='';
   }
   async finalize(){
-    this.name=await agents.nameMaster();
-    if(this.tags.length===0) this.tags=await agents.whisperEngine(this.body);
+    this.name=await titleAI();
+    if(!this.tags.length) this.tags=await tagAI(this.body);
     this.fileName=this.name.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'')+`-${this.id.slice(0,8)}.md`;
   }
-  async pushToGitHub(){
-    this.synced=await agents.archivistPush(this);
-    this.lastEdited=nowISO(); saveArchive();
-  }
+  async push(){ this.synced=await pushGit(this); this.lastEdited=nowISO(); saveArchive(); }
 }
 
-/* ----------  LOCAL STORAGE ---------- */
-const ARCHIVE_KEY='6ol-rituals';
-const rawArchive = JSON.parse(localStorage.getItem(ARCHIVE_KEY)||'[]');
-const archive    = rawArchive.map(o=>Object.setPrototypeOf(o,Ritual.prototype));
-window.__archive = archive;
-function saveArchive(){localStorage.setItem(ARCHIVE_KEY,JSON.stringify(archive));}
+/* ---------- STORAGE ---------- */
+const STORE='6ol-rituals';
+const archive=(JSON.parse(localStorage.getItem(STORE)||'[]')).map(o=>Object.setPrototypeOf(o,Ritual.prototype));
+function saveArchive(){localStorage.setItem(STORE,JSON.stringify(archive));}
+window.__archive=archive;
 
-/* ----------  DOM  ---------- */
-const form     = document.getElementById('ritualForm');
-const bodyEl   = document.getElementById('body');
-const tagsEl   = document.getElementById('tags');
-const loopEl   = document.getElementById('loopLevel');
-const unlockEl = document.getElementById('unlock');
-const preview  = document.getElementById('preview');
-const listEl   = document.getElementById('ritualList');
-const loopStatus = document.getElementById('loopStatus');
-const ascendBtn  = document.getElementById('ascend');
-const unlockForm = document.getElementById('unlockForm');
-const unlockInput= document.getElementById('unlockInput');
-const searchInput= document.getElementById('searchInput');
-const matchCount = document.getElementById('matchCount');
-const tagWrap    = document.getElementById('tagChips');
+/* ---------- DOM ---------- */
+const $ = id=>document.getElementById(id);
+const form=$('ritualForm'), bodyEl=$('body'), tagsEl=$('tags'), loopEl=$('loopLevel'), unlockEl=$('unlock'), preview=$('preview');
+const listEl=$('ritualList'), loopStatus=$('loopStatus'), ascendBtn=$('ascend'), unlockForm=$('unlockForm'), unlockInput=$('unlockInput');
+const searchInput=$('searchInput'), matchCount=$('matchCount'), tagWrap=$('tagChips');
 
-/* ----------  LOOP DISPLAY ---------- */
+/* ---------- LOOP UI ---------- */
 function updateLoopDisplay(){
   const names=['Initiate','Seeker','Witness','Architect','Lightbearer'];
-  loopStatus.textContent=`Current Loop: ${userLoopLevel} – ${names[userLoopLevel-1]||'—'}`;
+  loopStatus.textContent=`Current Loop: ${userLoop} – ${names[userLoop-1]||''}`;
 }
 
-/* ----------  GATE CHECKS ---------- */
-function canView(r){return r.loopLevel<=userLoopLevel && (!r.unlock||unlockedPassphrases.includes(r.unlock));}
-function isLocked(r){return !canView(r);}
-
-/* ----------  SEARCH FILTER ---------- */
-function filterMatch(r){
-  const gateOk = canView(r) || isLocked(r);
+/* ---------- GATE + FILTER ---------- */
+const canSee  = r=>r.loopLevel<=userLoop && (!r.unlock||unlocked.includes(r.unlock));
+const isLock  = r=>!canSee(r);
+const matchFn = r=>{
+  const gateOk = canSee(r)||isLock(r);
   if(!gateOk) return false;
-  const textOk = searchTerm ?
-    (r.name+r.body).toLowerCase().includes(searchTerm) || r.tags.some(t=>t.includes(searchTerm)) : true;
-  const tagOk  = activeTag ? r.tags.includes(activeTag) : true;
-  return textOk && tagOk;
-}
+  const txtOk = searchTerm? (r.name+r.body).toLowerCase().includes(searchTerm)||r.tags.some(t=>t.includes(searchTerm)):true;
+  const tagOk = activeTag? r.tags.includes(activeTag):true;
+  return txtOk&&tagOk;
+};
 
-/* ----------  RENDER ---------- */
+/* ---------- RENDER ---------- */
 function renderItem(r){
-  const div=document.createElement('div');
-  div.className='ritual-item'+(isLocked(r)?' locked':'');
-  div.innerHTML=`
-    <div class="ritual-header">
-      <strong>${r.name}</strong>
-      <span>Loop ${r.loopLevel} • ${new Date(r.createdAt).toLocaleString()}</span>
-    </div>
+  const d=document.createElement('div');
+  d.className='ritual-item'+(isLock(r)?' locked':'');
+  d.innerHTML=`
+    <div class="ritual-header"><strong>${r.name}</strong><span>Loop ${r.loopLevel} • ${new Date(r.createdAt).toLocaleString()}</span></div>
     <pre>${r.body}</pre>
     <small>tags: ${r.tags.join(', ')||'—'} • ${r.synced?'📤 synced':'⏳ pending'}</small>
-    ${isLocked(r)?'<div class="veil"><span>🔒 Locked</span></div>':''}
-  `;
-  listEl.appendChild(div);
+    ${isLock(r)?'<div class="veil"><span>🔒 Locked</span></div>':''}`;
+  listEl.appendChild(d);
 }
 function renderAll(){
   listEl.innerHTML='';
-  const matches = archive.filter(filterMatch);
+  const matches=archive.filter(matchFn);
   matches.forEach(renderItem);
   matchCount.textContent=matches.length?`(${matches.length})`:'';
 
-  // tag chips
-  const tags=new Set(); matches.forEach(r=>r.tags.forEach(t=>tags.add(t)));
+  /* chips */
   tagWrap.innerHTML='';
-  [...tags].sort().forEach(t=>{
+  const tags=[...new Set(matches.flatMap(r=>r.tags))].sort();
+  tags.forEach(t=>{
     const chip=document.createElement('div');
-    chip.textContent=t; chip.className='tag-chip'+(t===activeTag?' active':'');
-    chip.onclick=()=>{activeTag=(activeTag===t?'':t); renderAll();};
+    chip.className='tag-chip'+(t===activeTag?' active':''); chip.textContent=t;
+    chip.onclick=()=>{activeTag=activeTag===t?'':t; renderAll();};
     tagWrap.appendChild(chip);
   });
 }
 
-/* ----------  EVENT LISTENERS ---------- */
+/* ---------- EVENTS ---------- */
 bodyEl.addEventListener('input',()=>preview.textContent=bodyEl.value||'// Start typing above…');
 form.addEventListener('submit',async e=>{
   e.preventDefault();
@@ -197,24 +150,21 @@ form.addEventListener('submit',async e=>{
     tags:tagsEl.value.split(',').map(s=>s.trim()),
     unlock:unlockEl.value.trim()
   });
-  await rit.finalize(); archive.unshift(rit); saveArchive();
-  bodyEl.value=tagsEl.value=unlockEl.value=''; preview.textContent='// Start typing above…';
-  renderAll(); rit.pushToGitHub();
+  await rit.finalize(); archive.unshift(rit); saveArchive(); renderAll(); rit.push();
+  form.reset(); preview.textContent='// Start typing above…';
 });
-ascendBtn.addEventListener('click',()=>setLoop(userLoopLevel+1));
-unlockForm.addEventListener('submit',e=>{
+ascendBtn.onclick = ()=>setLoop(userLoop+1);
+unlockForm.onsubmit=e=>{
   e.preventDefault(); const v=unlockInput.value.trim();
-  if(v){addUnlock(v); unlockInput.value=''; renderAll();}
-});
-searchInput.addEventListener('input',e=>{
-  searchTerm=e.target.value.trim().toLowerCase(); renderAll();
-});
+  if(v){saveUnlock(v); unlockInput.value=''; renderAll();}
+};
+searchInput.oninput=e=>{searchTerm=e.target.value.trim().toLowerCase(); renderAll();};
 
-/* ----------  INIT ---------- */
+/* ---------- INIT ---------- */
 updateLoopDisplay(); renderAll();
 
-/* ----------  DEBUG HELPER ---------- */
-window.forgeTestRitual = async (txt='Console ritual')=>{
+/* ---------- DEBUG ---------- */
+window.forgeTestRitual=async(txt='Console ritual')=>{
   const r=new Ritual({body:txt,loopLevel:3,tags:['shadow'],unlock:'MIRROR'});
-  await r.finalize(); archive.unshift(r); saveArchive(); renderAll(); r.pushToGitHub(); return r;
+  await r.finalize(); archive.unshift(r); saveArchive(); renderAll(); r.push(); return r;
 };
