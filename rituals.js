@@ -1,13 +1,12 @@
 /* ==========================================================
-   6ol · Ritual Core · v1.4
-   Shadow Gate Logic · Loop Level + Passphrase Unlock
+   6ol · Ritual Core · v2.0
+   Gate v2: Loop Ascension + Passphrase Unlock
    ========================================================== */
 
 const OPENAI_API_KEY   = localStorage.getItem('OPENAI_KEY') || '';
 const GITHUB_TOKEN     = localStorage.getItem('GH_TOKEN')   || '';
 const GITHUB_REPO_FULL = '4got1en/6ol-data-vault';
 
-// 🔐 Gatekeepers
 let userLoopLevel = parseInt(localStorage.getItem('loopLevel') || '1');
 let unlockedPassphrases = JSON.parse(localStorage.getItem('unlocked') || '[]');
 function addUnlock(word) {
@@ -16,7 +15,18 @@ function addUnlock(word) {
     localStorage.setItem('unlocked', JSON.stringify(unlockedPassphrases));
   }
 }
+function setLoop(level) {
+  userLoopLevel = level;
+  localStorage.setItem('loopLevel', String(level));
+  updateLoopDisplay();
+  renderAll();
+}
+function updateLoopDisplay() {
+  const loopName = ['Initiate', 'Seeker', 'Witness', 'Architect', 'Lightbearer'][userLoopLevel - 1] || `Loop ${userLoopLevel}`;
+  document.getElementById('loopStatus').textContent = `Current Loop: ${userLoopLevel} – ${loopName}`;
+}
 
+/* ----------  Utility  ---------- */
 const uuid = () => crypto.randomUUID();
 const nowISO = () => new Date().toISOString();
 
@@ -117,7 +127,7 @@ const agents = {
   }
 };
 
-/* ----------  Ritual CLASS  ---------- */
+/* ----------  Ritual Class  ---------- */
 class Ritual {
   constructor({ body, loopLevel, tags, unlock }) {
     this.id         = uuid();
@@ -149,7 +159,7 @@ class Ritual {
   }
 }
 
-/* ----------  Local Storage ---------- */
+/* ----------  Archive Storage ---------- */
 const ARCHIVE_KEY = '6ol-rituals';
 const rawArchive = JSON.parse(localStorage.getItem(ARCHIVE_KEY) || '[]');
 const archive = rawArchive.map(obj => Object.setPrototypeOf(obj, Ritual.prototype));
@@ -158,7 +168,7 @@ function saveArchive() {
   localStorage.setItem(ARCHIVE_KEY, JSON.stringify(archive));
 }
 
-/* ----------  DOM ---------- */
+/* ----------  DOM Elements ---------- */
 const form     = document.getElementById('ritualForm');
 const bodyEl   = document.getElementById('body');
 const tagsEl   = document.getElementById('tags');
@@ -171,6 +181,7 @@ bodyEl.addEventListener('input', () => {
   preview.textContent = bodyEl.value || '// Start typing above…';
 });
 
+/* ----------  Submission ---------- */
 form.addEventListener('submit', async evt => {
   evt.preventDefault();
   const ritual = new Ritual({
@@ -188,19 +199,14 @@ form.addEventListener('submit', async evt => {
   ritual.pushToGitHub();
 });
 
-/* ----------  Shadow Gate Filtering ---------- */
+/* ----------  Gate Check ---------- */
 function canView(ritual) {
   if (ritual.loopLevel > userLoopLevel) return false;
   if (ritual.unlock && !unlockedPassphrases.includes(ritual.unlock)) return false;
   return true;
 }
 
-function renderAll() {
-  listEl.innerHTML = '';
-  archive.filter(canView).forEach(renderItem);
-}
-
-/* ----------  Render Ritual ---------- */
+/* ----------  Render Logic ---------- */
 function renderItem(ritual) {
   const el = document.createElement('div');
   el.className = 'ritual-item';
@@ -215,16 +221,29 @@ function renderItem(ritual) {
   listEl.appendChild(el);
 }
 
-/* ----------  Unlock Passphrase Box ---------- */
-const passDiv = document.createElement('div');
-passDiv.innerHTML = `
-  <form id="unlockForm" style="margin-top:2rem">
+function renderAll() {
+  listEl.innerHTML = '';
+  archive.filter(canView).forEach(renderItem);
+}
+
+/* ----------  UI: Loop + Unlock ---------- */
+const statusDiv = document.createElement('div');
+statusDiv.innerHTML = `
+  <div style="margin:1rem 0;">
+    <strong id="loopStatus">Current Loop: ...</strong>
+    <button id="ascend" style="margin-left:1rem;padding:0.25rem 0.5rem;">⬆️ Ascend</button>
+  </div>
+  <form id="unlockForm" style="margin-top:1rem">
     <input id="unlockInput" placeholder="🔑 Enter unlock word…" style="padding:0.5rem;border:1px solid #444;border-radius:4px;background:#111;color:#fff"/>
     <button style="padding:0.5rem;margin-left:0.5rem;">Unlock</button>
   </form>
 `;
-listEl.parentElement.appendChild(passDiv);
+listEl.parentElement.prepend(statusDiv);
+updateLoopDisplay();
 
+document.getElementById('ascend').addEventListener('click', () => {
+  setLoop(userLoopLevel + 1);
+});
 document.getElementById('unlockForm').addEventListener('submit', e => {
   e.preventDefault();
   const val = document.getElementById('unlockInput').value.trim();
@@ -235,7 +254,7 @@ document.getElementById('unlockForm').addEventListener('submit', e => {
   }
 });
 
-/* ----------  Initial Render ---------- */
+/* ----------  Init ---------- */
 renderAll();
 
 /* ----------  Debug Helper ---------- */
