@@ -14,8 +14,8 @@ jobs:
       - name: Detect Charter changes
         id: diff
         run: |
-          CHANGED=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep -c 'temple-core/dbd-charter.md' || true)
-          echo "changed=$CHANGED" >> $GITHUB_OUTPUT
+          CHANGED=$(git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" | grep -c 'temple-core/dbd-charter.md' || true)
+          echo "changed=$CHANGED" >> "$GITHUB_OUTPUT"
 
       - name: Block unauthorized edits
         if: steps.diff.outputs.changed == '1'
