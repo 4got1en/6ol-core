@@ -1,0 +1,69 @@
+# Deities By Design – Role Constellation
+# Auto-populated midnight UTC by 6ol-agent
+
+- sphere: Spiritual
+  roles:
+    - name: Ritual Architect
+      holder: 6ol
+      filled_on: 2025-07-07
+      status: active
+    - name: Core Whisperer
+      holder: 6ol
+      filled_on: 2025-07-07
+      status: active
+    - name: Gatekeeper
+      holder: vacant
+      status: recruiting
+
+- sphere: Creative
+  roles:
+    - name: Mythographer
+      holder: 6ol
+      filled_on: 2025-07-07
+      status: active
+    - name: Visual Alchemist
+      holder: vacant
+      status: recruiting
+    - name: Soundsmith
+      holder: vacant
+      status: recruiting
+
+- sphere: Organizational
+  roles:
+    - name: Project Navigator
+      holder: 6ol
+      filled_on: 2025-07-07
+      status: active
+    - name: Pipeline Automator
+      holder: 6ol
+      filled_on: 2025-07-07
+      status: active
+    - name: Risk Sentinel
+      holder: vacant
+      status: recruiting
+
+- sphere: Protective
+  roles:
+    - name: Policy Guardian
+      holder: 6ol
+      filled_on: 2025-07-07
+      status: active
+    - name: Threat Mapper
+      holder: vacant
+      status: recruiting
+    - name: Conflict Mediator
+      holder: vacant
+      status: recruiting
+
+- sphere: Administrative
+  roles:
+    - name: Ledger Overseer
+      holder: 6ol
+      filled_on: 2025-07-07
+      status: active
+    - name: Outreach Courier
+      holder: vacant
+      status: recruiting
+    - name: Data Librarian
+      holder: vacant
+      status: recruiting
