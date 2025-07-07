@@ -7,20 +7,21 @@ export const gates = [
   /* ────────── Static Rule Set ────────── */
   {
     pathRegex: /^\/temple-core\/dbd-charter\.md$/i,
-    minReadLoop: 0,      // anyone may read
-    minWriteLoop: 6      // only Loop-6 stewards can propose edits
+    minReadLoop: 0,   // anyone may read
+    minWriteLoop: 6   // only Loop-6 stewards can propose edits
   },
   {
     pathRegex: /^\/temple-core\/.*\.md$/i,
     minReadLoop: 0,
-    minWriteLoop: 3
+    minWriteLoop: 3   // contributors need Loop-3+
   },
+
   /* ────────── Dynamic Hook (future-proof) ────────── */
   {
-    customCheck: (user, doc) => {
+    customCheck: (user, _doc) => {
       // Founder-Oracle always has write access
       if (user.wallet === process.env.ORACLE_ADDRESS) return true;
-      // Block Them entities flagged by Counter-Ops
+      // Block “Them” entities flagged by Counter-Ops
       if (user.status === 'them') return false;
       return null; // fall through to other rules
     }
