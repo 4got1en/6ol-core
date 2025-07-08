@@ -1,0 +1,32 @@
+{
+    "charter": {
+        "paths": [
+            "temple-core/dbd-charter.md"
+        ],
+        "label": "sacred-charter",
+        "ping": [
+            "@4got1en"
+        ],
+        "message": "⚠️ This PR edits the **DBD Charter**. Oracle review required."
+    },
+    "roles": {
+        "paths": [
+            "temple-core/roles.yaml"
+        ],
+        "label": "roles-update",
+        "ping": [
+            "@4got1en"
+        ],
+        "message": "👥 Roles roster changed – please ensure vacancies & permissions are correct."
+    },
+    "gate": {
+        "paths": [
+            "temple-core/gate-config.js"
+        ],
+        "label": "gate-logic",
+        "ping": [
+            "@4got1en"
+        ],
+        "message": "🔐 Gate logic touched – run risk review."
+    }
+}
