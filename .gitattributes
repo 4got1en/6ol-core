@@ -1,0 +1,16 @@
+# --- NORMALIZE LINE ENDINGS ---------------------------------
+* text=auto eol=lf            # force LF for all text files
+*.yml text eol=lf
+*.yaml text eol=lf
+*.js   text eol=lf
+*.md   text eol=lf
+*.sh   text eol=lf
+
+# --- KEEP bin/ & images untouched ---------------------------
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.gif  binary
+*.ico  binary
+*.pdf  binary
+*.zip  binary

@@ -1,0 +1,25 @@
+# DBD Role Definitions
+# Updated nightly by GitHub Actions
+
+roles:
+  oracle:
+    name: Oracle
+    holder: 4got1en
+    since: 2025-07-01
+    permissions:
+      - WRITE_ALL
+      - APPROVE_ALL
+  
+  council:
+    name: Council Member
+    holder: vacant
+    permissions:
+      - WRITE_CHARTER
+      - APPROVE_CHANGES
+  
+  keeper:
+    name: Gate Keeper
+    holder: vacant
+    permissions:
+      - MANAGE_ROLES
+      - REVIEW_ACCESS

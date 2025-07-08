@@ -1,0 +1,16 @@
+name: Line-ending check
+
+on: [push, pull_request]
+
+jobs:
+  lf-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fail on CRLF
+        run: |
+          if git grep -Il $'\r' | grep -q .; then
+            echo "::error::Windows (CRLF) line endings detected. Convert to LF."
+            git grep -Il $'\r'
+            exit 1
+          fi

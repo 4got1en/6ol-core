@@ -1,0 +1,25 @@
+name: Core CI
+
+on: [push, pull_request]
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm ci
+
+      # Line-ending guard
+      - name: CRLF scan
+        run: |
+          if git grep -Il $'\r' | grep -q .; then
+            echo "::error::CRLF detected — run dos2unix"; exit 1; fi
+
+      # Lint + format check
+      - name: ESLint
+        run: npm run lint
+      - name: Prettier
+        run: npm run format:check
+
+      # Unit tests
+      - run: npm test

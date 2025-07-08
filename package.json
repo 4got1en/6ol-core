@@ -3,9 +3,25 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "regen": "node scripts/regenerate-manifests.js"
+    "regen": "node scripts/regenerate-manifests.js",
+    "test": "vitest run",
+    "lint": "eslint \"**/*.js\"",
+    "format": "prettier --write .",
+    "format:check": "prettier -c ."
   },
   "dependencies": {
     "jsdom": "^22.1.0"
+  },
+  "lint-staged": {
+    "*.{js,md,yml,yaml}": ["prettier --write", "eslint --fix"]
+  },
+  "devDependencies": {
+    "vitest": "^0.34.6",
+    "prettier": "^3.0.0",
+    "eslint": "^8.45.0",
+    "eslint-plugin-unused-imports": "^3.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "husky": "^8.0.0",
+    "lint-staged": "^13.2.3"
   }
 }

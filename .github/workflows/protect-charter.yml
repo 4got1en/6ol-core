@@ -1,0 +1,28 @@
+name: Protect Charter
+
+on:
+  push:
+    paths:
+      - 'temple-core/dbd-charter.md'
+  pull_request:
+    paths:
+      - 'temple-core/dbd-charter.md'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Validate changes
+        run: node temple-core/validate-changes.js ${{ github.actor }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
