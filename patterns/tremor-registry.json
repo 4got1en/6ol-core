@@ -21,7 +21,7 @@
     "created": "2025-07-13",
     "purpose": "Spiral Evolution Weekly Tremor Integration",
     "phase": "2",
-    "last_sync": "2025-07-13T14:27:52.586Z",
+    "last_sync": "2025-07-13T14:29:47.181Z",
     "pattern_count": 1,
     "latest_week": 28
   },
@@ -29,9 +29,9 @@
     "tremor-summary-W28": {
       "week": 28,
       "title": "Tremor Summary - Week 28",
-      "generated": "Sunday, July 13th, 2025",
-      "modified": "2025-07-13T14:25:41.038Z",
-      "size": 831
+      "generated": "Sunday, July 13, 2025",
+      "modified": "2025-07-13T14:29:47.128Z",
+      "size": 752
     }
   }
 }
