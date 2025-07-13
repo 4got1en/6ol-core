@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>WhisperEngine Test Console</title>
+  <style>
+    body { font-family: monospace; background: #0b0b0b; color: #eee; padding: 20px; }
+    .container { max-width: 800px; margin: 0 auto; }
+    button { background: #f5c84c; color: #000; border: none; padding: 8px 16px; margin: 5px; cursor: pointer; border-radius: 4px; }
+    .output { background: #151515; border: 1px solid #333; padding: 15px; margin: 10px 0; border-radius: 4px; }
+    .scroll-content { background: #1a1a1a; padding: 10px; margin: 10px 0; border-left: 3px solid #f5c84c; }
+    .stats { background: #0d1f0d; border: 1px solid #2d4a2d; padding: 10px; margin: 10px 0; border-radius: 4px; }
+    .error { background: #2d0d0d; border: 1px solid #4a2d2d; }
+    .shadow { background: #1a0d1a; border: 1px solid #3d2d3d; }
+    input, select { background: #222; color: #eee; border: 1px solid #444; padding: 5px; margin: 5px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🔮 WhisperEngine Test Console</h1>
+    
+    <div class="controls">
+      <h3>Loop Control</h3>
+      <p>Current Loop Level: <span id="current-loop">Loading...</span></p>
+      <button onclick="setLoop(1)">Set Loop 1 (sol)</button>
+      <button onclick="setLoop(2)">Set Loop 2 (luna)</button>
+      <button onclick="setLoop(3)">Set Loop 3 (umbra)</button>
+      <button onclick="setLoop(0)">Reset to Loop 0</button>
+    </div>
+
+    <div class="controls">
+      <h3>Scroll Delivery</h3>
+      <button onclick="getRegularScroll()">Get Regular Scroll</button>
+      <button onclick="getShadowScroll()">Get Shadow Scroll</button>
+      <button onclick="getStats()">Get User Stats</button>
+      <button onclick="getGlobalStats()">Get Global Stats</button>
+      <button onclick="resetUser()">Reset Current User</button>
+    </div>
+
+    <div class="controls">
+      <h3>Advanced Testing</h3>
+      <button onclick="testLoopReset()">Test Loop Reset (deliver all scrolls)</button>
+      <button onclick="clearCache()">Clear All Cache</button>
+    </div>
+
+    <div id="output" class="output">
+      <div>Ready to test WhisperEngine...</div>
+    </div>
+  </div>
+
+  <!-- Load the loop-engine first -->
+  <script src="loop-engine.js"></script>
+  
+  <!-- Load whisperEngine -->
+  <script src="whisperEngine.js"></script>
+
+  <script>
+    const output = document.getElementById('output');
+    const currentLoopSpan = document.getElementById('current-loop');
+
+    function log(message, className = '') {
+      const div = document.createElement('div');
+      div.innerHTML = typeof message === 'object' ? JSON.stringify(message, null, 2) : message;
+      if (className) div.className = className;
+      output.appendChild(div);
+      output.scrollTop = output.scrollHeight;
+      console.log(message);
+    }
+
+    function updateLoopDisplay() {
+      const level = Number(localStorage.getItem('6ol_loop_level') || 0);
+      currentLoopSpan.textContent = level;
+    }
+
+    function setLoop(level) {
+      localStorage.setItem('6ol_loop_level', level.toString());
+      updateLoopDisplay();
+      log(`Set loop level to ${level}`, 'stats');
+    }
+
+    async function getRegularScroll() {
+      try {
+        log('Requesting regular scroll...', 'stats');
+        const result = await window.whisperEngine.getNextScroll();
+        log(result, result.success ? 'scroll-content' : 'error');
+      } catch (err) {
+        log(`Error: ${err.message}`, 'error');
+      }
+    }
+
+    async function getShadowScroll() {
+      try {
+        log('Requesting shadow scroll...', 'stats');
+        const result = await window.whisperEngine.getNextScroll(null, 'shadow');
+        log(result, result.success && result.scroll ? 'shadow' : 'error');
+      } catch (err) {
+        log(`Error: ${err.message}`, 'error');
+      }
+    }
+
+    async function getStats() {
+      try {
+        const stats = await window.whisperEngine.getUserStats();
+        log('User Stats:', 'stats');
+        log(stats, 'stats');
+      } catch (err) {
+        log(`Error: ${err.message}`, 'error');
+      }
+    }
+
+    async function getGlobalStats() {
+      try {
+        const stats = await window.whisperEngine.getGlobalStats();
+        log('Global Stats:', 'stats');
+        log(stats, 'stats');
+      } catch (err) {
+        log(`Error: ${err.message}`, 'error');
+      }
+    }
+
+    async function resetUser() {
+      try {
+        const userId = localStorage.getItem('6ol_whisper_user_id');
+        const result = await window.whisperEngine.resetUser(userId);
+        log(`User reset: ${result}`, 'stats');
+      } catch (err) {
+        log(`Error: ${err.message}`, 'error');
+      }
+    }
+
+    async function testLoopReset() {
+      log('Testing loop reset by delivering all scrolls in current loop...', 'stats');
+      let count = 0;
+      let maxAttempts = 10; // Safety limit
+      
+      while (count < maxAttempts) {
+        try {
+          const result = await window.whisperEngine.getNextScroll();
+          log(`Attempt ${count + 1}: ${result.message || 'Scroll delivered'}`, 'scroll-content');
+          
+          if (result.action === 'LOOP_RESET') {
+            log('Loop reset triggered!', 'stats');
+            break;
+          }
+          
+          if (!result.success) {
+            log('No more scrolls available or error occurred', 'error');
+            break;
+          }
+          
+          count++;
+        } catch (err) {
+          log(`Error on attempt ${count + 1}: ${err.message}`, 'error');
+          break;
+        }
+      }
+    }
+
+    function clearCache() {
+      localStorage.removeItem('whisper_scroll_cache');
+      localStorage.removeItem('6ol_whisper_user_id');
+      log('Cache cleared. Refresh page to reinitialize.', 'stats');
+    }
+
+    // Initialize display
+    updateLoopDisplay();
+    
+    // Log when engine is ready
+    window.whisperEngine.initialize().then(() => {
+      log('WhisperEngine initialized and ready!', 'stats');
+    }).catch(err => {
+      log(`Failed to initialize: ${err.message}`, 'error');
+    });
+  </script>
+</body>
+</html>

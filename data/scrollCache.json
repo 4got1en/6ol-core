@@ -1,0 +1,59 @@
+{
+  "_meta": {
+    "version": "1.0.0",
+    "description": "Whisper Engine scroll delivery cache - tracks per-user scroll delivery state across loops",
+    "lastReset": null,
+    "globalStats": {
+      "totalUsers": 0,
+      "scrollsDelivered": 0,
+      "shadowScrollsDelivered": 0
+    }
+  },
+  "users": {
+    "_example_user_id": {
+      "userId": "_example_user_id",
+      "currentLoop": 1,
+      "createdAt": "2024-01-01T00:00:00.000Z",
+      "lastActivity": "2024-01-01T00:00:00.000Z",
+      "loopProgress": {
+        "1": {
+          "availableScrolls": ["daylight"],
+          "deliveredScrolls": [],
+          "completed": false,
+          "resetAt": null
+        },
+        "2": {
+          "availableScrolls": ["nightvision"],
+          "deliveredScrolls": [],
+          "completed": false,
+          "resetAt": null
+        },
+        "3": {
+          "availableScrolls": ["shadowdepth"],
+          "deliveredScrolls": [],
+          "completed": false,
+          "resetAt": null,
+          "shadowScrolls": {
+            "availableScrolls": ["forbidden-truth", "shadow-mastery"],
+            "deliveredScrolls": [],
+            "completed": false
+          }
+        }
+      },
+      "preferences": {
+        "enableShadowScrolls": true,
+        "deliveryInterval": "daily"
+      }
+    }
+  },
+  "scrollInventory": {
+    "regular": {
+      "1": ["daylight"],
+      "2": ["nightvision"], 
+      "3": ["shadowdepth"]
+    },
+    "shadow": {
+      "3": ["forbidden-truth", "shadow-mastery"]
+    }
+  }
+}
