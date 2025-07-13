@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>6ol · Ritual Core Hub · v3.5</title>
-  <base href="/6ol-core/">
   <link rel="icon" type="image/png" href="IMG_3069.png">
 
   <!-- ============= GLOBAL STYLES ============= -->
@@ -129,7 +128,7 @@
 
     <!-- unlock -->
     <form id="unlockForm" style="margin-top:1.5rem">
-      <input id="unlockInput" placeholder="🔑 Enter unlock word…"
+      <input id="unlockInput" placeholder="🔑 Enter unlock word or passphrase (sol, luna, umbra)…"
              style="padding:.5rem;border:1px solid var(--border);
                     border-radius:4px;background:#111;color:#fff">
       <button style="padding:.5rem;margin-left:.5rem;">Unlock</button>
@@ -149,6 +148,8 @@
 </main>
 
 <script type="module" src="rituals.js"></script>
+<script type="module" src="whisper-visual.js"></script>
+<script type="module" src="discord-sync.js"></script>
 <script type="module" src="terminal.js"></script>
 </body>
 </html>

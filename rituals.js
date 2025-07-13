@@ -13,6 +13,25 @@ let unlocked = JSON.parse(localStorage.getItem('unlocked') || '[]');
 let searchTerm = '';
 let activeTag  = '';
 
+/* Reflection gates and time locks (Whisper Engine v3 expansion) */
+const UNLOCK_TIMES_KEY = '6ol_unlock_times';
+const REFLECTIONS_KEY = '6ol_reflections';
+const TIME_LOCK_HOURS = 24;
+
+const REFLECTION_GATES = {
+  1: "What sparked your curiosity to begin this journey?",
+  2: "How has your understanding of yourself shifted since beginning?", 
+  3: "What shadow within you is ready to be acknowledged?",
+  4: "What patterns are you ready to architect into your life?",
+  5: "How will you carry this light forward into the world?"
+};
+
+const PASS_MAP = {
+  sol   : 1,   // Daylight initiation
+  luna  : 2,   // Night-vision insight
+  umbra : 3    // Shadow work depth
+};
+
 /* ---------- UTILS ---------- */
 const uuid   = () => crypto.randomUUID();
 const nowISO = () => new Date().toISOString();
@@ -23,6 +42,33 @@ function saveUnlock(word){
   }
 }
 function setLoop(l){ userLoop = l; localStorage.setItem('loopLevel', String(l)); updateLoopDisplay(); renderAll(); }
+
+/* Time lock helpers */
+const getUnlockTimes = () => JSON.parse(localStorage.getItem(UNLOCK_TIMES_KEY) || '{}');
+const setUnlockTime = (level, timestamp) => {
+  const times = getUnlockTimes();
+  times[level] = timestamp;
+  localStorage.setItem(UNLOCK_TIMES_KEY, JSON.stringify(times));
+};
+const canUnlockByTime = (level) => {
+  const times = getUnlockTimes();
+  const lastUnlock = times[level];
+  if (!lastUnlock) return true;
+  const hoursSince = (Date.now() - lastUnlock) / (1000 * 60 * 60);
+  return hoursSince >= TIME_LOCK_HOURS;
+};
+
+/* Reflection helpers */
+const getReflections = () => JSON.parse(localStorage.getItem(REFLECTIONS_KEY) || '{}');
+const setReflection = (level, reflection) => {
+  const reflections = getReflections();
+  reflections[level] = reflection;
+  localStorage.setItem(REFLECTIONS_KEY, JSON.stringify(reflections));
+};
+const hasReflected = (level) => {
+  const reflections = getReflections();
+  return reflections[level] && reflections[level].length > 10;
+};
 
 /* ---------- ERROR TRAP ---------- */
 window.lastError=null;
@@ -155,13 +201,114 @@ form.addEventListener('submit',async e=>{
 });
 ascendBtn.onclick = ()=>setLoop(userLoop+1);
 unlockForm.onsubmit=e=>{
-  e.preventDefault(); const v=unlockInput.value.trim();
-  if(v){saveUnlock(v); unlockInput.value=''; renderAll();}
+  e.preventDefault(); 
+  const v=unlockInput.value.trim();
+  
+  // Check if it's a passphrase
+  if(PASS_MAP.hasOwnProperty(v.toLowerCase())){
+    const newLevel = PASS_MAP[v.toLowerCase()];
+    if (newLevel > userLoop) {
+      // Check time lock
+      if (!canUnlockByTime(newLevel)) {
+        const times = getUnlockTimes();
+        const lastUnlock = times[newLevel];
+        const hoursLeft = TIME_LOCK_HOURS - (Date.now() - lastUnlock) / (1000 * 60 * 60);
+        alert(`⏰ Time lock active. Please wait ${Math.ceil(hoursLeft)} more hours before unlocking this level.`);
+        unlockInput.value='';
+        return;
+      }
+      
+      // Check reflection requirement
+      if (!hasReflected(newLevel)) {
+        showReflectionGate(newLevel, v);
+        unlockInput.value='';
+        return;
+      }
+      
+      // All gates passed, unlock
+      setLoop(newLevel);
+      setUnlockTime(newLevel, Date.now());
+      alert('🔓 Unlocked level ' + newLevel + '!');
+    } else {
+      alert('You already have this level or higher.');
+    }
+  } else {
+    // Regular unlock word
+    if(v){saveUnlock(v); renderAll();}
+  }
+  unlockInput.value='';
 };
 searchInput.oninput=e=>{searchTerm=e.target.value.trim().toLowerCase(); renderAll();};
 
 /* ---------- INIT ---------- */
-updateLoopDisplay(); renderAll();
+function initializeApp() {
+  updateLoopDisplay(); 
+  renderAll();
+}
+
+// Ensure DOM is ready before initializing
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initializeApp);
+} else {
+  initializeApp();
+}
+
+/* Reflection gate modal */
+function showReflectionGate(level, passphrase) {
+  const modal = document.createElement('div');
+  modal.style.cssText = `
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.8); z-index: 1000;
+    display: flex; align-items: center; justify-content: center;
+  `;
+  
+  const content = document.createElement('div');
+  content.style.cssText = `
+    background: var(--panel); border: 1px solid var(--border);
+    padding: 2rem; border-radius: 8px; max-width: 500px; width: 90%;
+    color: var(--fg);
+  `;
+  
+  content.innerHTML = `
+    <h2 style="color: var(--accent); margin-top: 0;">🪞 Reflection Gate</h2>
+    <p>Before unlocking Level ${level}, please reflect on this question:</p>
+    <p style="font-style: italic; color: var(--accent);">"${REFLECTION_GATES[level]}"</p>
+    <textarea id="reflection-input" rows="6" style="width: 100%; margin: 1rem 0; padding: 0.5rem; background: #111; color: var(--fg); border: 1px solid var(--border); border-radius: 4px;" 
+              placeholder="Share your honest reflection here..."></textarea>
+    <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+      <button id="reflection-cancel" style="background: #666; color: white; padding: 0.5rem 1rem; border: none; border-radius: 4px; cursor: pointer;">Cancel</button>
+      <button id="reflection-submit" style="background: var(--accent); color: #000; padding: 0.5rem 1rem; border: none; border-radius: 4px; cursor: pointer;">Submit & Unlock</button>
+    </div>
+  `;
+  
+  modal.appendChild(content);
+  document.body.appendChild(modal);
+  
+  // Handle submission
+  content.querySelector('#reflection-submit').onclick = () => {
+    const reflection = content.querySelector('#reflection-input').value.trim();
+    if (reflection.length < 10) {
+      alert('Please provide a more thoughtful reflection (at least 10 characters).');
+      return;
+    }
+    
+    setReflection(level, reflection);
+    setLoop(level);
+    setUnlockTime(level, Date.now());
+    document.body.removeChild(modal);
+    alert('🔓 Reflection recorded. Level ' + level + ' unlocked!');
+  };
+  
+  // Handle cancel
+  content.querySelector('#reflection-cancel').onclick = () => {
+    document.body.removeChild(modal);
+  };
+  
+  // Close on background click
+  modal.onclick = (e) => {
+    if (e.target === modal) document.body.removeChild(modal);
+  };
+}
 
 /* ---------- DEBUG ---------- */
 window.forgeTestRitual=async(txt='Console ritual')=>{
