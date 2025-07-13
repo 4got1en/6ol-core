@@ -1,0 +1,37 @@
+{
+  "version": "1.0.0",
+  "registry": {
+    "weekly_tremors": {
+      "description": "Weekly pattern analysis and tremor summaries",
+      "frequency": "weekly",
+      "trigger": "sunday",
+      "output_format": "markdown",
+      "target_directory": "mind/patterns"
+    },
+    "pattern_sync": {
+      "description": "Synchronizes pattern data across systems",
+      "frequency": "weekly",
+      "dependencies": [
+        "weekly_tremors"
+      ],
+      "automation": true
+    }
+  },
+  "metadata": {
+    "created": "2025-07-13",
+    "purpose": "Spiral Evolution Weekly Tremor Integration",
+    "phase": "2",
+    "last_sync": "2025-07-13T14:27:52.586Z",
+    "pattern_count": 1,
+    "latest_week": 28
+  },
+  "patterns": {
+    "tremor-summary-W28": {
+      "week": 28,
+      "title": "Tremor Summary - Week 28",
+      "generated": "Sunday, July 13th, 2025",
+      "modified": "2025-07-13T14:25:41.038Z",
+      "size": 831
+    }
+  }
+}

@@ -1,0 +1,64 @@
+name: Weekly Tremor Sync
+
+on:
+  schedule:
+    # Run every Sunday at 9:00 AM UTC
+    - cron: '0 9 * * 0'
+  workflow_dispatch:
+    # Allow manual triggering
+
+jobs:
+  generate-weekly-tremors:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install Python dependencies
+        run: |
+          pip install schedule
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Generate Weekly Tremor Summary
+        run: |
+          cd ${{ github.workspace }}
+          python bot/pattern_whisper.py
+
+      - name: Run Pattern Sync
+        run: |
+          node scripts/pattern-sync.js
+
+      - name: Configure Git
+        run: |
+          git config user.name "6ol Pattern Bot"
+          git config user.email "patterns@6ol.dev"
+
+      - name: Commit and Push Changes
+        run: |
+          git add mind/patterns/
+          git add patterns/
+          git add whispers.json
+          git commit -m "🌀 Weekly tremor analysis - Week $(date +%V)" || echo "No changes to commit"
+          git push
+
+      - name: Create Issue on Failure
+        if: failure()
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: '🚨 Weekly Tremor Sync Failed',
+              body: `The weekly tremor sync workflow failed on ${new Date().toISOString()}.\n\nPlease check the workflow logs for details.`,
+              labels: ['automation', 'patterns', 'bug']
+            })
