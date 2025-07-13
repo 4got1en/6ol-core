@@ -1,0 +1,27 @@
+{
+  "description": "Discord Loop role-to-tag mappings for Whisper Engine v3",
+  "version": "1.0",
+  "loopMappings": {
+    "Loop 1": {
+      "name": "The Seeker's Path",
+      "tags": ["beginner", "seeker", "invocation", "spark", "light", "calling"],
+      "priority": 1
+    },
+    "Loop 2": {
+      "name": "The Devoted Path", 
+      "tags": ["devotion", "ritual", "structure", "mirror", "discipline", "rooted"],
+      "priority": 2
+    },
+    "Loop 3": {
+      "name": "The Shadow Path",
+      "tags": ["shadow", "revelation", "unseen", "veil", "echo", "sacrifice"],
+      "priority": 3
+    }
+  },
+  "fallbackTag": "seeker",
+  "scheduleConfig": {
+    "dropTime": "13:00",
+    "timezone": "UTC",
+    "channelName": "#whisper-engine"
+  }
+}

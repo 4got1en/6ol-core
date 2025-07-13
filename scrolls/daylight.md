@@ -3,6 +3,7 @@ title: "Daylight Initiation"
 loop_level: 1
 passphrase: "sol"
 status: "Published"
+tags: ["beginner", "light", "calling", "invocation", "seeker"]
 ---
 
 # Daylight Initiation

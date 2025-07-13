@@ -2,16 +2,22 @@
   {
     "filename": "daylight.md",
     "title": "Daylight Initiation",
-    "summary": "Introduce 6ol’s mission & first ritual."
+    "summary": "Introduce 6ol's mission & first ritual.",
+    "loop_level": 1,
+    "tags": ["beginner", "light", "calling", "invocation", "seeker"]
   },
   {
     "filename": "nightvision.md",
     "title": "Night-Vision Insight",
-    "summary": "Self-reflection guide (loop level 2)."
+    "summary": "Self-reflection guide (loop level 2).",
+    "loop_level": 2,
+    "tags": ["mirror", "ritual", "discipline", "structure"]
   },
   {
     "filename": "shadowdepth.md",
     "title": "Shadow Work Depth",
-    "summary": "Advanced hidden insights (needs expansion)."
+    "summary": "Advanced hidden insights (needs expansion).",
+    "loop_level": 3,
+    "tags": ["shadow", "revelation", "sacrifice", "unseen"]
   }
 ]
