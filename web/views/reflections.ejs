@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px 0;
+            border-bottom: 2px solid #333;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(45deg, #4fc3f7, #29b6f6, #03a9f4);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+        
+        nav {
+            margin: 20px 0;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+        
+        nav a {
+            color: #e0e0e0;
+            text-decoration: none;
+            padding: 10px 20px;
+            border: 1px solid #333;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        nav a:hover,
+        nav a.active {
+            background: linear-gradient(45deg, #4fc3f7, #29b6f6);
+            color: #000;
+            transform: translateY(-2px);
+        }
+        
+        main {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 30px;
+            margin: 20px 0;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            color: #888;
+            border-top: 1px solid #333;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌞 6ol Core</h1>
+            <p>Embodied Presence · Web Dashboard</p>
+            <nav>
+                <ul>
+                    <li><a href="/" class="<%= page === 'home' ? 'active' : '' %>">Home</a></li>
+                    <li><a href="/maps" class="<%= page === 'maps' ? 'active' : '' %>">Spirit Maps</a></li>
+                    <li><a href="/reflections" class="<%= page === 'reflections' ? 'active' : '' %>">Reflections</a></li>
+                </ul>
+            </nav>
+        </header>
+        
+        <main>
+            <div class="reflections-section">
+                <h2>💭 Reflections</h2>
+                <p>Deep contemplations from the journey of embodied presence.</p>
+                
+                <div class="reflection-entries" style="margin: 30px 0;">
+                    
+                    <article class="reflection" style="background: rgba(255, 255, 255, 0.08); padding: 30px; border-radius: 12px; margin-bottom: 25px; border-left: 4px solid #4fc3f7;">
+                        <header style="margin-bottom: 20px;">
+                            <h3 style="color: #4fc3f7; margin-bottom: 8px;">Phase 3: Web Dashboard Emergence</h3>
+                            <time style="color: #888; font-size: 0.9rem;">Current Reflection</time>
+                        </header>
+                        <div class="content">
+                            <p style="margin-bottom: 15px;">
+                                The manifestation of this web dashboard represents a significant evolution in the 6ol Core ecosystem. 
+                                What began as scattered scripts and ritual frameworks now crystallizes into a unified interface 
+                                for embodied presence.
+                            </p>
+                            <p style="margin-bottom: 15px;">
+                                This integration layer bridges the gap between abstract spiritual concepts and practical, 
+                                accessible tools. The dashboard becomes a sacred space where digital and embodied practices converge.
+                            </p>
+                            <blockquote style="border-left: 3px solid #29b6f6; padding-left: 20px; margin: 20px 0; font-style: italic; color: #ccc;">
+                                "The interface is not separate from the practice - it IS the practice made visible."
+                            </blockquote>
+                        </div>
+                    </article>
+                    
+                    <article class="reflection" style="background: rgba(255, 255, 255, 0.08); padding: 30px; border-radius: 12px; margin-bottom: 25px; border-left: 4px solid #29b6f6;">
+                        <header style="margin-bottom: 20px;">
+                            <h3 style="color: #29b6f6; margin-bottom: 8px;">The Loop Engine as Living System</h3>
+                            <time style="color: #888; font-size: 0.9rem;">Foundational Insight</time>
+                        </header>
+                        <div class="content">
+                            <p style="margin-bottom: 15px;">
+                                The loop engine isn't just code - it's a digital manifestation of the eternal return, 
+                                the cyclical nature of consciousness exploring itself. Each iteration brings deeper awareness.
+                            </p>
+                            <p style="margin-bottom: 15px;">
+                                Through ritual-core.js and the various detection systems, we create feedback loops that 
+                                mirror the natural cycles of attention, reflection, and integration.
+                            </p>
+                        </div>
+                    </article>
+                    
+                    <article class="reflection" style="background: rgba(255, 255, 255, 0.08); padding: 30px; border-radius: 12px; margin-bottom: 25px; border-left: 4px solid #03a9f4;">
+                        <header style="margin-bottom: 20px;">
+                            <h3 style="color: #03a9f4; margin-bottom: 8px;">Navigation as Spiritual Practice</h3>
+                            <time style="color: #888; font-size: 0.9rem;">Ongoing Exploration</time>
+                        </header>
+                        <div class="content">
+                            <p style="margin-bottom: 15px;">
+                                Every click, every route transition, every interaction with this dashboard can become 
+                                a moment of mindful presence. The navigation itself becomes a form of walking meditation.
+                            </p>
+                            <p style="margin-bottom: 15px;">
+                                The maps guide us through different territories of consciousness, while the reflections 
+                                help us integrate the journey. This is technology in service of awakening.
+                            </p>
+                        </div>
+                    </article>
+                    
+                </div>
+                
+                <div class="contemplation-space" style="margin-top: 40px; padding: 25px; background: rgba(0, 0, 0, 0.4); border-radius: 10px; text-align: center;">
+                    <h3>🧘 Contemplation Space</h3>
+                    <p style="margin: 15px 0; font-style: italic; color: #bbb;">
+                        "What insights arise as you navigate these digital territories? 
+                        How does this interface serve your embodied practice?"
+                    </p>
+                    <div style="height: 60px; border: 1px dashed #444; border-radius: 5px; display: flex; align-items: center; justify-content: center; margin-top: 20px; color: #666;">
+                        Space for your own reflections...
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <footer>
+            <p>&copy; 2024 6ol Core · Phase 3: Web Dashboard</p>
+        </footer>
+    </div>
+</body>
+</html>

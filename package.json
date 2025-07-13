@@ -1,5 +1,12 @@
 {
   "name": "6ol-core",
   "version": "1.0.0",
-  "type": "module"
+  "type": "module",
+  "scripts": {
+    "web": "node web/index.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "ejs": "^3.1.9"
+  }
 }

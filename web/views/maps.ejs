@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px 0;
+            border-bottom: 2px solid #333;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(45deg, #4fc3f7, #29b6f6, #03a9f4);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+        
+        nav {
+            margin: 20px 0;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+        
+        nav a {
+            color: #e0e0e0;
+            text-decoration: none;
+            padding: 10px 20px;
+            border: 1px solid #333;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        nav a:hover,
+        nav a.active {
+            background: linear-gradient(45deg, #4fc3f7, #29b6f6);
+            color: #000;
+            transform: translateY(-2px);
+        }
+        
+        main {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 30px;
+            margin: 20px 0;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            color: #888;
+            border-top: 1px solid #333;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌞 6ol Core</h1>
+            <p>Embodied Presence · Web Dashboard</p>
+            <nav>
+                <ul>
+                    <li><a href="/" class="<%= page === 'home' ? 'active' : '' %>">Home</a></li>
+                    <li><a href="/maps" class="<%= page === 'maps' ? 'active' : '' %>">Spirit Maps</a></li>
+                    <li><a href="/reflections" class="<%= page === 'reflections' ? 'active' : '' %>">Reflections</a></li>
+                </ul>
+            </nav>
+        </header>
+        
+        <main>
+            <div class="maps-section">
+                <h2>🗺️ Spirit Maps</h2>
+                <p>Navigate the territories of consciousness and embodied presence.</p>
+                
+                <div class="map-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 25px; margin: 30px 0;">
+                    
+                    <div class="map-card" style="background: rgba(76, 195, 247, 0.1); padding: 25px; border-radius: 10px; border: 1px solid rgba(76, 195, 247, 0.3);">
+                        <h3>🌞 Layer-1: Core Territories</h3>
+                        <ul style="margin: 15px 0; padding-left: 20px;">
+                            <li>Ritual Core Systems</li>
+                            <li>Loop Engine Dynamics</li>
+                            <li>Terminal Interfaces</li>
+                            <li>Mind Architecture</li>
+                        </ul>
+                        <p style="font-size: 0.9rem; color: #aaa;">Foundation layer for embodied practice</p>
+                    </div>
+                    
+                    <div class="map-card" style="background: rgba(41, 182, 246, 0.1); padding: 25px; border-radius: 10px; border: 1px solid rgba(41, 182, 246, 0.3);">
+                        <h3>🌒 Layer-2: Active Projects</h3>
+                        <ul style="margin: 15px 0; padding-left: 20px;">
+                            <li>Analytics Dashboard</li>
+                            <li>Finance Integration</li>
+                            <li>Legal Framework</li>
+                            <li>Spirit Map Visualization</li>
+                        </ul>
+                        <p style="font-size: 0.9rem; color: #aaa;">Current development focus</p>
+                    </div>
+                    
+                    <div class="map-card" style="background: rgba(3, 169, 244, 0.1); padding: 25px; border-radius: 10px; border: 1px solid rgba(3, 169, 244, 0.3);">
+                        <h3>🌑 Layer-3+: Backlog & Ideas</h3>
+                        <ul style="margin: 15px 0; padding-left: 20px;">
+                            <li>Web Dashboard (Current)</li>
+                            <li>Mobile Interface</li>
+                            <li>AI Integration</li>
+                            <li>Community Features</li>
+                        </ul>
+                        <p style="font-size: 0.9rem; color: #aaa;">Future expansion territories</p>
+                    </div>
+                    
+                </div>
+                
+                <div class="navigation-tools" style="margin-top: 40px; padding: 25px; background: rgba(0, 0, 0, 0.4); border-radius: 10px;">
+                    <h3>🧭 Navigation Tools</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px;">
+                        <div style="padding: 15px; background: rgba(255, 255, 255, 0.05); border-radius: 5px;">
+                            <strong>Control Center</strong><br>
+                            <small>Central command interface</small>
+                        </div>
+                        <div style="padding: 15px; background: rgba(255, 255, 255, 0.05); border-radius: 5px;">
+                            <strong>Detect Stage</strong><br>
+                            <small>Awareness monitoring</small>
+                        </div>
+                        <div style="padding: 15px; background: rgba(255, 255, 255, 0.05); border-radius: 5px;">
+                            <strong>Temple Core</strong><br>
+                            <small>Sacred space access</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <footer>
+            <p>&copy; 2024 6ol Core · Phase 3: Web Dashboard</p>
+        </footer>
+    </div>
+</body>
+</html>

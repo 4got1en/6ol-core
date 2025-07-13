@@ -1,0 +1,39 @@
+/* 6ol Core Web Dashboard Styles */
+
+/* Base styles are inlined in the HTML templates for simplicity */
+/* This file can be used for additional custom styles */
+
+.feature-card:hover {
+    transform: translateY(-3px);
+    transition: transform 0.3s ease;
+}
+
+.map-card:hover {
+    transform: scale(1.02);
+    transition: transform 0.3s ease;
+}
+
+.reflection:hover {
+    background: rgba(255, 255, 255, 0.12) !important;
+    transition: background 0.3s ease;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+    
+    nav ul {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    main {
+        padding: 20px;
+    }
+}
