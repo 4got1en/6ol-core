@@ -1,9 +1,12 @@
-# 🌒 Night-Vision Insight
+---
+title: "Night-Vision Insight"
+loop_level: 2
+passphrase: "luna"
+status: "Draft"
+tags: ["mirror", "ritual", "discipline", "structure"]
+---
 
-> Loop Level: 2  
-> Passphrase: `luna`  
-> Status: Draft  
-> Location: `scrolls/nightvision.md`
+# 🌒 Night-Vision Insight
 
 ---
 

@@ -1,6 +1,17 @@
-[{"filename": "eveningharvest.html", "title": "Evening Harvest", "summary": ""}
-,
-{"filename": "middayflow.html", "title": "Midday Flow Check", "summary": ""}
-,
-{"filename": "morningseed.html", "title": "Morning Seed Offering", "summary": ""}
+[
+  {
+    "filename": "eveningharvest.html",
+    "title": "Evening Harvest",
+    "summary": ""
+  },
+  {
+    "filename": "middayflow.html",
+    "title": "Midday Flow Check",
+    "summary": ""
+  },
+  {
+    "filename": "morningseed.html",
+    "title": "Morning Seed Offering",
+    "summary": ""
+  }
 ]

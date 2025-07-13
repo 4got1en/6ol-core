@@ -3,6 +3,7 @@ title: "Shadow Work Depth"
 loop_level: 3
 passphrase: "umbra"
 status: "Draft"
+tags: ["shadow", "revelation", "sacrifice", "unseen"]
 ---
 
 # Shadow Work Depth
