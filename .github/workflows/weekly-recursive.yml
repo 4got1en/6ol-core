@@ -1,0 +1,65 @@
+name: Weekly Recursive Reflection
+
+on:
+  schedule:
+    # Run every Sunday at 18:00 UTC (weekly reflection time)
+    - cron: '0 18 * * 0'
+  workflow_dispatch:
+    inputs:
+      week_override:
+        description: 'Override week number (e.g., 2025-W29)'
+        required: false
+        type: string
+
+jobs:
+  recursive-reflection:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      
+      - name: Install dependencies
+        run: |
+          npm install
+          
+      - name: Generate recursive reflection
+        run: |
+          node scripts/recursive-sync.js
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WEEK_OVERRIDE: ${{ inputs.week_override }}
+      
+      - name: Commit recursive reflection
+        run: |
+          git config user.name "6ol Recursive Bot"
+          git config user.email "recursive@6ol.dev"
+          git add mind/recursive/recursive-reflection-*.md
+          git add mind/theory/theory-*.md
+          git commit -m "🌀 Weekly Recursive Reflection - Week $(date +%Y-W%U)" || echo "No new reflection to commit"
+      
+      - name: Push changes
+        run: |
+          git push
+      
+      - name: Create PR for theory updates
+        if: ${{ env.THEORY_UPDATED == 'true' }}
+        run: |
+          gh pr create \
+            --title "Phase 4: Emergent Theory Update — Week $(date +%Y-W%U)" \
+            --body "Automated PR created due to significant theoretical developments in weekly recursive reflection." \
+            --head ${{ github.ref_name }} \
+            --base main \
+            --label "automated,theory,recursive-reflection"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

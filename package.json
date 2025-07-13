@@ -1,5 +1,28 @@
 {
   "name": "6ol-core",
   "version": "1.0.0",
-  "type": "module"
+  "type": "module",
+  "description": "6ol Temple core system for pattern detection and recursive consciousness",
+  "scripts": {
+    "bot": "python bot/pattern_whisper.py",
+    "reflect": "node scripts/reflect.js",
+    "recursive": "node scripts/recursive-sync.js",
+    "sync-patterns": "node scripts/pattern-sync.js",
+    "analyze-patterns": "python bot/pattern_engine.py"
+  },
+  "dependencies": {
+    "discord.js": "^14.14.1",
+    "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {},
+  "keywords": [
+    "ai",
+    "consciousness", 
+    "patterns",
+    "recursion",
+    "temple",
+    "discord-bot"
+  ],
+  "author": "6ol Temple Collective",
+  "license": "MIT"
 }

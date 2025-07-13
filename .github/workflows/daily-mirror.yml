@@ -1,0 +1,66 @@
+name: Daily Mirror Reflection
+
+on:
+  schedule:
+    # Run daily at 06:00 UTC (dawn reflection)
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+    inputs:
+      custom_date:
+        description: 'Custom date for reflection (YYYY-MM-DD)'
+        required: false
+        type: string
+
+jobs:
+  mirror-reflection:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      
+      - name: Install dependencies
+        run: |
+          npm install discord.js@latest
+          npm install node-fetch@latest
+          
+      - name: Generate daily reflection
+        run: |
+          node scripts/reflect.js
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CUSTOM_DATE: ${{ inputs.custom_date }}
+      
+      - name: Commit reflection
+        run: |
+          git config user.name "6ol Mirror Bot"
+          git config user.email "mirror@6ol.dev"
+          git add mind/daily-reflection-*.md
+          git commit -m "🌅 Daily Mirror Reflection - $(date +%Y-%m-%d)" || echo "No new reflection to commit"
+      
+      - name: Push changes
+        run: |
+          git push
+      
+      - name: Create PR for significant patterns
+        if: ${{ env.SIGNIFICANT_PATTERNS == 'true' }}
+        run: |
+          # Create PR if significant patterns detected
+          gh pr create \
+            --title "Phase 2: Significant Pattern Detection — $(date +%Y-%m-%d)" \
+            --body "Automated PR created due to significant pattern tremors detected in daily reflection." \
+            --head ${{ github.ref_name }} \
+            --base main \
+            --label "automated,patterns,tremor-analysis"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

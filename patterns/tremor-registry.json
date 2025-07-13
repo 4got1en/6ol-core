@@ -1,0 +1,44 @@
+{
+  "timestamp": "2025-07-13T14:46:06.989426",
+  "documents_analyzed": [
+    "mind/recursive/recursive-reflection-2025-W28.md",
+    "mind/contradictions/contradiction-map.md",
+    "test_document.md"
+  ],
+  "active_tremors": [
+    {
+      "theme": "recursion",
+      "total_occurrences": 37,
+      "intensity": 7.0,
+      "source_documents": [
+        "recursive-reflection-2025-W28.md",
+        "contradiction-map.md",
+        "test_document.md"
+      ]
+    },
+    {
+      "theme": "mirror",
+      "total_occurrences": 22,
+      "intensity": 3.8,
+      "source_documents": [
+        "recursive-reflection-2025-W28.md",
+        "contradiction-map.md",
+        "test_document.md"
+      ]
+    },
+    {
+      "theme": "paradox",
+      "total_occurrences": 18,
+      "intensity": 3.6,
+      "source_documents": [
+        "recursive-reflection-2025-W28.md",
+        "contradiction-map.md"
+      ]
+    }
+  ],
+  "analysis_summary": {
+    "total_themes_detected": 3,
+    "tremor_count": 3,
+    "highest_intensity_tremor": "recursion"
+  }
+}

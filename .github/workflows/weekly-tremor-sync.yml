@@ -1,0 +1,80 @@
+name: Weekly Tremor Sync
+
+on:
+  schedule:
+    # Run every Saturday at 20:00 UTC (pre-recursive reflection)
+    - cron: '0 20 * * 6'
+  workflow_dispatch:
+    inputs:
+      force_pr:
+        description: 'Force PR creation regardless of tremor levels'
+        required: false
+        type: boolean
+        default: false
+
+jobs:
+  tremor-sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: Install Python dependencies
+        run: |
+          pip install --no-cache-dir discord.py python-dotenv
+          
+      - name: Install Node dependencies
+        run: |
+          npm install
+          
+      - name: Run pattern analysis
+        run: |
+          python bot/pattern_engine.py
+        working-directory: ${{ github.workspace }}
+      
+      - name: Generate tremor summary
+        run: |
+          node scripts/pattern-sync.js
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          FORCE_PR: ${{ inputs.force_pr }}
+      
+      - name: Commit tremor updates
+        run: |
+          git config user.name "6ol Tremor Bot"
+          git config user.email "tremor@6ol.dev"
+          git add patterns/
+          git add mind/tremor-summary-*.md
+          git commit -m "🌀 Weekly Tremor Sync - $(date +%Y-W%U)" || echo "No tremor updates to commit"
+      
+      - name: Push changes
+        run: |
+          git push
+      
+      - name: Create PR for significant tremors
+        if: ${{ env.SIGNIFICANT_TREMORS == 'true' }}
+        run: |
+          gh pr create \
+            --title "Phase 6: Weekly Tremor Integration — tremor-summary and sync" \
+            --body "$(cat $TREMOR_PR_BODY)" \
+            --head ${{ github.ref_name }} \
+            --base main \
+            --label "automated,tremor-analysis,pattern-sync"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

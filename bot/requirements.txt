@@ -1,0 +1,3 @@
+# Python requirements for 6ol Temple bot system
+discord.py>=2.3.2
+python-dotenv>=1.0.0
