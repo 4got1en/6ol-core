@@ -197,6 +197,7 @@
       document.getElementById('test-visual-drop').onclick = async () => {
         const testDrop = await processScrollForVisualDrop('scrolls/daylight.md');
         if (testDrop) {
+          displayVisualDrop(testDrop);
           alert('Visual drop created successfully! Check the Visual Drops section below.');
         } else {
           alert('Failed to create visual drop. Check console for errors.');
