@@ -19,18 +19,20 @@ const fs = require('fs');
 const mockInteraction = (options = {}) => ({
   member: options.member || { id: 'test-user', displayName: 'TestUser' },
   guild: options.guild || { id: 'test-guild' },
-  deferReply: jest.fn(),
-  editReply: jest.fn(),
-  reply: jest.fn(),
-  deferred: false
+  deferReply: jest.fn().mockResolvedValue(),
+  editReply: jest.fn().mockResolvedValue(),
+  reply: jest.fn().mockResolvedValue(),
+  deferred: true
 });
 
 describe('Ascend Command', () => {
   let interaction;
   let mockRoleManager;
+  let consoleSpy;
 
   beforeEach(() => {
     jest.clearAllMocks();
+    consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
     interaction = mockInteraction();
     
     // Mock LoopRoleManager
@@ -53,6 +55,10 @@ describe('Ascend Command', () => {
         }
       }
     }));
+  });
+
+  afterEach(() => {
+    consoleSpy.mockRestore();
   });
 
   describe('Successful Ascension', () => {
@@ -149,6 +155,7 @@ describe('Ascend Command', () => {
   describe('Error Handling', () => {
     test('should handle unexpected errors gracefully', async () => {
       mockRoleManager.canAscendToNextLevel.mockRejectedValue(new Error('Test error'));
+      interaction.deferred = true; // Mark as deferred
 
       await ascendCommand.execute(interaction);
 

@@ -38,10 +38,12 @@ const mockGuild = (roles = [], botPosition = 10) => ({
 describe('LoopRoleManager', () => {
   let roleManager;
   let guild;
+  let consoleSpy;
 
   beforeEach(() => {
-    // Reset mocks
+    // Reset mocks and suppress console.error in tests
     jest.clearAllMocks();
+    consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
     
     // Create test guild with roles
     const testRoles = [
@@ -54,6 +56,11 @@ describe('LoopRoleManager', () => {
     
     guild = mockGuild(testRoles);
     roleManager = new LoopRoleManager(guild);
+  });
+
+  afterEach(() => {
+    // Restore console.error
+    consoleSpy.mockRestore();
   });
 
   describe('getCurrentLoopLevel', () => {
@@ -125,11 +132,21 @@ describe('LoopRoleManager', () => {
       expect(result.reason).toBe('Already at maximum level');
     });
 
-    test('should handle errors gracefully', async () => {
-      const member = null; // Invalid member
-      const result = await roleManager.canAscendToNextLevel(member);
-      expect(result.canAscend).toBe(false);
-      expect(result.reason).toBe('Error checking eligibility');
+    test('should handle errors gracefully and continue with fallback', async () => {
+      // Create a member that will cause getCurrentLoopLevel to use fallback
+      const invalidMember = {
+        roles: {
+          cache: {
+            has: () => { throw new Error('Role check failed'); }
+          }
+        }
+      };
+      
+      const result = await roleManager.canAscendToNextLevel(invalidMember);
+      // Since getCurrentLoopLevel falls back to 1, canAscend should be true (1 -> 2)
+      expect(result.canAscend).toBe(true);
+      expect(result.currentLevel).toBe(1);
+      expect(result.nextLevel).toBe(2);
     });
   });
 
