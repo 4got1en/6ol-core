@@ -97,7 +97,7 @@ const searchInput=$('searchInput'), matchCount=$('matchCount'), tagWrap=$('tagCh
 
 /* ---------- LOOP UI ---------- */
 function updateLoopDisplay(){
-  const names=['Initiate','Seeker','Witness','Architect','Lightbearer'];
+  const names=['Initiate','Seeker','Witness','Architect','Lightbearer','','','','','','','','Voidkeeper'];
   loopStatus.textContent=`Current Loop: ${userLoop} – ${names[userLoop-1]||''}`;
 }
 

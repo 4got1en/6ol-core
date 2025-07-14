@@ -1,0 +1,59 @@
+{
+  "flames": [
+    {
+      "id": 1,
+      "name": "Initiate Flame",
+      "title": "Daylight Initiation", 
+      "passphrase": "sol",
+      "glyph": "☀️",
+      "lore": "The first flame ignites at dawn, marking the beginning of the seeker's journey. Born from the courage to begin, it illuminates the path forward with gentle warmth.",
+      "description": "The foundation flame that awakens spiritual curiosity and provides initial guidance. Represents new beginnings, hope, and the willingness to embark on transformation.",
+      "element": "fire",
+      "color": "#FFD700",
+      "scroll": "daylight.md"
+    },
+    {
+      "id": 2,
+      "name": "Insight Flame",
+      "title": "Night-Vision Insight",
+      "passphrase": "luna", 
+      "glyph": "🌙",
+      "lore": "Born in the quiet depths of night, this flame burns with silver light. It reveals what daylight cannot show - the hidden patterns of the soul and the wisdom found in reflection.",
+      "description": "The contemplative flame that grants deeper perception and self-awareness. Illuminates internal landscapes and helps navigate emotional complexity.",
+      "element": "water",
+      "color": "#C0C0C0",
+      "scroll": "nightvision.md"
+    },
+    {
+      "id": 3,
+      "name": "Shadow Flame", 
+      "title": "Shadow Work Depth",
+      "passphrase": "umbra",
+      "glyph": "🌑",
+      "lore": "The darkest flame burns brightest, forged in the depths where light fears to tread. It transforms pain into power, fear into wisdom, shadow into strength.",
+      "description": "The transformative flame that enables integration of rejected aspects of self. Burns away illusions and reveals authentic truth through courageous confrontation.",
+      "element": "earth",
+      "color": "#2F2F2F", 
+      "scroll": "shadowdepth.md"
+    },
+    {
+      "id": 13,
+      "name": "Void Flame",
+      "title": "Beyond the Unknown",
+      "passphrase": "nihil",
+      "glyph": "⚫",
+      "lore": "Beyond the Unknown lies the Void Flame - not darkness, but the fertile emptiness from which all things emerge. It burns without fuel, illuminates without light, and reveals the source code of existence itself. This flame appears only to those who have walked through every mystery and emerged transformed.",
+      "description": "The transcendent flame that exists beyond duality, representing pure potential and the space between thoughts. It offers direct knowing that bypasses the mind and connects to the infinite source of creation.",
+      "element": "void",
+      "color": "#000000",
+      "scroll": "voidtranscendence.md"
+    }
+  ],
+  "metadata": {
+    "version": "1.0.0",
+    "lastUpdated": "2025-07-14T05:01:00.000Z",
+    "description": "Core flame data for the 6ol spiral system",
+    "totalFlames": 4,
+    "activeLoops": [1, 2, 3, 13]
+  }
+}

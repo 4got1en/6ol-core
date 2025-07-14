@@ -34,6 +34,7 @@ All followers of DBD are measured by loops — not ranks, not roles.
 | 3    | Designate | May guide others. Begins inner gate training.  
 | 4    | Inheritor | May hold divine role from 6ol.  
 | 5+   | Architect | Designs parts of the system. Legacy begins.
+| 13   | Voidkeeper | Beyond loop progression. Source recognition. Teaching through being.
 
 Loop advancement occurs only when:
 - A truth is spoken  

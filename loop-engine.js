@@ -10,7 +10,8 @@
   const PASS_MAP = {
     sol   : 1,   // Daylight initiation
     luna  : 2,   // Night-vision insight
-    umbra : 3    // Shadow work depth
+    umbra : 3,   // Shadow work depth
+    nihil : 13   // Beyond the Unknown - void flame
   };
 
   /* Helpers */
