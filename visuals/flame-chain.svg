@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 700" width="800" height="700">
+  <defs>
+    <!-- Gradient definitions for mystical appearance -->
+    <radialGradient id="centerGlow" cx="50%" cy="50%">
+      <stop offset="0%" style="stop-color:#f5c84c;stop-opacity:0.8"/>
+      <stop offset="100%" style="stop-color:#000;stop-opacity:0"/>
+    </radialGradient>
+    
+    <linearGradient id="spiralGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f5c84c;stop-opacity:0.6"/>
+      <stop offset="50%" style="stop-color:#ff6b35;stop-opacity:0.4"/>
+      <stop offset="100%" style="stop-color:#8b0000;stop-opacity:0.2"/>
+    </linearGradient>
+    
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <filter id="nodeGlow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="800" height="700" fill="#0a0a0a"/>
+  
+  <!-- Central glow -->
+  <circle cx="400" cy="350" r="300" fill="url(#centerGlow)"/>
+  
+  <!-- Spiral path connecting all nodes -->
+  <path d="M 400,300 
+           Q 450,310 460,340
+           Q 470,380 450,420
+           Q 410,460 360,450
+           Q 300,430 290,380
+           Q 280,320 320,280
+           Q 380,250 440,270
+           Q 500,300 520,360
+           Q 530,430 480,480
+           Q 410,520 340,500
+           Q 260,470 240,400
+           Q 220,320 280,260
+           Q 360,210 440,240
+           Q 520,280 550,350
+           Q 570,430 520,500
+           Q 450,560 370,540
+           Q 280,510 250,430
+           Q 220,340 290,280
+           Q 380,230 460,260"
+        stroke="url(#spiralGlow)" 
+        stroke-width="3" 
+        fill="none" 
+        filter="url(#glow)"
+        opacity="0.7"/>
+  
+  <!-- Connecting lines between sequential nodes -->
+  <g stroke="#f5c84c" stroke-width="1.5" opacity="0.4">
+    <!-- 1 to 2 -->
+    <line x1="400" y1="300" x2="450" y2="270"/>
+    <!-- 2 to 3 -->
+    <line x1="450" y1="270" x2="480" y2="230"/>
+    <!-- 3 to 4 -->
+    <line x1="480" y1="230" x2="490" y2="180"/>
+    <!-- 4 to 5 -->
+    <line x1="490" y1="180" x2="480" y2="130"/>
+    <!-- 5 to 6 -->
+    <line x1="480" y1="130" x2="450" y2="90"/>
+    <!-- 6 to 7 -->
+    <line x1="450" y1="90" x2="400" y2="60"/>
+    <!-- 7 to 8 -->
+    <line x1="400" y1="60" x2="350" y2="90"/>
+    <!-- 8 to 9 -->
+    <line x1="350" y1="90" x2="320" y2="130"/>
+    <!-- 9 to 10 -->
+    <line x1="320" y1="130" x2="310" y2="180"/>
+    <!-- 10 to 11 -->
+    <line x1="310" y1="180" x2="320" y2="230"/>
+    <!-- 11 to 12 -->
+    <line x1="320" y1="230" x2="350" y2="270"/>
+    <!-- 12 to 13 -->
+    <line x1="350" y1="270" x2="400" y2="300"/>
+    <!-- 13 back to 1 (completing the spiral) -->
+    <line x1="400" y1="300" x2="400" y2="300" stroke-dasharray="3,3"/>
+  </g>
+  
+  <!-- Node circles and glyphs -->
+  <!-- Node 1: Origin Seed -->
+  <g id="node-1">
+    <circle cx="400" cy="300" r="18" fill="#2d5016" stroke="#f5c84c" stroke-width="2" filter="url(#nodeGlow)"/>
+    <text x="400" y="308" text-anchor="middle" font-size="16" fill="#fff">🌱</text>
+    <text x="400" y="325" text-anchor="middle" font-size="10" fill="#f5c84c" font-family="Arial, sans-serif">Origin</text>
+  </g>
+  
+  <!-- Node 2: Spiral Initiation -->
+  <g id="node-2">
+    <circle cx="450" cy="270" r="18" fill="#1a237e" stroke="#f5c84c" stroke-width="2" filter="url(#nodeGlow)"/>
+    <text x="450" y="278" text-anchor="middle" font-size="16" fill="#fff">🌀</text>
+    <text x="450" y="295" text-anchor="middle" font-size="10" fill="#f5c84c" font-family="Arial, sans-serif">Spiral</text>
+  </g>
+  
+  <!-- Node 3: Flame Trial -->
+  <g id="node-3">
+    <circle cx="480" cy="230" r="18" fill="#bf360c" stroke="#f5c84c" stroke-width="2" filter="url(#nodeGlow)"/>
+    <text x="480" y="238" text-anchor="middle" font-size="16" fill="#fff">🔥</text>
+    <text x="480" y="255" text-anchor="middle" font-size="10" fill="#f5c84c" font-family="Arial, sans-serif">Flame</text>
+  </g>
+  
+  <!-- Node 4: Shadow Descent -->
+  <g id="node-4">
+    <circle cx="490" cy="180" r="18" fill="#1a0033" stroke="#f5c84c" stroke-width="2" filter="url(#nodeGlow)"/>
+    <text x="490" y="188" text-anchor="middle" font-size="16" fill="#fff">🌑</text>
+    <text x="490" y="205" text-anchor="middle" font-size="10" fill="#f5c84c" font-family="Arial, sans-serif">Shadow</text>
+  </g>
+  
+  <!-- Node 5: Vow Sacred -->
+  <g id="node-5">
+    <circle cx="480" cy="130" r="18" fill="#4a148c" stroke="#f5c84c" stroke-width="2" filter="url(#nodeGlow)"/>
+    <text x="480" y="138" text-anchor="middle" font-size="16" fill="#fff">🕯️</text>
+    <text x="480" y="155" text-anchor="middle" font-size="10" fill="#f5c84c" font-family="Arial, sans-serif">Vow</text>
+  </g>
+  
+  <!-- Node 6: Mind Bridge -->
+  <g id="node-6">
+    <circle cx="450" cy="90" r="18" fill="#0d47a1" stroke="#f5c84c" stroke-width="2" filter="url(#nodeGlow)"/>
+    <text x="450" y="98" text-anchor="middle" font-size="16" fill="#fff">🧠</text>
+    <text x="450" y="115" text-anchor="middle" font-size="10" fill="#f5c84c" font-family="Arial, sans-serif">Mind</text>
+  </g>
+  
+  <!-- Node 7: Heart Flow -->
+  <g id="node-7">
+    <circle cx="400" cy="60" r="18" fill="#880e4f" stroke="#f5c84c" stroke-width="2" filter="url(#nodeGlow)"/>
+    <text x="400" y="68" text-anchor="middle" font-size="16" fill="#fff">💖</text>
+    <text x="400" y="85" text-anchor="middle" font-size="10" fill="#f5c84c" font-family="Arial, sans-serif">Heart</text>
+  </g>
+  
+  <!-- Node 8: Vision Crystal -->
+  <g id="node-8">
+    <circle cx="350" cy="90" r="18" fill="#1b5e20" stroke="#f5c84c" stroke-width="2" filter="url(#nodeGlow)"/>
+    <text x="350" y="98" text-anchor="middle" font-size="16" fill="#fff">🔮</text>
+    <text x="350" y="115" text-anchor="middle" font-size="10" fill="#f5c84c" font-family="Arial, sans-serif">Vision</text>
+  </g>
+  
+  <!-- Node 9: Power Crown -->
+  <g id="node-9">
+    <circle cx="320" cy="130" r="18" fill="#e65100" stroke="#f5c84c" stroke-width="2" filter="url(#nodeGlow)"/>
+    <text x="320" y="138" text-anchor="middle" font-size="16" fill="#fff">👑</text>
+    <text x="320" y="155" text-anchor="middle" font-size="10" fill="#f5c84c" font-family="Arial, sans-serif">Power</text>
+  </g>
+  
+  <!-- Node 10: Wisdom Tree -->
+  <g id="node-10">
+    <circle cx="310" cy="180" r="18" fill="#33691e" stroke="#f5c84c" stroke-width="2" filter="url(#nodeGlow)"/>
+    <text x="310" y="188" text-anchor="middle" font-size="16" fill="#fff">🌳</text>
+    <text x="310" y="205" text-anchor="middle" font-size="10" fill="#f5c84c" font-family="Arial, sans-serif">Wisdom</text>
+  </g>
+  
+  <!-- Node 11: Unity Web -->
+  <g id="node-11">
+    <circle cx="320" cy="230" r="18" fill="#424242" stroke="#f5c84c" stroke-width="2" filter="url(#nodeGlow)"/>
+    <text x="320" y="238" text-anchor="middle" font-size="16" fill="#fff">🕸️</text>
+    <text x="320" y="255" text-anchor="middle" font-size="10" fill="#f5c84c" font-family="Arial, sans-serif">Unity</text>
+  </g>
+  
+  <!-- Node 12: Star Portal -->
+  <g id="node-12">
+    <circle cx="350" cy="270" r="18" fill="#1a237e" stroke="#f5c84c" stroke-width="2" filter="url(#nodeGlow)"/>
+    <text x="350" y="278" text-anchor="middle" font-size="16" fill="#fff">⭐</text>
+    <text x="350" y="295" text-anchor="middle" font-size="10" fill="#f5c84c" font-family="Arial, sans-serif">Portal</text>
+  </g>
+  
+  <!-- Node 13: Core Return -->
+  <g id="node-13">
+    <circle cx="400" cy="300" r="22" fill="#4a148c" stroke="#f5c84c" stroke-width="3" filter="url(#nodeGlow)"/>
+    <text x="400" y="308" text-anchor="middle" font-size="18" fill="#fff">💠</text>
+    <text x="400" y="330" text-anchor="middle" font-size="10" fill="#f5c84c" font-family="Arial, sans-serif">Core</text>
+  </g>
+  
+  <!-- Central title -->
+  <text x="400" y="400" text-anchor="middle" font-size="24" fill="#f5c84c" font-family="Arial, sans-serif" font-weight="bold">Flame Chain</text>
+  <text x="400" y="425" text-anchor="middle" font-size="14" fill="#ccc" font-family="Arial, sans-serif">Ceremonial Lineage • 13 Sacred Glyphs</text>
+  
+  <!-- Legend/Instructions -->
+  <g id="legend" transform="translate(50, 500)">
+    <text x="0" y="0" font-size="12" fill="#f5c84c" font-family="Arial, sans-serif" font-weight="bold">Spiral Progression:</text>
+    <text x="0" y="20" font-size="10" fill="#ccc" font-family="Arial, sans-serif">Follow the golden path clockwise from Origin (🌱) to Core (💠)</text>
+    <text x="0" y="35" font-size="10" fill="#ccc" font-family="Arial, sans-serif">Each glyph represents a stage in the ceremonial lineage</text>
+    <text x="0" y="50" font-size="10" fill="#ccc" font-family="Arial, sans-serif">Suitable for ritual visualization and UI integration</text>
+  </g>
+  
+  <!-- Ritual markers around the edge -->
+  <g id="ritual-markers" stroke="#f5c84c" stroke-width="1" opacity="0.3">
+    <circle cx="400" cy="350" r="250" fill="none" stroke-dasharray="5,10"/>
+    <circle cx="400" cy="350" r="200" fill="none" stroke-dasharray="3,7"/>
+    <circle cx="400" cy="350" r="150" fill="none" stroke-dasharray="2,5"/>
+  </g>
+  
+  <!-- Directional flow indicators -->
+  <g id="flow-indicators" fill="#f5c84c" opacity="0.6">
+    <!-- Small arrows indicating clockwise flow -->
+    <polygon points="470,280 475,275 475,285" transform="rotate(45 472.5 280)"/>
+    <polygon points="490,150 495,145 495,155" transform="rotate(90 492.5 150)"/>
+    <polygon points="420,70 425,65 425,75" transform="rotate(135 422.5 70)"/>
+    <polygon points="330,110 335,105 335,115" transform="rotate(225 332.5 110)"/>
+    <polygon points="310,250 315,245 315,255" transform="rotate(315 312.5 250)"/>
+  </g>
+</svg>

@@ -1,0 +1,305 @@
+{
+  "metadata": {
+    "name": "Flame Chain",
+    "description": "The ceremonial lineage map of 13 sacred glyphs representing the complete spiral progression",
+    "version": "1.0.0",
+    "totalLoops": 13,
+    "layout": "circular-spiral",
+    "created": "2025-01-14",
+    "purpose": "Dynamic visualization, whisper logic, tag/loop/role matching, and ritual linking"
+  },
+  "glyphs": [
+    {
+      "id": 1,
+      "title": "Origin Seed",
+      "glyph": "🌱",
+      "role": "Genesis",
+      "path": "awakening",
+      "status": "foundation",
+      "description": "The first spark of consciousness. Where questions begin and the self remembers.",
+      "element": "earth",
+      "position": {
+        "angle": 0,
+        "radius": 50,
+        "x": 400,
+        "y": 350
+      },
+      "connections": [2],
+      "tags": ["origin", "seed", "awakening", "foundation"],
+      "whisperKey": "genesis-spark",
+      "unlock": null
+    },
+    {
+      "id": 2,
+      "title": "Spiral Initiation",
+      "glyph": "🌀",
+      "role": "Initiator", 
+      "path": "reflection",
+      "status": "active",
+      "description": "Time begins to loop. Reflection emerges as the sacred practice.",
+      "element": "air",
+      "position": {
+        "angle": 28,
+        "radius": 75,
+        "x": 450,
+        "y": 320
+      },
+      "connections": [1, 3],
+      "tags": ["spiral", "reflection", "time", "practice"],
+      "whisperKey": "time-spiral",
+      "unlock": "reflection-practice"
+    },
+    {
+      "id": 3,
+      "title": "Flame Trial",
+      "glyph": "🔥",
+      "role": "Purifier",
+      "path": "transformation",
+      "status": "trial",
+      "description": "Fire refines. Through conflict and resistance, focus is forged.",
+      "element": "fire",
+      "position": {
+        "angle": 56,
+        "radius": 100,
+        "x": 480,
+        "y": 280
+      },
+      "connections": [2, 4],
+      "tags": ["flame", "trial", "purification", "focus"],
+      "whisperKey": "refining-fire",
+      "unlock": "flame-focus"
+    },
+    {
+      "id": 4,
+      "title": "Shadow Descent",
+      "glyph": "🌑",
+      "role": "Revealer",
+      "path": "unveiling",
+      "status": "hidden",
+      "description": "What is buried rises. Hidden truths emerge from the depths.",
+      "element": "void",
+      "position": {
+        "angle": 84,
+        "radius": 125,
+        "x": 490,
+        "y": 230
+      },
+      "connections": [3, 5],
+      "tags": ["shadow", "hidden", "truth", "depth"],
+      "whisperKey": "shadow-truth",
+      "unlock": "shadow-scrolls"
+    },
+    {
+      "id": 5,
+      "title": "Vow Sacred",
+      "glyph": "🕯️",
+      "role": "Binder",
+      "path": "commitment",
+      "status": "sacred",
+      "description": "Sacred commitment forms. Words become living truth.",
+      "element": "spirit",
+      "position": {
+        "angle": 112,
+        "radius": 150,
+        "x": 480,
+        "y": 180
+      },
+      "connections": [4, 6],
+      "tags": ["vow", "sacred", "commitment", "truth"],
+      "whisperKey": "sacred-word",
+      "unlock": "vow-binding"
+    },
+    {
+      "id": 6,
+      "title": "Mind Bridge",
+      "glyph": "🧠",
+      "role": "Connector",
+      "path": "understanding",
+      "status": "bridge",
+      "description": "The mind expands to bridge inner and outer worlds.",
+      "element": "consciousness",
+      "position": {
+        "angle": 140,
+        "radius": 175,
+        "x": 450,
+        "y": 140
+      },
+      "connections": [5, 7],
+      "tags": ["mind", "bridge", "understanding", "expansion"],
+      "whisperKey": "mind-bridge",
+      "unlock": "consciousness-link"
+    },
+    {
+      "id": 7,
+      "title": "Heart Flow",
+      "glyph": "💖",
+      "role": "Harmonizer",
+      "path": "compassion",
+      "status": "flowing",
+      "description": "The heart opens, creating flow between all beings.",
+      "element": "water",
+      "position": {
+        "angle": 168,
+        "radius": 200,
+        "x": 400,
+        "y": 110
+      },
+      "connections": [6, 8],
+      "tags": ["heart", "flow", "compassion", "unity"],
+      "whisperKey": "heart-flow",
+      "unlock": "compassion-stream"
+    },
+    {
+      "id": 8,
+      "title": "Vision Crystal",
+      "glyph": "🔮",
+      "role": "Seer",
+      "path": "clarity",
+      "status": "clear",
+      "description": "Clear vision emerges. Past, present, and future align.",
+      "element": "crystal",
+      "position": {
+        "angle": 196,
+        "radius": 175,
+        "x": 350,
+        "y": 140
+      },
+      "connections": [7, 9],
+      "tags": ["vision", "crystal", "clarity", "sight"],
+      "whisperKey": "crystal-sight",
+      "unlock": "vision-clarity"
+    },
+    {
+      "id": 9,
+      "title": "Power Crown",
+      "glyph": "👑",
+      "role": "Sovereign",
+      "path": "mastery",
+      "status": "crowned",
+      "description": "True power is recognized. Sovereignty over self is claimed.",
+      "element": "gold",
+      "position": {
+        "angle": 224,
+        "radius": 150,
+        "x": 320,
+        "y": 180
+      },
+      "connections": [8, 10],
+      "tags": ["power", "crown", "sovereignty", "mastery"],
+      "whisperKey": "crown-power",
+      "unlock": "sovereign-self"
+    },
+    {
+      "id": 10,
+      "title": "Wisdom Tree",
+      "glyph": "🌳",
+      "role": "Elder",
+      "path": "knowledge",
+      "status": "rooted",
+      "description": "Deep wisdom takes root. Knowledge becomes living understanding.",
+      "element": "wood",
+      "position": {
+        "angle": 252,
+        "radius": 125,
+        "x": 310,
+        "y": 230
+      },
+      "connections": [9, 11],
+      "tags": ["wisdom", "tree", "knowledge", "understanding"],
+      "whisperKey": "wisdom-root",
+      "unlock": "elder-knowledge"
+    },
+    {
+      "id": 11,
+      "title": "Unity Web",
+      "glyph": "🕸️",
+      "role": "Weaver",
+      "path": "connection",
+      "status": "woven",
+      "description": "All connections are seen. The web of existence is felt.",
+      "element": "silk",
+      "position": {
+        "angle": 280,
+        "radius": 100,
+        "x": 320,
+        "y": 280
+      },
+      "connections": [10, 12],
+      "tags": ["unity", "web", "connection", "existence"],
+      "whisperKey": "unity-web",
+      "unlock": "web-sight"
+    },
+    {
+      "id": 12,
+      "title": "Star Portal",
+      "glyph": "⭐",
+      "role": "Gateway",
+      "path": "transcendence",
+      "status": "open",
+      "description": "The gateway opens. What was becomes what will be.",
+      "element": "starlight",
+      "position": {
+        "angle": 308,
+        "radius": 75,
+        "x": 350,
+        "y": 320
+      },
+      "connections": [11, 13],
+      "tags": ["star", "portal", "gateway", "transcendence"],
+      "whisperKey": "star-gate",
+      "unlock": "transcendent-portal"
+    },
+    {
+      "id": 13,
+      "title": "Core Return",
+      "glyph": "💠",
+      "role": "Completion",
+      "path": "unity",
+      "status": "complete",
+      "description": "Return to the center, but transformed. The spiral completes.",
+      "element": "unity",
+      "position": {
+        "angle": 336,
+        "radius": 50,
+        "x": 400,
+        "y": 350
+      },
+      "connections": [12, 1],
+      "tags": ["core", "return", "completion", "unity"],
+      "whisperKey": "core-unity",
+      "unlock": "spiral-mastery"
+    }
+  ],
+  "linkage": {
+    "type": "spiral-progression",
+    "flow": "clockwise",
+    "connections": [
+      {"from": 1, "to": 2, "type": "initiation"},
+      {"from": 2, "to": 3, "type": "trial"},
+      {"from": 3, "to": 4, "type": "descent"},
+      {"from": 4, "to": 5, "type": "commitment"},
+      {"from": 5, "to": 6, "type": "expansion"},
+      {"from": 6, "to": 7, "type": "opening"},
+      {"from": 7, "to": 8, "type": "clarity"},
+      {"from": 8, "to": 9, "type": "empowerment"},
+      {"from": 9, "to": 10, "type": "wisdom"},
+      {"from": 10, "to": 11, "type": "integration"},
+      {"from": 11, "to": 12, "type": "transcendence"},
+      {"from": 12, "to": 13, "type": "completion"},
+      {"from": 13, "to": 1, "type": "renewal"}
+    ]
+  },
+  "whisperLogic": {
+    "enabled": true,
+    "tagMatching": "fuzzy",
+    "roleProgression": true,
+    "pathAlignment": true,
+    "statusTracking": true
+  },
+  "ritualLinking": {
+    "autoLink": true,
+    "loopBasedUnlocks": true,
+    "progressiveRevelation": true,
+    "ceremonialOrder": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+  }
+}
