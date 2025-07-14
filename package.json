@@ -1,5 +1,8 @@
 {
   "name": "6ol-core",
   "version": "1.0.0",
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "discord.js": "^14.21.0"
+  }
 }
