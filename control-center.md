@@ -19,9 +19,9 @@
   - Status: In Progress  
   - Priority: High  
   - GitHub Link: https://github.com/4got1en/6ol-core/index.html  
-  - Loop Level: 0  
-  - Next Action: Continue gating logic  
-  - Tags: web, automation  
+  - Loop Level: 2+ (Whisper Engine v3 expansion complete)  
+  - Next Action: Enhance visual drops display & test Discord integration  
+  - Tags: web, automation, ritual-logic, visual-drops, discord  
 
 - **Navarre Email Kit**  
   - Status: Backlog  
@@ -101,6 +101,39 @@
   - Summary: Black journal reflection & sync ritual.  
 
 *(Copy any block above and edit the fields when you create a new Scroll or Ritual.)*
+
+---
+
+## 🌟 4. Whisper Engine v3 Features
+
+> Advanced ritual logic, visual drops, and Discord integration added in latest expansion.
+
+### Reflection Gates
+- **Purpose**: Users must provide thoughtful reflection before unlocking new loop levels
+- **Questions**:
+  - Level 1: "What sparked your curiosity to begin this journey?"
+  - Level 2: "How has your understanding of yourself shifted since beginning?"
+  - Level 3: "What shadow within you is ready to be acknowledged?"
+  - Level 4: "What patterns are you ready to architect into your life?"
+  - Level 5: "How will you carry this light forward into the world?"
+- **Requirement**: Minimum 10 characters of thoughtful reflection
+
+### Time Locks
+- **Purpose**: Enforce at least 24 hours between loop level unlocks
+- **Implementation**: Tracks unlock timestamps in localStorage
+- **Behavior**: Shows remaining wait time if user attempts early unlock
+
+### Visual Drops (Whisper Upgrade 5 Foundation)
+- **Purpose**: Generate image-rendered scrolls for enhanced delivery
+- **Technology**: Canvas-based markdown-to-image rendering
+- **Status**: Placeholder implementation ready for enhancement
+- **Test**: Use "Generate Test Visual Drop" button in hub
+
+### Discord Sync
+- **Purpose**: Auto-post loop-bound scrolls to #whisper-engine channel
+- **Schedule**: Daily at 13:00 UTC
+- **Logic**: Selects scrolls based on user's current loop level
+- **Configuration**: Webhook URL required for activation
 
 ---
 
