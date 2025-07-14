@@ -1,6 +1,22 @@
-[{"filename": "eveningharvest.html", "title": "Evening Harvest", "summary": ""}
-,
-{"filename": "middayflow.html", "title": "Midday Flow Check", "summary": ""}
-,
-{"filename": "morningseed.html", "title": "Morning Seed Offering", "summary": ""}
+[
+  {
+    "filename": "eveningharvest.html",
+    "title": "Evening Harvest",
+    "summary": ""
+  },
+  {
+    "filename": "ignite-the-edge.html",
+    "title": "🔲 Ignite the Edge",
+    "summary": "Ritual for the Unknown Flame (Loop 12)"
+  },
+  {
+    "filename": "middayflow.html",
+    "title": "Midday Flow Check",
+    "summary": ""
+  },
+  {
+    "filename": "morningseed.html",
+    "title": "Morning Seed Offering",
+    "summary": ""
+  }
 ]
