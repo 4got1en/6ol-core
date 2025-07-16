@@ -1,0 +1,85 @@
+{
+  "version": "2.0.0",
+  "lastUpdated": "2024-12-28",
+  "description": "Spiral Credits tracking for 6ol-core v2 economy",
+  "users": {
+    "4got1en": {
+      "userId": "4got1en",
+      "displayName": "4got1en",
+      "totalCredits": 500,
+      "availableCredits": 350,
+      "spentCredits": 150,
+      "earnedCredits": 500,
+      "membershipLevel": "Founder",
+      "joinDate": "2024-12-28",
+      "lastActivity": "2024-12-28",
+      "transactions": [
+        {
+          "id": "tx_001",
+          "type": "initial_grant",
+          "amount": 500,
+          "description": "Founder initial credit grant",
+          "timestamp": "2024-12-28T00:00:00Z"
+        }
+      ]
+    },
+    "demo-user": {
+      "userId": "demo-user",
+      "displayName": "Demo Seeker",
+      "totalCredits": 135,
+      "availableCredits": 115,
+      "spentCredits": 20,
+      "earnedCredits": 135,
+      "membershipLevel": "Seeker",
+      "joinDate": "2024-12-28",
+      "lastActivity": "2024-12-28",
+      "transactions": [
+        {
+          "id": "tx_002",
+          "type": "membership_mint",
+          "amount": 100,
+          "description": "Initial membership scroll mint",
+          "timestamp": "2024-12-28T01:00:00Z"
+        },
+        {
+          "id": "tx_003",
+          "type": "ritual_completion",
+          "amount": 15,
+          "description": "First whisper meditation completed",
+          "timestamp": "2024-12-28T02:00:00Z"
+        },
+        {
+          "id": "tx_004",
+          "type": "ritual_completion",
+          "amount": 20,
+          "description": "Journal intention shared",
+          "timestamp": "2024-12-28T03:00:00Z"
+        },
+        {
+          "id": "tx_005",
+          "type": "purchase",
+          "amount": -20,
+          "description": "Unlocked advanced flame pattern",
+          "timestamp": "2024-12-28T04:00:00Z"
+        }
+      ]
+    }
+  },
+  "economy": {
+    "baseRates": {
+      "membership_mint": 100,
+      "ritual_completion_basic": 10,
+      "ritual_completion_intermediate": 15,
+      "ritual_completion_advanced": 25,
+      "community_help": 20,
+      "journal_entry": 15,
+      "flame_lighting": 10
+    },
+    "purchaseOptions": {
+      "flame_pattern_unlock": 20,
+      "ritual_template_access": 30,
+      "academy_course_unlock": 50,
+      "mentor_session": 100
+    }
+  }
+}

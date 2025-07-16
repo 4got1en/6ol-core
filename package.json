@@ -1,6 +1,6 @@
 {
   "name": "6ol-core",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "main": "bot.js",
   "scripts": {
     "start": "node bot.js",
