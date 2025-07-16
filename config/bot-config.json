@@ -1,0 +1,25 @@
+{
+  "roles": {
+    "initiate": "ROLE_ID_INITIATE",
+    "seeker": "ROLE_ID_SEEKER", 
+    "witness": "ROLE_ID_WITNESS",
+    "architect": "ROLE_ID_ARCHITECT",
+    "lightbearer": "ROLE_ID_LIGHTBEARER"
+  },
+  "channels": {
+    "reflections": "CHANNEL_ID_REFLECTIONS",
+    "whispers": "CHANNEL_ID_WHISPERS",
+    "general": "CHANNEL_ID_GENERAL"
+  },
+  "permissions": {
+    "requiredBotPermissions": ["MANAGE_ROLES", "SEND_MESSAGES", "USE_SLASH_COMMANDS"],
+    "adminRoles": ["ADMIN_ROLE_ID"]
+  },
+  "loops": {
+    "1": { "name": "Initiate", "roleKey": "initiate" },
+    "2": { "name": "Seeker", "roleKey": "seeker" },
+    "3": { "name": "Witness", "roleKey": "witness" },
+    "4": { "name": "Architect", "roleKey": "architect" },
+    "5": { "name": "Lightbearer", "roleKey": "lightbearer" }
+  }
+}

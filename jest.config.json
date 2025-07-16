@@ -1,0 +1,13 @@
+{
+  "testEnvironment": "node",
+  "collectCoverageFrom": [
+    "commands/**/*.js",
+    "utils/**/*.js",
+    "!**/node_modules/**"
+  ],
+  "testMatch": [
+    "**/tests/**/*.test.js"
+  ],
+  "verbose": true,
+  "clearMocks": true
+}
