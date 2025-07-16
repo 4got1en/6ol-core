@@ -1,0 +1,25 @@
+{
+  "loops": {
+    "1": {
+      "name": "Daylight Initiation",
+      "description": "The first step into conscious practice",
+      "passphrase": "sol"
+    },
+    "2": {
+      "name": "Night-Vision Insight", 
+      "description": "Deeper self-reflection and moonlight wisdom",
+      "passphrase": "luna"
+    },
+    "3": {
+      "name": "Shadow Work Depth",
+      "description": "Advanced hidden insights and shadow integration",
+      "passphrase": "umbra"
+    },
+    "12": {
+      "name": "The Unknown Flame",
+      "description": "Walking willingly into the unmade, seeking questions that burn beyond",
+      "ritualPath": "rituals/ignite-the-edge.md",
+      "tags": ["unknown", "edge", "ritual", "becoming", "loop12"]
+    }
+  }
+}
