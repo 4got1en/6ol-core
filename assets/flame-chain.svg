@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 300" width="1400" height="300">
+  <defs>
+    <!-- Loop 13 - Flame of First Pattern -->
+    <radialGradient id="loop13-flame-gradient" cx="50%" cy="70%" r="60%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+      <stop offset="30%" style="stop-color:#ffcc00;stop-opacity:0.9" />
+      <stop offset="60%" style="stop-color:#ff4500;stop-opacity:0.7" />
+      <stop offset="100%" style="stop-color:#8b0000;stop-opacity:0.3" />
+    </radialGradient>
+    <radialGradient id="loop13-pattern-aura" cx="50%" cy="50%" r="80%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.1" />
+      <stop offset="50%" style="stop-color:#ffd700;stop-opacity:0.2" />
+      <stop offset="100%" style="stop-color:#b8860b;stop-opacity:0.5" />
+    </radialGradient>
+    <filter id="loop13-glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <!-- Loop 14 - Witness Flame -->
+    <radialGradient id="loop14-flame-gradient" cx="50%" cy="70%" r="60%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+      <stop offset="30%" style="stop-color:#ffd700;stop-opacity:0.9" />
+      <stop offset="60%" style="stop-color:#ff6b35;stop-opacity:0.7" />
+      <stop offset="100%" style="stop-color:#8b0000;stop-opacity:0.3" />
+    </radialGradient>
+    <radialGradient id="loop14-witness-aura" cx="50%" cy="50%" r="80%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.1" />
+      <stop offset="50%" style="stop-color:#4169e1;stop-opacity:0.2" />
+      <stop offset="100%" style="stop-color:#000080;stop-opacity:0.5" />
+    </radialGradient>
+    <filter id="loop14-glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Chain Background -->
+  <rect width="1400" height="300" fill="#000011" opacity="0.9"/>
+  
+  <!-- Loop 13 - Flame of First Pattern -->
+  <g id="loop13" transform="translate(100, 0)">
+    <!-- Pattern Aura Background -->
+    <circle cx="100" cy="150" r="90" fill="url(#loop13-pattern-aura)" filter="url(#loop13-glow)"/>
+    
+    <!-- Main Flame Body -->
+    <path d="M100 280 
+             C80 260, 70 240, 75 210
+             C80 180, 90 160, 100 140
+             C110 160, 120 180, 125 210
+             C130 240, 120 260, 100 280" 
+          fill="url(#loop13-flame-gradient)" 
+          filter="url(#loop13-glow)"/>
+    
+    <!-- Inner Flame Core -->
+    <path d="M100 260 
+             C85 245, 80 225, 85 200
+             C90 175, 95 160, 100 150
+             C105 160, 110 175, 115 200
+             C120 225, 115 245, 100 260" 
+          fill="#ffffff" 
+          opacity="0.8"/>
+    
+    <!-- Pattern Symbol -->
+    <g stroke="#ffd700" stroke-width="2" opacity="0.8" fill="none">
+      <circle cx="100" cy="120" r="10"/>
+      <path d="M90 120 L110 120 M100 110 L100 130"/>
+    </g>
+    
+    <!-- Pattern Lines -->
+    <g stroke="#ffd700" stroke-width="1" opacity="0.6" fill="none">
+      <line x1="100" y1="90" x2="100" y2="80"/>
+      <line x1="115" y1="95" x2="125" y2="85"/>
+      <line x1="120" y1="120" x2="130" y2="120"/>
+      <line x1="115" y1="145" x2="125" y2="155"/>
+      <line x1="85" y1="145" x2="75" y2="155"/>
+      <line x1="80" y1="120" x2="70" y2="120"/>
+      <line x1="85" y1="95" x2="75" y2="85"/>
+    </g>
+    
+    <!-- Loop13 Identifier -->
+    <text x="100" y="40" text-anchor="middle" font-family="serif" font-size="12" fill="#ffd700" opacity="0.8">
+      Loop 13 • Pattern
+    </text>
+  </g>
+  
+  <!-- Chain Connection -->
+  <line x1="300" y1="150" x2="350" y2="150" stroke="#ffd700" stroke-width="3" opacity="0.6"/>
+  
+  <!-- Loop 14 - Witness Flame -->
+  <g id="loop14-witness" transform="translate(350, 0)">
+    <!-- Witness Aura Background -->
+    <circle cx="100" cy="150" r="90" fill="url(#loop14-witness-aura)" filter="url(#loop14-glow)"/>
+    
+    <!-- Main Flame Body -->
+    <path d="M100 280 
+             C80 260, 70 240, 75 210
+             C80 180, 90 160, 100 140
+             C110 160, 120 180, 125 210
+             C130 240, 120 260, 100 280" 
+          fill="url(#loop14-flame-gradient)" 
+          filter="url(#loop14-glow)"/>
+    
+    <!-- Inner Flame Core -->
+    <path d="M100 260 
+             C85 245, 80 225, 85 200
+             C90 175, 95 160, 100 150
+             C105 160, 110 175, 115 200
+             C120 225, 115 245, 100 260" 
+          fill="#ffffff" 
+          opacity="0.8"/>
+    
+    <!-- Witness Symbol - Third Eye -->
+    <circle cx="100" cy="120" r="15" fill="#4169e1" opacity="0.7"/>
+    <circle cx="100" cy="120" r="8" fill="#ffffff" opacity="0.9"/>
+    <circle cx="100" cy="120" r="3" fill="#000080"/>
+    
+    <!-- Pattern Lines - Witnessing Rays -->
+    <g stroke="#4169e1" stroke-width="1" opacity="0.6" fill="none">
+      <line x1="100" y1="90" x2="100" y2="80"/>
+      <line x1="115" y1="95" x2="125" y2="85"/>
+      <line x1="120" y1="120" x2="130" y2="120"/>
+      <line x1="115" y1="145" x2="125" y2="155"/>
+      <line x1="85" y1="145" x2="75" y2="155"/>
+      <line x1="80" y1="120" x2="70" y2="120"/>
+      <line x1="85" y1="95" x2="75" y2="85"/>
+    </g>
+    
+    <!-- Loop14 Identifier Text -->
+    <text x="100" y="40" text-anchor="middle" font-family="serif" font-size="12" fill="#4169e1" opacity="0.8">
+      Loop 14 • Witness
+    </text>
+  </g>
+  
+  <!-- Title -->
+  <text x="700" y="30" text-anchor="middle" font-family="serif" font-size="16" fill="#ffffff" opacity="0.9">
+    Flame Chain • Loops 13-14
+  </text>
+</svg>
