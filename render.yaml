@@ -1,25 +1,19 @@
 services:
   - type: web
-    name: 6ol-bot
-    env: node
-    plan: free
+    name: 6ol-discord-bot
+    runtime: node
+    repo: https://github.com/4got1en/6ol-core
+    branch: main
     buildCommand: npm install
-  startCommand: node app.js
+    startCommand: node app.js
+    plan: free
     autoDeploy: true
-    services:
-      - type: web
-        name: 6ol-discord-bot
-        runtime: node
-        repo: https://github.com/4got1en/6ol-core
-        branch: main
-        buildCommand: npm install
-  startCommand: node app.js
-        envVars:
-          - key: DISCORD_TOKEN
-            sync: false
-          - key: CLIENT_ID
-            sync: false
-          - key: GUILD_ID
-            sync: false
-          - key: GH_TOKEN
-            sync: false
+    envVars:
+      - key: DISCORD_TOKEN
+        sync: false
+      - key: CLIENT_ID
+        sync: false
+      - key: GUILD_ID
+        sync: false
+      - key: GH_TOKEN
+        sync: false

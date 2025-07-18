@@ -1,10 +1,10 @@
 {
   "name": "6ol-core",
   "version": "1.0.0",
-  "main": "bot.js",
+  "main": "app.js",
   "scripts": {
-    "start": "node bot.js",
-    "dev": "nodemon bot.js",
+    "start": "node app.js",
+    "dev": "nodemon app.js",
     "test": "jest"
   },
   "dependencies": {
