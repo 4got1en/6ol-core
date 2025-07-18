@@ -1,0 +1,14 @@
+name: Scheduled Health Check
+
+on:
+  schedule:
+    - cron: '0 * * * *' # Every hour
+
+jobs:
+  health:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check 6ol Bot Health
+        run: |
+          curl -f https://your-bot-health-endpoint || echo "Bot health check failed!"
+      # Add notification step here (e.g., Discord webhook, email)

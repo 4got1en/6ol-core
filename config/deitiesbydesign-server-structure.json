@@ -1,0 +1,70 @@
+{
+  "categories": [
+    {
+      "name": "Temple Core",
+      "channels": [
+        {"name": "📡announcements", "type": "text", "description": "System logs, bot status, release notes"},
+        {"name": "🧠system-mind", "type": "text", "description": "High-level plans, Cypher logic decisions"},
+        {"name": "🧩bug-reports", "type": "text", "description": "For error reports and bot issues"}
+      ]
+    },
+    {
+      "name": "Development Realms",
+      "channels": [
+        {"name": "🌐frontend-dev", "type": "text", "description": "HTML/CSS/JS web systems (e.g. 6ol-app)"},
+        {"name": "⚙️backend-dev", "type": "text", "description": "Node.js, APIs, GitHub Actions"},
+        {"name": "🧵threads-dev", "type": "text", "description": "Whisper logic, journaling, scroll chains"},
+        {"name": "🛠️copilot-chat", "type": "text", "description": "Direct coding help / GitHub Copilot ideas"},
+        {"name": "🔧dev-ops", "type": "text", "description": "Hosting, uptime, secrets, GitHub sync"}
+      ]
+    },
+    {
+      "name": "Scroll Archives",
+      "channels": [
+        {"name": "📜loop1-scrolls", "type": "text"},
+        {"name": "📜loop2-scrolls", "type": "text"},
+        {"name": "📜loop3-scrolls", "type": "text"},
+        {"name": "📚codex-vault", "type": "text", "description": "Core documents and identity scrolls"}
+      ]
+    },
+    {
+      "name": "Whisper Engine",
+      "channels": [
+        {"name": "🌀whisper-engine", "type": "text", "description": "Daily drops, random scrolls"},
+        {"name": "🎴scroll-cards", "type": "text", "description": "Visual scroll embeds"},
+        {"name": "🔮remix-lab", "type": "text", "description": "For remixing and reshaping scrolls"}
+      ]
+    },
+    {
+      "name": "User Interfaces",
+      "channels": [
+        {"name": "💬general-chat", "type": "text"},
+        {"name": "❓support-requests", "type": "text"},
+        {"name": "🎫ticket-room", "type": "text", "description": "Auto-ticket system (e.g. with buttons)"}
+      ]
+    },
+    {
+      "name": "Energy Systems",
+      "channels": [
+        {"name": "💸income-tracking", "type": "text", "description": "Passive income, financial logs"},
+        {"name": "⏱️time-allocation", "type": "text", "description": "Productivity and task timers"},
+        {"name": "🔄automation-status", "type": "text", "description": "CI/CD and background syncs"}
+      ]
+    },
+    {
+      "name": "Reflection Chambers",
+      "channels": [
+        {"name": "🪞mirror-of-mind", "type": "text", "description": "Contradiction mapping and insight loops"},
+        {"name": "📝daily-reflection", "type": "text", "description": "/reflect command logs"},
+        {"name": "📈pattern-tracker", "type": "text", "description": "Spiral evolution, tremors, and theory"}
+      ]
+    },
+    {
+      "name": "The Void",
+      "channels": [
+        {"name": "🧪lab-001", "type": "text", "description": "Experimental features"},
+        {"name": "🔒shadow-gate", "type": "text", "description": "Hidden loop 3+ rituals"}
+      ]
+    }
+  ]
+}

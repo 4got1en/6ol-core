@@ -1,18 +1,19 @@
 {
   "name": "6ol-core",
   "version": "1.0.0",
-  "main": "bot.js",
+  "main": "app.js",
   "scripts": {
-    "start": "node bot.js",
-    "dev": "nodemon bot.js",
+    "start": "node app.js",
+    "dev": "nodemon app.js",
     "test": "jest"
   },
   "dependencies": {
+    "@octokit/rest": "^22.0.0",
     "discord.js": "^14.14.1",
     "dotenv": "^16.3.1"
   },
   "devDependencies": {
-    "nodemon": "^3.0.2",
-    "jest": "^29.7.0"
+    "jest": "^29.7.0",
+    "nodemon": "^3.0.2"
   }
 }

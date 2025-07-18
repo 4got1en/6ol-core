@@ -69,26 +69,33 @@
   </style>
 </head>
 <body>
-
-<nav>
-  <a href="#new">New Ritual</a>
-  <a href="#archive">Archive</a>
-  <a href="#console">Terminal</a>
-</nav>
-
-<main>
-
-  <!-- ===== NEW RITUAL ===== -->
-  <section id="new">
-    <h1>Forge a New Ritual</h1>
-    <div class="card">
-      <form id="ritualForm">
-        <label>Ritual Text
-          <textarea id="body" rows="6" placeholder="Pour your intention here…" required></textarea>
-        </label>
-        <label>Loop Level
-          <select id="loopLevel">
-            <option value="1">1 – Initiate</option>
+  <main>
+    <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;">
+      <img src="IMG_3069.png" alt="6ol Logo" style="width:56px;height:56px;border-radius:50%;box-shadow:0 2px 8px #0006;">
+      <div>
+        <h1 style="margin:0;color:#f5c84c;font-size:2rem;">6ol Core Hub</h1>
+        <p style="margin:0 0 .2rem 0;">Welcome to the 6ol ritual engine and knowledge vault.</p>
+      </div>
+      <a href="https://github.com/4got1en/6ol-core#-start-here-the-6ol-funnel" style="margin-left:auto;background:#f5c84c;color:#000;padding:.7rem 1.2rem;border-radius:6px;font-weight:600;text-decoration:none;box-shadow:0 2px 8px #0002;">🚦 Need Help?</a>
+    </div>
+    <section style="background:#222;padding:1.5rem 1rem;border-radius:1rem;margin-bottom:2rem;max-width:600px;">
+      <h2 style="color:#f5c84c;">🚦 Start Here: 6ol Funnel</h2>
+      <ol style="text-align:left;max-width:500px;margin:0 auto;">
+        <li><a href="https://github.com/4got1en/6ol-core#-start-here-the-6ol-funnel">Quick Start & Setup</a></li>
+        <li><a href="DISCORD_BOT_README.md">Bot Usage & Commands</a></li>
+        <li><a href="docs/scrolls.md">Scrolls & Rituals Guide</a></li>
+        <li><a href="docs/usage-examples.md">Usage Examples</a></li>
+        <li><a href="docs/monitoring.md">Monitoring & Automation</a></li>
+        <li><a href="CONTRIBUTING.md">Contributing</a></li>
+      </ol>
+      <p style="margin-top:1rem;font-size:1rem;opacity:0.8;">Follow the funnel above to get started, use the bot, contribute, and keep your system healthy.</p>
+    </section>
+    <nav>
+      <a href="https://github.com/4got1en/6ol-core">GitHub Repo</a> ·
+      <a href="scrolls/">Scrolls</a> ·
+      <a href="rituals/">Rituals</a>
+    </nav>
+  </main>
             <option value="2">2 – Seeker</option>
             <option value="3">3 – Witness</option>
             <option value="4">4 – Architect</option>

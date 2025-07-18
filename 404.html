@@ -68,4 +68,11 @@
   <a href="index.html">← Return to 6ol Core Hub</a>
   <footer>© 2025 4got1en · 6ol Core</footer>
 </body>
+<script>
+  // GitHub Pages SPA redirect
+  if (location.pathname !== '/index.html' && location.pathname !== '/') {
+    location.replace('/index.html' + location.search + location.hash);
+  }
+</script>
+</body>
 </html>

@@ -19,4 +19,23 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm ci
+      - name: Validate environment variables
+        run: node scripts/validate-env.js
       - run: npm test
+
+  notify-discord:
+    needs: test
+    if: failure()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify Discord on failure
+        run: |
+          if [ -n "$DISCORD_WEBHOOK_URL" ]; then
+            curl -H "Content-Type: application/json" \
+              -d '{"content": "❌ 6ol Core CI test workflow failed on $GITHUB_REPOSITORY@$GITHUB_SHA. See: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"}' \
+              "$DISCORD_WEBHOOK_URL"
+          else
+            echo "No Discord webhook set."
+          fi
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
