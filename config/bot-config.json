@@ -1,10 +1,10 @@
 {
   "roles": {
-    "initiate": "ROLE_ID_INITIATE",
-    "seeker": "ROLE_ID_SEEKER", 
-    "witness": "ROLE_ID_WITNESS",
-    "architect": "ROLE_ID_ARCHITECT",
-    "lightbearer": "ROLE_ID_LIGHTBEARER"
+  "initiate": "1395351835006468126",
+  "seeker": "1395352067563982869", 
+  "witness": "1395352259788800031",
+  "architect": "1395352430622933106",
+  "lightbearer": "1395352603541635093"
   },
   "channels": {
     "reflections": "CHANNEL_ID_REFLECTIONS",

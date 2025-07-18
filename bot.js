@@ -1,3 +1,30 @@
+// ...existing code...
+// Keep-alive loop to ensure bot stays active 24/7
+function keepAliveLoop() {
+  setInterval(() => {
+    // This can be extended to include health checks, periodic tasks, etc.
+    console.log('🟢 Bot keep-alive ping:', new Date().toISOString());
+  }, 1000 * 60 * 5); // Every 5 minutes
+}
+
+keepAliveLoop();
+// ...existing code...
+// Send a welcome message when the bot joins a new server
+client.on('guildCreate', async (guild) => {
+  // Try to find a system or general channel
+  const channel = guild.systemChannel || guild.channels.cache.find(c => c.name === 'general' && c.isTextBased && c.permissionsFor(guild.members.me).has('SEND_MESSAGES'));
+  const welcomeMsg =
+    `🌞 **6ol Core Bot Activated!**\n\n` +
+    `Start here: https://github.com/4got1en/6ol-core#-start-here-the-6ol-funnel\n` +
+    `Use /help for commands, onboarding, and docs.\n` +
+    'Configure roles/channels in `config/bot-config.json` and secrets in `.env`.\n' +
+    `Questions? See the funnel or open an issue!`;
+  try {
+    if (channel) await channel.send(welcomeMsg);
+  } catch (e) {
+    // Ignore if can't send
+  }
+});
 /**
  * bot.js - Main Discord bot file for 6ol Core
  * Handles command registration and bot initialization
@@ -31,13 +58,18 @@ async function loadCommands() {
     for (const file of commandFiles) {
       const filePath = path.join(commandsPath, file);
       const command = require(filePath);
-      
       if ('data' in command && 'execute' in command) {
         client.commands.set(command.data.name, command);
         console.log(`✅ Loaded command: ${command.data.name}`);
       } else {
         console.log(`⚠️ Command at ${filePath} is missing required "data" or "execute" property.`);
       }
+    }
+    // Ensure /help is always available
+    if (!client.commands.has('help')) {
+  const helpCmd = require('./slash/help.js');
+      client.commands.set(helpCmd.data.name, helpCmd);
+      console.log('✅ Loaded command: help');
     }
   } catch (error) {
     console.error('Error loading commands:', error);

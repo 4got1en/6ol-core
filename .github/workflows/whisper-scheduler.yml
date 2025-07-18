@@ -15,7 +15,26 @@ jobs:
         with:
           node-version: 22.x
       - run: npm ci
+      - name: Validate environment variables
+        run: node scripts/validate-env.js || echo "Skipping validation if env not set for scheduler."
       - name: Run Whisper Scheduler Script
         run: node scripts/whisper-scheduler.js
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  notify-discord:
+    needs: whisper
+    if: failure()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify Discord on failure
+        run: |
+          if [ -n "$DISCORD_WEBHOOK_URL" ]; then
+            curl -H "Content-Type: application/json" \
+              -d '{"content": "❌ 6ol Core scheduler workflow failed on $GITHUB_REPOSITORY@$GITHUB_SHA. See: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"}' \
+              "$DISCORD_WEBHOOK_URL"
+          else
+            echo "No Discord webhook set."
+          fi
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}

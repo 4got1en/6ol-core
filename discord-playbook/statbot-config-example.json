@@ -1,0 +1,8 @@
+{
+  "statroles": [
+    { "name": "Top Contributor", "threshold": 1000 },
+    { "name": "Active Member", "threshold": 250 }
+  ],
+  "track": ["messages", "voice", "growth"],
+  "dashboard": true
+}

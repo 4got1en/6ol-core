@@ -7,6 +7,7 @@ const { SlashCommandBuilder, EmbedBuilder, ModalBuilder, TextInputBuilder, TextI
 const LoopRoleManager = require('../utils/loopRoles');
 const fs = require('fs').promises;
 const path = require('path');
+const { commitReflection } = require('../utils/vaultCommit');
 
 // Reflection prompts by level
 const REFLECTION_PROMPTS = {
@@ -40,7 +41,7 @@ const REFLECTION_PROMPTS = {
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('reflect')
-    .setDescription('Engage with a daily reflection prompt'),
+    .setDescription('Get a reflection prompt and log your answer. Use this after reading a scroll or completing a ritual.'),
 
   async execute(interaction) {
     try {
@@ -80,6 +81,25 @@ module.exports = {
         });
 
         await handleReflectionSubmission(modalSubmission, member, currentLevel, prompt);
+
+        // --- Vault commit integration ---
+        try {
+          const vaultToken = process.env.VAULT_PUSH_TOKEN;
+          if (vaultToken) {
+            const date = new Date().toISOString().split('T')[0];
+            const fileName = `${date}-${member.id}-reflection.md`;
+            const filePath = `journals/${fileName}`;
+            const reflectionContent = `# Reflection\n\n**User:** <@${member.id}>\n**Date:** ${date}\n**Level:** ${currentLevel}\n**Prompt:** ${prompt}\n\n---\n\n${modalSubmission.fields.getTextInputValue('reflection_input')}`;
+            await commitReflection({
+              token: vaultToken,
+              filePath,
+              content: reflectionContent,
+              commitMessage: `Add reflection for ${member.id} on ${date}`
+            });
+          }
+        } catch (vaultErr) {
+          console.error('Failed to commit reflection to vault:', vaultErr);
+        }
         
       } catch (error) {
         if (error.code === 'InteractionCollectorError') {

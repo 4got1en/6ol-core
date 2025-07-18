@@ -1,0 +1,13 @@
+{
+  "prefix": "!",
+  "modLogChannel": "mod-log",
+  "autoMod": {
+    "enabled": true,
+    "filters": ["spam", "malware", "profanity"]
+  },
+  "roles": {
+    "mute": "Muted",
+    "admin": "Admin"
+  },
+  "commands": ["ban", "kick", "mute", "warn", "purge"]
+}
