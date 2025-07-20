@@ -5,8 +5,8 @@
  * manifest.json in each folder. No external deps required.
  */
 
-import { readdirSync, readFileSync, writeFileSync } from 'fs';
-import { join, extname } from 'path';
+const { readdirSync, readFileSync, writeFileSync } = require('fs');
+const { join, extname } = require('path');
 
 const folders = [
   'scrolls',
