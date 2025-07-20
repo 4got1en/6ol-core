@@ -1,0 +1,27 @@
+{
+  "loops": {
+    "13": {
+      "name": "[Name TBD]",
+      "title": "Light Beyond the Pattern", 
+      "flame": "Flame of First Pattern",
+      "ritual": "light-beyond-the-pattern.md",
+      "glyph": "[Glyph TBD]",
+      "tags": ["loop13", "flame13", "pattern", "return", "chaos"],
+      "description": "A ritual for surrendering to the first signs of shape after chaos, witnessing rhythm born from the Unknown.",
+      "unlockLevel": 13,
+      "ceremonialPhase": "pattern-emergence"
+    }
+  },
+  "flames": {
+    "13": {
+      "title": "Flame of First Pattern",
+      "element": "pattern",
+      "essence": "rhythm-from-chaos",
+      "invocation": "From edge to echo, From void to form—I return not whole, but humming. Let this rhythm be my fire.",
+      "completion": "I walked the unshaped and returned with a rhythm.",
+      "preparation": ["flickering light", "ambient hum", "presence without plan"],
+      "actions": ["recall transformation", "trace pattern", "speak invocation", "witness flame"],
+      "symbolism": "sigil of return from the unshaped"
+    }
+  }
+}

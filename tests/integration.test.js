@@ -47,7 +47,7 @@ describe('Bot Integration', () => {
 
   test('should load flame data without errors', () => {
     expect(() => {
-      const flameData = require('../data/flameData.json');
+      const flameData = require('../utils/flameData.json');
       expect(flameData).toHaveProperty('flames');
     }).not.toThrow();
   });

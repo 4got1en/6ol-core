@@ -167,7 +167,7 @@ async function createErrorEmbed(title, description, currentLevel) {
  */
 async function loadFlameData() {
   try {
-    const dataPath = path.join(__dirname, '..', 'data', 'flameData.json');
+    const dataPath = path.join(__dirname, '..', 'utils', 'flameData.json');
     const data = await fs.readFile(dataPath, 'utf8');
     return JSON.parse(data);
   } catch (error) {
