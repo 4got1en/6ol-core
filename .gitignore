@@ -46,3 +46,6 @@ Thumbs.db
 # Build artifacts
 dist/
 build/
+
+# Test files
+manual-test-*.js
