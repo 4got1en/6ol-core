@@ -53,7 +53,7 @@ describe('Bot Integration', () => {
   });
 
   test('should have all expected commands', () => {
-    const expectedCommands = ['ascend', 'reflect', 'whisper'];
+    const expectedCommands = ['ascend', 'reflect', 'whisper', 'reset-roles'];
     const commandsPath = path.join(__dirname, '..', 'commands');
     const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
     
