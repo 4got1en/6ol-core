@@ -1,8 +1,8 @@
 
 
-# 6ol Core System
+# 6ol Core System & DeitiesByDesign Codex
 
-**The 6ol Core is a ritual engine, Discord bot, and knowledge vault for progressive self-initiation, reflection, and community growth.**
+**The 6ol Core is a ritual engine, Discord bot, and knowledge vault for progressive self-initiation, reflection, and community growth. It now houses the sacred DeitiesByDesign Codex—foundational teachings for divine creative mastery.**
 
 ---
 
@@ -24,7 +24,20 @@
 - **Discord Bot:** Ritual management, ascension, reflection, and whisper engine
 - **Vault:** All user input and rituals are journaled to the [6ol-data-vault](https://github.com/4got1en/6ol-data-vault)
 - **Scrolls:** Interactive HTML/Markdown scrolls for each loop/ritual
+- **DeitiesByDesign Codex:** Sacred documents and foundational teachings for divine creative mastery
 - **Automation:** CI/CD, scheduled jobs, and persistent bot hosting
+
+### 📜 Sacred Documents & Teaching Systems
+
+**6ol Loop System:** Progressive self-initiation through daylight, nightvision, and shadow work rituals
+- Loop 1: Daylight Initiation (Passphrase: `sol`)
+- Loop 2: Night-Vision Insight (Passphrase: `luna`)  
+- Loop 3: Shadow Work Depth (Advanced practices)
+
+**DeitiesByDesign Codex:** Foundational teachings for divine creative understanding
+- **Foundation:** Onboarding scroll introducing core principles and practices
+- **Loop 1:** Seeker Flame - Entry teachings for awakening divine creative essence
+- **Progressive Teaching:** Structured advancement through sacred knowledge and practice
 
 ---
 
@@ -46,6 +59,29 @@
 	pm2 start bot.js --name 6ol-bot
 	```
 4. **Invite the Bot** to your Discord server with required permissions.
+
+---
+
+## 📜 Sacred Scrolls & Teachings
+
+The system contains two complementary teaching frameworks:
+
+### 6ol Ritual System
+Access progressive loop teachings through the scrolls directory:
+- `scrolls/daylight.md` - Loop 1 foundation
+- `scrolls/nightvision.md` - Loop 2 insights  
+- `scrolls/shadowdepth.md` - Loop 3 mastery
+
+### DeitiesByDesign Codex
+Sacred foundational documents for divine creative understanding:
+- `scrolls/dbd-onboarding-scroll.md` - Essential orientation and principles
+- `scrolls/loop1-seeker-flame.md` - First teaching: awakening divine creative fire
+
+**Getting Started with DeitiesByDesign:**
+1. Begin with the onboarding scroll for foundational understanding
+2. Establish a sacred journal for insights and practice documentation
+3. Progress to Loop 1: Seeker Flame for structured development
+4. Engage in the Three Kindling Practices: Sacred Creative Session, Wisdom Absorption, and Community Reflection
 
 ---
 
