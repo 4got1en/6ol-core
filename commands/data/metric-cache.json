@@ -1,0 +1,20 @@
+{
+  "lastUpdated": "2025-01-21T04:02:00.000Z",
+  "metrics": {
+    "totalScrolls": 47,
+    "activeScrolls": 12,
+    "recentScrolls": 3,
+    "totalSeekers": 156,
+    "activeSeekers": 34,
+    "reflectionCount": 89,
+    "dailyWhispers": 1,
+    "whisperEngagement": 73,
+    "systemUptime": "99.2",
+    "errorRate": "0.001",
+    "blessingsReceived": 247,
+    "energyFlow": "↗️ Growing",
+    "sustainabilityScore": "🟢 Stable"
+  },
+  "cacheTimestamp": "2025-01-21T04:02:00.000Z",
+  "validUntil": "2025-01-21T04:17:00.000Z"
+}

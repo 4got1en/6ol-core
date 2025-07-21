@@ -1,0 +1,55 @@
+{
+  "metrics": {
+    "cacheTimeout": 900,
+    "refreshInterval": 300,
+    "fallbackData": {
+      "enabled": true,
+      "useWhenError": true
+    }
+  },
+  "dashboards": {
+    "overview": {
+      "enabled": true,
+      "minLevel": 1,
+      "features": ["basicMetrics", "scrollMetrics", "userMetrics"]
+    },
+    "scrolls": {
+      "enabled": true,
+      "minLevel": 1,
+      "features": ["scrollAnalytics", "engagementMetrics"]
+    },
+    "users": {
+      "enabled": true,
+      "minLevel": 2,
+      "features": ["userAnalytics", "engagementMetrics", "journeyTracking"]
+    },
+    "economy": {
+      "enabled": true,
+      "minLevel": 3,
+      "features": ["financialMetrics", "sustainabilityScores", "blessingTracking"]
+    },
+    "technical": {
+      "enabled": true,
+      "minLevel": 2,
+      "features": ["systemHealth", "performanceMetrics", "errorTracking"]
+    }
+  },
+  "alertThresholds": {
+    "systemUptime": 95.0,
+    "errorRate": 1.0,
+    "engagementRate": 50.0,
+    "sustainabilityScore": 0.7
+  },
+  "displayOptions": {
+    "useEmojis": true,
+    "showTimestamps": true,
+    "compactMode": false,
+    "colorThemes": {
+      "overview": "8e44ad",
+      "scrolls": "9b59b6", 
+      "users": "3498db",
+      "economy": "27ae60",
+      "technical": "ff6b6b"
+    }
+  }
+}
