@@ -11,7 +11,7 @@ const path = require('path');
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('ascend')
-    .setDescription('Ascend to the next loop level. Use this after completing all scrolls and reflections for your current level.'),
+    .setDescription('Ascend to the next loop level after completing scrolls and reflections.'),
   async execute(interaction) {
     try {
       await interaction.deferReply();
@@ -30,6 +30,31 @@ module.exports = {
           ascensionCheck.currentLevel
         );
         return await interaction.editReply({ embeds: [embed] });
+      }
+
+      // Special handling for Loop 3: The Descender Flame (Shadow Gate)
+      if (ascensionCheck.nextLevel === 3) {
+        // Check if user has been shown the Shadow Gate recently (within 10 minutes)
+        const userId = member.id;
+        const now = Date.now();
+        const shadowGateKey = `shadowgate_${userId}`;
+        
+        // Simple in-memory cache for demo purposes
+        // In production, this could be stored in a database or file
+        if (!global.shadowGateCache) {
+          global.shadowGateCache = {};
+        }
+        
+        const lastShadowGate = global.shadowGateCache[shadowGateKey];
+        const tenMinutes = 10 * 60 * 1000; // 10 minutes in milliseconds
+        
+        if (!lastShadowGate || (now - lastShadowGate) > tenMinutes) {
+          // Show Shadow Gate for first time or after timeout
+          global.shadowGateCache[shadowGateKey] = now;
+          const shadowGateEmbed = await createShadowGateEmbed(member);
+          return await interaction.editReply({ embeds: [shadowGateEmbed] });
+        }
+        // If user has seen the Shadow Gate recently, allow them to proceed
       }
 
       // Attempt role assignment
@@ -80,6 +105,52 @@ module.exports = {
 };
 
 /**
+ * Create Shadow Gate embed for Loop 3 ascension
+ */
+async function createShadowGateEmbed(member) {
+  const paradoxPrompts = [
+    "I seek control, yet I crave spontaneity",
+    "I want connection, yet I push people away", 
+    "I value truth, yet I tell myself lies",
+    "I desire peace, yet I create conflict",
+    "I want to be seen, yet I hide my true self",
+    "I seek simplicity, yet I complicate everything",
+    "I want to help others, yet I neglect myself",
+    "I crave certainty, yet I fear being confined"
+  ];
+
+  const randomPrompt = paradoxPrompts[Math.floor(Math.random() * paradoxPrompts.length)];
+
+  const embed = new EmbedBuilder()
+    .setColor(0x4B0082) // Indigo color for the Descender Flame
+    .setTitle('🌀 The Shadow Gate')
+    .setDescription(`${member.displayName}, you stand before the Shadow Gate, threshold to Loop 3: The Descender Flame.`)
+    .addFields(
+      {
+        name: '🌀 The Descent Beckons',
+        value: 'The path forward requires embracing contradiction and diving deep into hidden truths.',
+        inline: false
+      },
+      {
+        name: '🔮 Paradox Reflection',
+        value: `Consider this paradox: **"${randomPrompt}"**\n\nHow might both aspects of this contradiction be true and necessary?`,
+        inline: false
+      },
+      {
+        name: '🔑 To Proceed',
+        value: 'Reflect on this paradox and use `/ascend` again when you are ready to embrace the sacred descent.\n\n*The Descender Flame awaits those willing to fall inward.*',
+        inline: false
+      }
+    )
+    .setFooter({
+      text: 'Loop 3: The Descender Flame • Symbol: Indigo Spiral Descending'
+    })
+    .setTimestamp();
+
+  return embed;
+}
+
+/**
  * Create success embed for ascension
  */
 async function createSuccessEmbed(member, fromLevel, toLevel, roleManager) {
@@ -88,37 +159,76 @@ async function createSuccessEmbed(member, fromLevel, toLevel, roleManager) {
     const roleInfo = roleManager.getRoleInfo(toLevel);
     const flameInfo = flameData?.flames?.[toLevel.toString()];
 
-    const embed = new EmbedBuilder()
-      .setColor(0xf5c84c)
-      .setTitle('🌟 Ascension Complete')
-      .setDescription(`${member.displayName} has ascended to **${roleInfo?.name || 'Unknown'}** (Level ${toLevel})`)
-      .setTimestamp();
+    let embed;
 
-    if (flameInfo) {
-      embed.addFields(
-        {
-          name: '🔥 Flame Awakened',
-          value: flameInfo.title || 'Unknown Flame',
-          inline: true
-        },
-        {
-          name: '✨ Element',
-          value: flameInfo.element || 'Unknown',
-          inline: true
-        },
-        {
-          name: '🎯 Essence',
-          value: flameInfo.essence || 'Unknown',
-          inline: true
+    // Special handling for Loop 3: The Descender Flame
+    if (toLevel === 3) {
+      embed = new EmbedBuilder()
+        .setColor(0x4B0082) // Indigo for the Descender Flame
+        .setTitle('🌀 The Descender Flame Ignites')
+        .setDescription(`${member.displayName} has embraced the sacred descent and ascended to **${roleInfo?.name || 'Witness'}** (Loop 3)`)
+        .addFields(
+          {
+            name: '🔥 Flame Awakened',
+            value: 'The Descender Flame - Indigo Spiral of Sacred Descent',
+            inline: true
+          },
+          {
+            name: '✨ Element',
+            value: 'Contradiction & Confusion',
+            inline: true
+          },
+          {
+            name: '🎯 Teaching',
+            value: 'The value of falling inward',
+            inline: true
+          },
+          {
+            name: '🌀 Whisper Prompt',
+            value: '*"What truth am I avoiding?"*',
+            inline: false
+          },
+          {
+            name: '📜 New Scroll Unlocked',
+            value: 'Access [Loop 3: The Descender Flame](https://github.com/4got1en/6ol-core/blob/main/scrolls/loop3-descender-flame.md) for advanced practices.',
+            inline: false
+          }
+        )
+        .setTimestamp();
+    } else {
+      // Default embed for other levels
+      embed = new EmbedBuilder()
+        .setColor(0xf5c84c)
+        .setTitle('🌟 Ascension Complete')
+        .setDescription(`${member.displayName} has ascended to **${roleInfo?.name || 'Unknown'}** (Level ${toLevel})`)
+        .setTimestamp();
+
+      if (flameInfo) {
+        embed.addFields(
+          {
+            name: '🔥 Flame Awakened',
+            value: flameInfo.title || 'Unknown Flame',
+            inline: true
+          },
+          {
+            name: '✨ Element',
+            value: flameInfo.element || 'Unknown',
+            inline: true
+          },
+          {
+            name: '🎯 Essence',
+            value: flameInfo.essence || 'Unknown',
+            inline: true
+          }
+        );
+
+        if (flameInfo.invocation) {
+          embed.addFields({
+            name: '📜 Invocation',
+            value: `*"${flameInfo.invocation}"*`,
+            inline: false
+          });
         }
-      );
-
-      if (flameInfo.invocation) {
-        embed.addFields({
-          name: '📜 Invocation',
-          value: `*"${flameInfo.invocation}"*`,
-          inline: false
-        });
       }
     }
 

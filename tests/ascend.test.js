@@ -2,7 +2,7 @@
  * ascend.test.js - Unit tests for ascend command
  */
 
-const ascendCommand = require('../slash/ascend');
+const ascendCommand = require('../commands/ascend');
 
 // Mock dependencies
 jest.mock('../utils/loopRoles');
@@ -213,7 +213,7 @@ describe('Ascend Command', () => {
     test('should have correct command data', () => {
       expect(ascendCommand.data).toBeDefined();
       expect(ascendCommand.data.name).toBe('ascend');
-      expect(ascendCommand.data.description).toBe('Ascend to the next loop level');
+      expect(ascendCommand.data.description).toBe('Ascend to the next loop level after completing scrolls and reflections.');
     });
 
     test('should have execute function', () => {

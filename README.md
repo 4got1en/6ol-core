@@ -49,6 +49,27 @@
 
 ---
 
+## 🌀 Loop System
+
+The 6ol Core follows a progressive loop system for spiritual development and self-initiation:
+
+### Loop 1: Daylight Initiation
+**Symbol:** ☀️ Golden sun rising  
+**Focus:** First steps into conscious practice, morning rituals, and basic awareness  
+**Scroll:** [Daylight Initiation](./scrolls/loop1/daylight-initiation.html)
+
+### Loop 2: Night-Vision Insight  
+**Symbol:** 🌙 Silver moon waxing  
+**Focus:** Deeper self-reflection, moonlight wisdom, and shadow awareness  
+**Scroll:** [Night-Vision](./scrolls/nightvision.md)
+
+### Loop 3: The Descender Flame
+**Symbol:** 🌀 Indigo spiral descending  
+**Focus:** Embracing contradiction, confusion, and the sacred descent into hidden truths  
+**Scroll:** [Loop 3: The Descender Flame](./scrolls/loop3-descender-flame.md)
+
+---
+
 ## 📚 Docs & Links
 
 - [Bot Usage & Commands](./DISCORD_BOT_README.md)
