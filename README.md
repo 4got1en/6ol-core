@@ -62,6 +62,35 @@
 
 ---
 
+## 🌀 Loop System
+
+The 6ol Core operates on a progressive loop system where users advance through levels of mastery and commitment:
+
+### Loop 1: Initiate Level
+- **Role:** Initiate  
+- **Focus:** Beginning the journey, initial exploration
+- **Requirements:** Complete first rituals and reflections
+
+### Loop 2: Devoted Flame (Seeker Level)
+- **Role:** Seeker
+- **Focus:** Commitment and sustained practice
+- **Scroll:** [Devoted Flame](./scrolls/loop2-devoted-flame.md)
+- **Trial:** Questions about discipline and commitment
+- **Requirements:** 
+  - Receive a Whisper from the engine
+  - Reflect using `/reflect` or manual journaling
+  - Answer trial questions about devotion  
+  - Complete practice for 3 consecutive days
+
+### Loops 3-5: Advanced Levels
+- **Loop 3:** Witness Level - Shadow work and deeper observation
+- **Loop 4:** Architect Level - Building sustainable spiritual practices  
+- **Loop 5:** Lightbearer Level - Sharing wisdom and guiding others
+
+*Use `/ascend` to progress between loops when requirements are met.*
+
+---
+
 ## 🩺 Troubleshooting
 
 - **Bot not responding?** Check `.env` and `bot-config.json` for correct tokens/IDs
