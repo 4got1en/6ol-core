@@ -10,9 +10,9 @@
 
 ### Discord Bot Implementation:
 - **✅ `bot.js`** - Main bot file with command registration and error handling
-- **✅ `commands/ascend.js`** - Ascension command with comprehensive error handling
-- **✅ `commands/reflect.js`** - Daily reflection command with modal interface
-- **✅ `commands/whisper.js`** - Whisper engine content access command
+- **✅ `slash/ascend.js`** - Ascension command with comprehensive error handling
+- **✅ `slash/reflect.js`** - Daily reflection command with modal interface
+- **✅ `slash/whisper.js`** - Whisper engine content access command
 - **✅ `utils/loopRoles.js`** - Clear role management utility class
 - **✅ `config/bot-config.json`** - Externalized configuration (no hard-coded IDs)
 

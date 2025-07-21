@@ -2,7 +2,7 @@
  * ascend.test.js - Unit tests for ascend command
  */
 
-const ascendCommand = require('../commands/ascend');
+const ascendCommand = require('../slash/ascend');
 
 // Mock dependencies
 jest.mock('../utils/loopRoles');

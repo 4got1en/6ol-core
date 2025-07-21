@@ -13,7 +13,7 @@ const WHISPER_CONTENT = {
   1: [
     {
       title: 'Daylight Initiation',
-      path: 'scrolls/daylight.md',
+      path: 'scrolls/loop1/daylight-initiation.html',
       passphrase: 'sol',
       description: 'The first light breaks through the veil of unknowing'
     }
@@ -21,7 +21,7 @@ const WHISPER_CONTENT = {
   2: [
     {
       title: 'Night-Vision Insight',
-      path: 'scrolls/nightvision.md', 
+      path: 'scrolls/loop2/nightvision-insight.html',
       passphrase: 'luna',
       description: 'Seeing through the darkness within and without'
     }
@@ -29,15 +29,15 @@ const WHISPER_CONTENT = {
   3: [
     {
       title: 'Shadow Work Depth',
-      path: 'scrolls/shadowdepth.md',
-      passphrase: 'umbra', 
+      path: 'scrolls/loop3/shadow-work-depth.html',
+      passphrase: 'umbra',
       description: 'Embracing the depths that others fear to explore'
     }
   ],
   4: [
     {
       title: 'Architectural Wisdom',
-      path: 'scrolls/architecture.md',
+      path: 'scrolls/loop4/architectural-wisdom.html',
       passphrase: 'forma',
       description: 'Building structures that support transformation'
     }
@@ -45,7 +45,7 @@ const WHISPER_CONTENT = {
   5: [
     {
       title: 'Lightbearer\'s Call',
-      path: 'scrolls/lightbearer.md',
+      path: 'scrolls/loop5/lightbearers-call.html',
       passphrase: 'lux',
       description: 'Carrying the flame forward for others to follow'
     }
@@ -55,10 +55,10 @@ const WHISPER_CONTENT = {
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('whisper')
-    .setDescription('Access whisper engine content')
+    .setDescription('Access a scroll for your current loop level, or specify one by name.')
     .addStringOption(option =>
       option.setName('content')
-        .setDescription('Specific content to access (optional)')
+        .setDescription('Type the name or passphrase of a scroll (optional).')
         .setRequired(false)
     ),
 
@@ -219,6 +219,13 @@ async function createContentEmbed(content, userLevel) {
       }
     );
 
+
+    // Add usage instructions
+    embed.addFields({
+      name: 'How to Use',
+      value: 'Read the scroll, complete any prompts in your journal, and use `/reflect` to log your answers. Type `/help` for more guidance.',
+      inline: false
+    });
     // Add full content link if available
     if (content.path) {
       embed.addFields({

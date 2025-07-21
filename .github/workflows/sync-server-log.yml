@@ -1,0 +1,20 @@
+name: Sync Server Setup Log
+
+on:
+  push:
+    paths:
+      - 'data/server-setup-log.txt'
+
+jobs:
+  sync-log:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Commit and push log file
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/server-setup-log.txt
+          git commit -m "chore: update server setup log [auto-sync]" || echo "No changes to commit"
+          git push
