@@ -1,0 +1,114 @@
+{
+  "flameRoles": {
+    "seekerFlame": {
+      "name": "Seeker Flame",
+      "color": "#FFD700",
+      "description": "Golden flame of curiosity and initial awakening",
+      "permissions": ["VIEW_CHANNEL", "SEND_MESSAGES", "READ_MESSAGE_HISTORY"],
+      "loop": 1,
+      "element": "discovery",
+      "essence": "seeking-truth"
+    },
+    "devotedFlame": {
+      "name": "Devoted Flame", 
+      "color": "#FFFFFF",
+      "description": "White flame of dedication and deeper commitment",
+      "permissions": ["VIEW_CHANNEL", "SEND_MESSAGES", "READ_MESSAGE_HISTORY", "EMBED_LINKS"],
+      "loop": 2,
+      "element": "devotion",
+      "essence": "inner-commitment"
+    },
+    "descenderFlame": {
+      "name": "Descender Flame",
+      "color": "#191970", 
+      "description": "Dark blue flame of shadow work and deep exploration",
+      "permissions": ["VIEW_CHANNEL", "SEND_MESSAGES", "READ_MESSAGE_HISTORY", "EMBED_LINKS", "ATTACH_FILES"],
+      "loop": 3,
+      "element": "shadow",
+      "essence": "depth-walking"
+    },
+    "reclaimerFlame": {
+      "name": "Reclaimer Flame",
+      "color": "#006400",
+      "description": "Dark green flame of integration and wisdom reclamation",
+      "permissions": ["VIEW_CHANNEL", "SEND_MESSAGES", "READ_MESSAGE_HISTORY", "EMBED_LINKS", "ATTACH_FILES", "USE_EXTERNAL_EMOJIS"],
+      "loop": 4,
+      "element": "integration",
+      "essence": "wisdom-reclaiming"
+    },
+    "witnessFlame": {
+      "name": "Witness Flame",
+      "color": "#800080",
+      "description": "Purple flame of witnessing and transcendent awareness",
+      "permissions": ["VIEW_CHANNEL", "SEND_MESSAGES", "READ_MESSAGE_HISTORY", "EMBED_LINKS", "ATTACH_FILES", "USE_EXTERNAL_EMOJIS", "MANAGE_MESSAGES"],
+      "loop": 5,
+      "element": "witness",
+      "essence": "transcendent-awareness"
+    }
+  },
+  "channelCategories": {
+    "flamebearerTrials": {
+      "name": "🔥 Flamebearer Trials",
+      "description": "Challenges and rituals for flame progression",
+      "channels": [
+        {
+          "name": "🔥trial-chamber",
+          "description": "Active flame trials and challenges",
+          "type": "text"
+        },
+        {
+          "name": "🌟ascension-logs", 
+          "description": "Records of successful ascensions",
+          "type": "text"
+        },
+        {
+          "name": "🎯flame-guidance",
+          "description": "Mentorship and guidance for flamebearers",
+          "type": "text"
+        }
+      ]
+    },
+    "loopDiscussions": {
+      "name": "🌌 Loop Discussions",
+      "description": "Deep discussions about loop theory and practice",
+      "channels": [
+        {
+          "name": "🌀loop-theory",
+          "description": "Theoretical discussions about loops and cycles",
+          "type": "text"
+        },
+        {
+          "name": "🔄pattern-recognition",
+          "description": "Identifying patterns and recursive insights",
+          "type": "text"
+        },
+        {
+          "name": "🌌cosmic-insights",
+          "description": "Higher-level philosophical discussions",
+          "type": "text"
+        }
+      ]
+    },
+    "reflections": {
+      "name": "🪞 Reflections", 
+      "description": "Personal insights and contemplative practices",
+      "channels": [
+        {
+          "name": "🪞personal-insights",
+          "description": "Share personal reflections and insights",
+          "type": "text"
+        },
+        {
+          "name": "📝daily-practice",
+          "description": "Daily spiritual and contemplative practices",
+          "type": "text"
+        },
+        {
+          "name": "🌙shadow-work",
+          "description": "Deep shadow integration and healing work",
+          "type": "text"
+        }
+      ]
+    }
+  }
+}

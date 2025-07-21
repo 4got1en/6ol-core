@@ -1,6 +1,30 @@
 {
   "categories": [
     {
+      "name": "🔥 Flamebearer Trials",
+      "channels": [
+        {"name": "🔥trial-chamber", "type": "text", "description": "Active flame trials and challenges"},
+        {"name": "🌟ascension-logs", "type": "text", "description": "Records of successful ascensions"},
+        {"name": "🎯flame-guidance", "type": "text", "description": "Mentorship and guidance for flamebearers"}
+      ]
+    },
+    {
+      "name": "🌌 Loop Discussions", 
+      "channels": [
+        {"name": "🌀loop-theory", "type": "text", "description": "Theoretical discussions about loops and cycles"},
+        {"name": "🔄pattern-recognition", "type": "text", "description": "Identifying patterns and recursive insights"},
+        {"name": "🌌cosmic-insights", "type": "text", "description": "Higher-level philosophical discussions"}
+      ]
+    },
+    {
+      "name": "🪞 Reflections",
+      "channels": [
+        {"name": "🪞personal-insights", "type": "text", "description": "Share personal reflections and insights"},
+        {"name": "📝daily-practice", "type": "text", "description": "Daily spiritual and contemplative practices"},
+        {"name": "🌙shadow-work", "type": "text", "description": "Deep shadow integration and healing work"}
+      ]
+    },
+    {
       "name": "Temple Core",
       "channels": [
         {"name": "📡announcements", "type": "text", "description": "System logs, bot status, release notes"},

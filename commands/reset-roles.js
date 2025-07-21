@@ -33,7 +33,7 @@ module.exports = {
         return await interaction.editReply({ embeds: [errorEmbed] });
       }
 
-      // Define the flame role names to search for
+      // Define the flame role names to search for (updated for new flame system)
       const flameRoleNames = [
         'Seeker Flame',
         'Devoted Flame', 

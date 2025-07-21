@@ -11,7 +11,7 @@ const path = require('path');
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('ascend')
-    .setDescription('Ascend to the next loop level. Use this after completing all scrolls and reflections for your current level.'),
+    .setDescription('Ascend to the next loop level after completing requirements'),
   async execute(interaction) {
     try {
       await interaction.deferReply();
