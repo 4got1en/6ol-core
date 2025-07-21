@@ -28,6 +28,18 @@
 
 ---
 
+## 🔥 Loops & Scrolls
+
+The 6ol journey is structured as progressive loops, each building deeper levels of practice and insight:
+
+- **[Loop 1: Daylight Initiation](./scrolls/loop1/daylight-initiation.html)** — First steps into conscious practice, establishing foundation rituals
+- **[Loop 2: The Devoted Flame](./scrolls/loop2-devoted-flame.md)** — Transition from Seeker to Disciple, mastering discipline and sacred consistency
+- **[Loop 3: Shadow Work Depth](./scrolls/shadow/shadow-mastery.md)** — Advanced shadow integration and mastery
+
+Each loop contains specific teachings, reflection requirements, and rituals. Progress through loops using the `/ascend` command in Discord after completing requirements.
+
+---
+
 ## 🛠️ Quick Start
 
 1. **Clone & Install**
